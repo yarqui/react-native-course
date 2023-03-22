@@ -10,17 +10,39 @@ const regScreenStyles = StyleSheet.create({
 
   regUnderlay: {
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: "aqua",
+
+    position: "relative",
 
     flex: 1,
     alignItems: "center",
 
-    // justifyContent: "flex-end",
     marginTop: 220,
     paddingHorizontal: 16,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: "#ffffff",
+  },
+
+  regAvatarUnderlay: {
+    position: "absolute",
+    top: -60,
+    // or 👇
+    // transform: [{ translateY: -60 }],
+
+    width: 120,
+    height: 120,
+
+    borderRadius: 16,
+
+    backgroundColor: "#F6F6F6",
+  },
+
+  plusIcon: {
+    position: "absolute",
+    top: 81,
+    right: -12,
+    color: "#FF6C00",
   },
 
   regTitle: {

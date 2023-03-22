@@ -1,4 +1,12 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import Avatar from "../../components/Avatar";
 import globalStyles from "../../utils/globalStyles";
 import regScreenStyles from "./regScreenStyles";
 
@@ -6,8 +14,13 @@ const RegistrationScreen = () => {
   return (
     <View style={regScreenStyles.regContainer}>
       <View style={regScreenStyles.regUnderlay}>
-        <Text style={regScreenStyles.regTitle}>Registration</Text>
-        <View style={globalStyles.authInputContainer}>
+        <Avatar></Avatar>
+        <KeyboardAvoidingView
+          style={globalStyles.authInputContainer}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <Text style={regScreenStyles.regTitle}>Registration</Text>
+
           <TextInput
             style={globalStyles.authInput}
             placeholder="Login"
@@ -31,7 +44,7 @@ const RegistrationScreen = () => {
               <Text style={globalStyles.showPasswordText}>Show</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </KeyboardAvoidingView>
 
         <TouchableOpacity style={globalStyles.authBtn}>
           <Text style={globalStyles.authBtnText}>Sign Up</Text>

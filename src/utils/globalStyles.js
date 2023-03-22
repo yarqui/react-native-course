@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
-import fonts from "./fonts";
 
 // borderWidth: 1, borderColor: "red",
 
 const globalStyles = StyleSheet.create({
   appContainer: {
     borderWidth: 1,
-    borderColor: "lime",
+    borderColor: "red",
+
     flex: 1,
+    justifyContent: "flex-end",
   },
 
   bgImage: {

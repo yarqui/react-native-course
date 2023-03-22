@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { TextInput, View, Button, ImageBackground } from "react-native";
+import { View, ImageBackground } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import fonts from "./src/utils/fonts";
 import RegistrationScreen from "./src/screens/RegistrationScreen/regScreen";
 import globalStyles from "./src/utils/globalStyles";
-import regScreenStyles from "./src/screens/RegistrationScreen/regScreenStyles";
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -14,6 +13,8 @@ const loadFonts = async () => {
     [fonts.robotoBold]: require("./assets/fonts/Roboto/Roboto-Bold.ttf"),
   });
 };
+
+// TODO: UNINSTALL REACT-NATIVE-SVG
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
@@ -38,9 +39,7 @@ const App = () => {
       source={require("./src/images/bg.jpg")}
     >
       <View style={globalStyles.appContainer}>
-        <RegistrationScreen
-        // style={regScreenStyles.regScreen}
-        ></RegistrationScreen>
+        <RegistrationScreen />
       </View>
     </ImageBackground>
   );
