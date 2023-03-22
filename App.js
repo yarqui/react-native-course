@@ -1,30 +1,60 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  ImageBackground,
+} from "react-native";
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
 
-export default function App() {
+const loadFonts = async () => {
+  await Font.loadAsync({
+    "Roboto-Regular": require("./assets/fonts/Roboto/Roboto-Regular.ttf"),
+    "Roboto-Medium": require("./assets/fonts/Roboto/Roboto-Medium.ttf"),
+    "Roboto-Bold": require("./assets/fonts/Roboto/Roboto-Bold.ttf"),
+  });
+};
+
+const App = () => {
+  const [isReady, setIsReady] = useState(false);
+
   const inputHandler = () => {};
 
   const submitHandler = () => {};
 
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={loadFonts}
+        onFinish={() => setIsReady(true)}
+        onError={console.warn}
+      />
+    );
+  }
+
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Login"
-          onChangeText={() => {}}
-        />
-        <Button title="Sign Up" onPress={() => {}} />
-      </View>
+      <ImageBackground source={require("./src/images/bg.jpg")}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Login"
+            onChangeText={() => {}}
+          />
+          <Button title="Sign Up" onPress={() => {}} />
+        </View>
+      </ImageBackground>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 16,
+    paddingTop: 30,
   },
   inputContainer: {
     // borderColor: "red",
@@ -43,6 +73,7 @@ const styles = StyleSheet.create({
     flex: 5,
   },
   textInput: {
+    fontFamily: "Roboto-Bold",
     textAlign: "center",
     borderColor: "#cccccc",
     borderWidth: 1,
@@ -52,3 +83,5 @@ const styles = StyleSheet.create({
     padding: 8,
   },
 });
+
+export default App;
