@@ -2,19 +2,20 @@ import { StyleSheet } from "react-native";
 import fonts from "../../utils/fonts";
 
 const regScreenStyles = StyleSheet.create({
-  regContainer: {
-    // borderWidth: 1,
-    // borderColor: "red",
-    flex: 1,
-  },
+  // regContainer: {
+  // borderWidth: 1,
+  // borderColor: "red",
+  // flex: 1,
+  // },
 
   regUnderlay: {
-    borderWidth: 1,
-    borderColor: "aqua",
-
-    position: "relative",
-
     flex: 1,
+    // borderWidth: 1,
+    // borderColor: "violet",
+
+    // position: "relative",
+
+    // flex: 1,
     alignItems: "center",
 
     marginTop: 220,

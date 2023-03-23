@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { View, ImageBackground } from "react-native";
+import {
+  View,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import fonts from "./src/utils/fonts";
@@ -13,8 +18,6 @@ const loadFonts = async () => {
     [fonts.robotoBold]: require("./assets/fonts/Roboto/Roboto-Bold.ttf"),
   });
 };
-
-// TODO: UNINSTALL REACT-NATIVE-SVG
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
@@ -33,37 +36,7 @@ const App = () => {
     );
   }
 
-  return (
-    <ImageBackground
-      style={globalStyles.bgImage}
-      source={require("./src/images/bg.jpg")}
-    >
-      <View style={globalStyles.appContainer}>
-        <RegistrationScreen />
-      </View>
-    </ImageBackground>
-  );
+  return <RegistrationScreen />;
 };
-
-// const styles = StyleSheet.create({
-// inputContainer: {
-//   // borderColor: "red",
-//   // borderWidth: 1,
-//   flex: 1,
-//   flexDirection: "row",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-// },
-// textInput: {
-//   fontFamily: "Roboto-Bold",
-//   textAlign: "center",
-//   borderColor: "#cccccc",
-//   borderWidth: 1,
-//   borderRadius: 5,
-//   width: "70%",
-//   marginRight: 8,
-//   padding: 8,
-// },
-// });
 
 export default App;
