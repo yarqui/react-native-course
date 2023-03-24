@@ -4,6 +4,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -21,6 +22,20 @@ const loadFonts = async () => {
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
+  const [keyboardIsShown, setKeyboardIsShown] = useState(false);
+  console.log("keyboardIsShown:", keyboardIsShown);
+
+  const handleActiveKeyboard = () => {
+    if (keyboardIsShown) return;
+
+    setKeyboardIsShown(!keyboardIsShown);
+  };
+
+  const hideKeyboard = () => {
+    setKeyboardIsShown(false);
+
+    Keyboard.dismiss();
+  };
 
   const inputHandler = () => {};
 
@@ -36,7 +51,13 @@ const App = () => {
     );
   }
 
-  return <RegistrationScreen />;
+  return (
+    <RegistrationScreen
+      keyboardIsShown={keyboardIsShown}
+      handleActiveKeyboard={handleActiveKeyboard}
+      hideKeyboard={hideKeyboard}
+    />
+  );
 };
 
 export default App;

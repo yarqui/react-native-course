@@ -2,34 +2,29 @@ import { StyleSheet } from "react-native";
 import fonts from "../../utils/fonts";
 
 const regScreenStyles = StyleSheet.create({
-  // regContainer: {
-  // borderWidth: 1,
-  // borderColor: "red",
-  // flex: 1,
-  // },
-
   regUnderlay: {
     flex: 1,
-    // borderWidth: 1,
-    // borderColor: "violet",
+    borderWidth: 1,
+    borderColor: "violet",
 
     // position: "relative",
 
     // flex: 1,
-    alignItems: "center",
 
+    // TODO:of keyboard is active move marginTop
     marginTop: 220,
-    paddingHorizontal: 16,
+
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+
     backgroundColor: "#ffffff",
   },
 
   regAvatarUnderlay: {
     position: "absolute",
     top: -60,
-    // or 👇
-    // transform: [{ translateY: -60 }],
+    left: "50%",
+    transform: [{ translateX: -48 }],
 
     width: 120,
     height: 120,
