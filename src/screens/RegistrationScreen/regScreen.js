@@ -15,11 +15,13 @@ import regScreenStyles from "./regScreenStyles";
 const RegistrationScreen = () => {
   return (
     <KeyboardContainer>
-      <TextInput
-        style={globalStyles.authInput}
-        placeholder="Email"
-        placeholderTextColor={"#BDBDBD"}
-      ></TextInput>
+      <View style={globalStyles.appContainer}>
+        <TextInput
+          style={globalStyles.authInput}
+          placeholder="Email"
+          placeholderTextColor={"#BDBDBD"}
+        ></TextInput>
+      </View>
     </KeyboardContainer>
   );
 };

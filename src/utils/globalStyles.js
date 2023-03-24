@@ -3,28 +3,26 @@ import { StyleSheet } from "react-native";
 // borderWidth: 1, borderColor: "red",
 
 const globalStyles = StyleSheet.create({
+  keyboardAvoiding: {
+    flex: 1,
+    width: "100%",
+  },
+
   appContainer: {
     borderWidth: 1,
     borderColor: "red",
 
     flex: 1,
-
-    // backgroundColor: "white",
-  },
-
-  bgImage: {
-    flex: 1,
-    // justifyContent: "flex-end",
-
+    width: "100%",
+    justifyContent: "flex-end",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingTop: 44,
     paddingBottom: 34,
   },
 
-  authInputContainer: {
-    // width: "100%",
-    // gap: 16,
-    // marginTop: 32,
+  bgImage: {
+    flex: 1,
   },
 
   authInput: {
@@ -35,10 +33,14 @@ const globalStyles = StyleSheet.create({
     lineHeight: 19,
     borderWidth: 1,
     borderColor: "#E8E8E8",
-    // // TODO: REMOVE THIS 👇
-    // borderColor: "aqua",
     borderRadius: 8,
     backgroundColor: "#F6F6F6",
+  },
+
+  authInputContainer: {
+    // width: "100%",
+    // gap: 16,
+    // marginTop: 32,
   },
 
   passwordContainer: {

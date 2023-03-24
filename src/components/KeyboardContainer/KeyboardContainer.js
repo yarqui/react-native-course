@@ -3,17 +3,18 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+import globalStyles from "../../utils/globalStyles";
 
 const KeyboardContainer = ({ children }) => {
   return (
     <TouchableWithoutFeedback>
       <ImageBackground
-        style={{ flex: 1 }}
+        style={globalStyles.bgImage}
         source={require("../../images/bg.jpg")}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS == "ios" ? "padding" : ""}
+          style={globalStyles.keyboardAvoiding}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           {children}
         </KeyboardAvoidingView>
