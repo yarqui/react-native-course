@@ -1,5 +1,6 @@
 import {
   ImageBackground,
+  Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -7,7 +8,12 @@ import globalStyles from "../../utils/globalStyles";
 
 const KeyboardContainer = ({ children }) => {
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+      style={{ flex: 1, backgroundColor: "#fff" }}
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
       <ImageBackground
         style={globalStyles.bgImage}
         source={require("../../images/bg.jpg")}

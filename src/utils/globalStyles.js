@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 const globalStyles = StyleSheet.create({
   keyboardAvoiding: {
     flex: 1,
-    width: "100%",
   },
 
   appContainer: {
@@ -13,9 +12,7 @@ const globalStyles = StyleSheet.create({
     borderColor: "red",
 
     flex: 1,
-    width: "100%",
     justifyContent: "flex-end",
-    alignItems: "center",
     paddingHorizontal: 16,
     paddingTop: 44,
     paddingBottom: 34,
@@ -23,6 +20,8 @@ const globalStyles = StyleSheet.create({
 
   bgImage: {
     flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
   },
 
   authInput: {

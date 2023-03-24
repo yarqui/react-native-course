@@ -8,7 +8,7 @@ import {
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import fonts from "./src/utils/fonts";
-import RegistrationScreen from "./src/screens/RegistrationScreen/regScreen";
+import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
 import globalStyles from "./src/utils/globalStyles";
 
 const loadFonts = async () => {
