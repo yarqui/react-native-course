@@ -1,18 +1,10 @@
 import { StyleSheet } from "react-native";
-import fonts from "../../utils/fonts";
 
 const regScreenStyles = StyleSheet.create({
   regUnderlay: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: "violet",
 
-    // position: "relative",
-
-    // flex: 1,
-
-    // TODO:of keyboard is active move marginTop
-    marginTop: 220,
+    marginTop: 240,
 
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -25,6 +17,7 @@ const regScreenStyles = StyleSheet.create({
     top: -60,
     left: "50%",
     transform: [{ translateX: -48 }],
+    // overflow: "hidden",
 
     width: 120,
     height: 120,
@@ -36,18 +29,10 @@ const regScreenStyles = StyleSheet.create({
 
   plusIcon: {
     position: "absolute",
-    top: 81,
+    bottom: -12,
     right: -12,
-    color: "#FF6C00",
-  },
 
-  regTitle: {
-    marginTop: 92,
-    fontFamily: fonts.robotoMedium,
-    fontSize: 30,
-    lineHeight: 35,
-    textAlign: "center",
-    color: "#212121",
+    color: "#FF6C00",
   },
 });
 

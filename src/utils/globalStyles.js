@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import fonts from "./fonts";
 
 // borderWidth: 1, borderColor: "red",
 
@@ -8,15 +9,11 @@ const globalStyles = StyleSheet.create({
   },
 
   appContainer: {
-    borderWidth: 1,
-    borderColor: "red",
-
     flex: 1,
     justifyContent: "flex-end",
 
-    paddingHorizontal: 16,
-    paddingTop: 44,
     paddingBottom: 34,
+    paddingHorizontal: 16,
   },
 
   bgImage: {
@@ -24,18 +21,23 @@ const globalStyles = StyleSheet.create({
     top: 0,
     right: 0,
 
+    paddingTop: 44,
     justifyContent: "flex-end",
 
     width: "100%",
   },
 
-  authInputContainer: {
-    borderWidth: 1,
-    borderColor: "lime",
+  authTitle: {
+    fontFamily: fonts.robotoMedium,
+    fontSize: 30,
+    lineHeight: 35,
+    textAlign: "center",
+    color: "#212121",
+  },
 
+  authInputContainer: {
     alignItems: "center",
     gap: 16,
-    marginTop: 32,
   },
 
   authInput: {
@@ -54,16 +56,11 @@ const globalStyles = StyleSheet.create({
   },
 
   passwordContainer: {
-    // borderWidth: 1,
-    // borderColor: "red",
     flexDirection: "row",
     position: "relative",
   },
 
   showPasswordText: {
-    // borderWidth: 1,
-    // borderColor: "lime",
-
     position: "absolute",
     right: 0,
     top: 0,
@@ -74,7 +71,7 @@ const globalStyles = StyleSheet.create({
   },
 
   authBtn: {
-    marginTop: 43,
+    marginTop: 12,
 
     alignItems: "center",
 

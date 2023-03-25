@@ -1,16 +1,17 @@
 import { useState } from "react";
-import {
-  View,
-  ImageBackground,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { Keyboard } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import fonts from "./src/utils/fonts";
 import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
-import globalStyles from "./src/utils/globalStyles";
+import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
+
+// TODO: ?? Consider making appContainer ON THE TOP of regUnderlay
+// to make top and bottom paddings global (maybe horizontal too?)
+// In this case, use regUnderlay with position: absolute?
+// Check the relative parent in this case from which it'll be positioned
+
+// TODO: implement expo-splash-screen instead of expo-app-loading
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -23,7 +24,25 @@ const loadFonts = async () => {
 const App = () => {
   const [isReady, setIsReady] = useState(false);
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
-  console.log("keyboardIsShown:", keyboardIsShown);
+  const [passwordIsShown, setPasswordIsShown] = useState(false);
+
+  // const [windowHeight, setWindowHeight] = useState(
+  //   () => Dimensions.get("window").height
+  // );
+
+  // useEffect(() => {
+  //   const onChange = () => {
+  //     const height = Dimensions.get("window").height;
+  //     setWindowHeight(height);
+  //     console.log("height:", height);
+  //   };
+
+  //   Dimensions.addEventListener("change", onChange);
+
+  //   return () => {
+  //     Dimensions.removeEventListener("change", onChange);
+  //   };
+  // }, []);
 
   const handleActiveKeyboard = () => {
     if (keyboardIsShown) return;
@@ -36,8 +55,6 @@ const App = () => {
 
     Keyboard.dismiss();
   };
-
-  const inputHandler = () => {};
 
   const submitHandler = () => {};
 
@@ -52,11 +69,21 @@ const App = () => {
   }
 
   return (
-    <RegistrationScreen
+    // <RegistrationScreen
+    //   // windowHeight={windowHeight ? windowHeight : null}
+    //   keyboardIsShown={keyboardIsShown}
+    //   passwordIsShown={passwordIsShown}
+    //   setPasswordIsShown={setPasswordIsShown}
+    //   handleActiveKeyboard={handleActiveKeyboard}
+    //   hideKeyboard={hideKeyboard}
+    // />
+    <LoginScreen
       keyboardIsShown={keyboardIsShown}
+      passwordIsShown={passwordIsShown}
+      setPasswordIsShown={setPasswordIsShown}
       handleActiveKeyboard={handleActiveKeyboard}
       hideKeyboard={hideKeyboard}
-    />
+    ></LoginScreen>
   );
 };
 

@@ -1,11 +1,10 @@
 import {
-  ImageBackground,
   Image,
-  Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import PropTypes from "prop-types";
 import globalStyles from "../../utils/globalStyles";
 
 const KeyboardContainer = ({ hideKeyboard, children }) => {
@@ -23,13 +22,17 @@ const KeyboardContainer = ({ hideKeyboard, children }) => {
         <KeyboardAvoidingView
           style={globalStyles.keyboardAvoiding}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
-          onPress={Keyboard.dismiss}
         >
           {children}
         </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
   );
+};
+
+KeyboardContainer.propTypes = {
+  hideKeyboard: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default KeyboardContainer;
