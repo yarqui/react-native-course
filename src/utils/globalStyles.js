@@ -1,25 +1,43 @@
 import { StyleSheet } from "react-native";
+import fonts from "./fonts";
 
 // borderWidth: 1, borderColor: "red",
 
 const globalStyles = StyleSheet.create({
-  appContainer: {
-    borderWidth: 1,
-    borderColor: "red",
+  keyboardAvoiding: {
+    flex: 1,
+  },
 
+  appContainer: {
     flex: 1,
     justifyContent: "flex-end",
+
+    paddingBottom: 34,
+    paddingHorizontal: 16,
   },
 
   bgImage: {
-    flex: 1,
+    position: "absolute",
+    top: 0,
+    right: 0,
+
     paddingTop: 44,
+    justifyContent: "flex-end",
+
+    width: "100%",
+  },
+
+  authTitle: {
+    fontFamily: fonts.robotoMedium,
+    fontSize: 30,
+    lineHeight: 35,
+    textAlign: "center",
+    color: "#212121",
   },
 
   authInputContainer: {
-    width: "100%",
+    alignItems: "center",
     gap: 16,
-    marginTop: 32,
   },
 
   authInput: {
@@ -46,17 +64,14 @@ const globalStyles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
-
     padding: 15,
-
     fontSize: 16,
     lineHeight: 19,
-
     color: "#1B4371",
   },
 
   authBtn: {
-    marginTop: 43,
+    marginTop: 12,
 
     alignItems: "center",
 
@@ -64,7 +79,7 @@ const globalStyles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 32,
 
-    borderRadius: 100,
+    borderRadius: 50,
 
     backgroundColor: "#FF6C00",
   },

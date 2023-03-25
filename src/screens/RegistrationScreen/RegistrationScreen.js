@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
+import Avatar from "../../components/Avatar";
 import KeyboardContainer from "../../components/KeyboardContainer";
 import globalStyles from "../../utils/globalStyles";
-import regScreenStyles from "../RegistrationScreen/regScreenStyles";
+import regScreenStyles from "./regScreenStyles";
 
 const initialUserState = {
+  login: "",
   email: "",
   password: "",
+  avatar: null,
 };
 
-const LoginScreen = ({
+const RegistrationScreen = ({
   keyboardIsShown,
   passwordIsShown,
   setPasswordIsShown,
@@ -20,26 +23,44 @@ const LoginScreen = ({
   const [userData, setUserData] = useState(initialUserState);
   const [readyToSubmit, setReadyToSubmit] = useState(false);
 
-  const { email, password } = userData;
+  const { login, email, password } = userData;
 
   useEffect(() => {
-    if (email && password) {
+    if (login && email && password) {
       return setReadyToSubmit(true);
     }
     setReadyToSubmit(false);
-  }, [email, password]);
+  }, [login, email, password]);
 
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
       <View
         style={{
           ...regScreenStyles.regUnderlay,
-          marginTop: keyboardIsShown ? 229 : 360,
+          marginTop: keyboardIsShown ? 124 : 240,
         }}
       >
         <View style={globalStyles.appContainer}>
+          <Avatar style={regScreenStyles.regAvatarUnderlay}></Avatar>
           <View style={globalStyles.authInputContainer}>
-            <Text style={globalStyles.authTitle}>Login</Text>
+            <Text style={globalStyles.authTitle}>Registration</Text>
+
+            <TextInput
+              style={globalStyles.authInput}
+              placeholder="Login"
+              placeholderTextColor={"#BDBDBD"}
+              name="login"
+              keyboardType={"default"}
+              value={userData.login}
+              onFocus={handleActiveKeyboard}
+              onSubmitEditing={hideKeyboard}
+              onChangeText={(value) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  login: value,
+                }))
+              }
+            />
 
             <TextInput
               style={globalStyles.authInput}
@@ -99,21 +120,21 @@ const LoginScreen = ({
                   disabled={!readyToSubmit}
                   activeOpacity={0.8}
                   onPress={() => {
-                    console.log("future submit logic:", userData);
+                    console.log("future submit form logic", userData);
                     setUserData(initialUserState);
                   }}
                 >
-                  <Text style={globalStyles.authBtnText}>Sign In</Text>
+                  <Text style={globalStyles.authBtnText}>Sign Up</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
-                    console.log("future navigation to sign up screen");
+                    console.log("future navigation to log in screen");
                   }}
                 >
                   <Text style={globalStyles.authAccountPrompt}>
-                    No account? Sign Up
+                    Have an account? Sign In
                   </Text>
                 </TouchableOpacity>
               </>
@@ -125,11 +146,12 @@ const LoginScreen = ({
   );
 };
 
-LoginScreen.propTypes = {
+RegistrationScreen.propTypes = {
   keyboardIsShown: PropTypes.bool.isRequired,
   passwordIsShown: PropTypes.bool.isRequired,
   setPasswordIsShown: PropTypes.func.isRequired,
   handleActiveKeyboard: PropTypes.func.isRequired,
   hideKeyboard: PropTypes.func.isRequired,
 };
-export default LoginScreen;
+
+export default RegistrationScreen;

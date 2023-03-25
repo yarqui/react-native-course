@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { View, ImageBackground } from "react-native";
+import { Keyboard } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import fonts from "./src/utils/fonts";
-import RegistrationScreen from "./src/screens/RegistrationScreen/regScreen";
-import globalStyles from "./src/utils/globalStyles";
+import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
+import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
+
+// TODO: ?? Consider making appContainer ON THE TOP of regUnderlay
+// to make top and bottom paddings global (maybe horizontal too?)
+// In this case, use regUnderlay with position: absolute?
+// Check the relative parent in this case from which it'll be positioned
+
+// TODO: implement expo-splash-screen instead of expo-app-loading
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -14,12 +21,40 @@ const loadFonts = async () => {
   });
 };
 
-// TODO: UNINSTALL REACT-NATIVE-SVG
-
 const App = () => {
   const [isReady, setIsReady] = useState(false);
+  const [keyboardIsShown, setKeyboardIsShown] = useState(false);
+  const [passwordIsShown, setPasswordIsShown] = useState(false);
 
-  const inputHandler = () => {};
+  // const [windowHeight, setWindowHeight] = useState(
+  //   () => Dimensions.get("window").height
+  // );
+
+  // useEffect(() => {
+  //   const onChange = () => {
+  //     const height = Dimensions.get("window").height;
+  //     setWindowHeight(height);
+  //     console.log("height:", height);
+  //   };
+
+  //   Dimensions.addEventListener("change", onChange);
+
+  //   return () => {
+  //     Dimensions.removeEventListener("change", onChange);
+  //   };
+  // }, []);
+
+  const handleActiveKeyboard = () => {
+    if (keyboardIsShown) return;
+
+    setKeyboardIsShown(!keyboardIsShown);
+  };
+
+  const hideKeyboard = () => {
+    setKeyboardIsShown(false);
+
+    Keyboard.dismiss();
+  };
 
   const submitHandler = () => {};
 
@@ -34,36 +69,22 @@ const App = () => {
   }
 
   return (
-    <ImageBackground
-      style={globalStyles.bgImage}
-      source={require("./src/images/bg.jpg")}
-    >
-      <View style={globalStyles.appContainer}>
-        <RegistrationScreen />
-      </View>
-    </ImageBackground>
+    // <RegistrationScreen
+    //   // windowHeight={windowHeight ? windowHeight : null}
+    //   keyboardIsShown={keyboardIsShown}
+    //   passwordIsShown={passwordIsShown}
+    //   setPasswordIsShown={setPasswordIsShown}
+    //   handleActiveKeyboard={handleActiveKeyboard}
+    //   hideKeyboard={hideKeyboard}
+    // />
+    <LoginScreen
+      keyboardIsShown={keyboardIsShown}
+      passwordIsShown={passwordIsShown}
+      setPasswordIsShown={setPasswordIsShown}
+      handleActiveKeyboard={handleActiveKeyboard}
+      hideKeyboard={hideKeyboard}
+    ></LoginScreen>
   );
 };
-
-// const styles = StyleSheet.create({
-// inputContainer: {
-//   // borderColor: "red",
-//   // borderWidth: 1,
-//   flex: 1,
-//   flexDirection: "row",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-// },
-// textInput: {
-//   fontFamily: "Roboto-Bold",
-//   textAlign: "center",
-//   borderColor: "#cccccc",
-//   borderWidth: 1,
-//   borderRadius: 5,
-//   width: "70%",
-//   marginRight: 8,
-//   padding: 8,
-// },
-// });
 
 export default App;
