@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import * as Font from "expo-font";
-import AppLoading from "expo-app-loading";
 import fonts from "./src/utils/fonts";
 import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
 import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
