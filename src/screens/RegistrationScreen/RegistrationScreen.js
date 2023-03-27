@@ -16,6 +16,7 @@ const initialUserState = {
 const RegistrationScreen = ({
   keyboardIsShown,
   passwordIsShown,
+  focusedInput,
   setPasswordIsShown,
   hideKeyboard,
   handleActiveKeyboard,
@@ -46,13 +47,20 @@ const RegistrationScreen = ({
             <Text style={globalStyles.authTitle}>Registration</Text>
 
             <TextInput
-              style={globalStyles.authInput}
+              style={{
+                ...globalStyles.authInput,
+                borderColor: focusedInput === "login" ? "#FF6C00" : "#E8E8E8",
+                backgroundColor:
+                  focusedInput === "login" ? "#FFFFFF" : "#F6F6F6",
+              }}
               placeholder="Login"
               placeholderTextColor={"#BDBDBD"}
               name="login"
               keyboardType={"default"}
               value={userData.login}
-              onFocus={handleActiveKeyboard}
+              onFocus={() => {
+                handleActiveKeyboard("login");
+              }}
               onSubmitEditing={hideKeyboard}
               onChangeText={(value) =>
                 setUserData((prevUserData) => ({
@@ -63,13 +71,20 @@ const RegistrationScreen = ({
             />
 
             <TextInput
-              style={globalStyles.authInput}
+              style={{
+                ...globalStyles.authInput,
+                borderColor: focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
+                backgroundColor:
+                  focusedInput === "email" ? "#FFFFFF" : "#F6F6F6",
+              }}
               placeholder="Email"
               placeholderTextColor={"#BDBDBD"}
               name="email"
               keyboardType={"email-address"}
               value={userData.email}
-              onFocus={handleActiveKeyboard}
+              onFocus={() => {
+                handleActiveKeyboard("email");
+              }}
               onSubmitEditing={hideKeyboard}
               onChangeText={(value) =>
                 setUserData((prevUserData) => ({
@@ -81,12 +96,20 @@ const RegistrationScreen = ({
 
             <View style={globalStyles.passwordContainer}>
               <TextInput
-                style={globalStyles.authInput}
+                style={{
+                  ...globalStyles.authInput,
+                  borderColor:
+                    focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
+                  backgroundColor:
+                    focusedInput === "password" ? "#FFFFFF" : "#F6F6F6",
+                }}
                 placeholder="Password"
                 name="password"
                 keyboardType={"default"}
                 value={userData.password}
-                onFocus={handleActiveKeyboard}
+                onFocus={() => {
+                  handleActiveKeyboard("password");
+                }}
                 secureTextEntry={!passwordIsShown}
                 placeholderTextColor={"#BDBDBD"}
                 onSubmitEditing={hideKeyboard}

@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 // TODO: ?? Consider making appContainer ON THE TOP of regUnderlay
 // to make top and bottom paddings global (maybe horizontal too?)
 // In this case, use regUnderlay with position: absolute?
-// Check the relative parent in this case from which it'll be positioned.
+// Check the relative parent in this case from which it'll be positioned
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,6 +17,7 @@ const App = () => {
   const [isReady, setIsReady] = useState(false);
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
   const [passwordIsShown, setPasswordIsShown] = useState(false);
+  const [focusedInput, setFocusedInput] = useState(null);
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -55,7 +56,9 @@ const App = () => {
   //   };
   // }, []);
 
-  const handleActiveKeyboard = () => {
+  const handleActiveKeyboard = (inputName) => {
+    setFocusedInput(inputName);
+
     if (keyboardIsShown) return;
 
     setKeyboardIsShown(!keyboardIsShown);
@@ -63,6 +66,8 @@ const App = () => {
 
   const hideKeyboard = () => {
     setKeyboardIsShown(false);
+
+    setFocusedInput(null);
 
     Keyboard.dismiss();
   };
@@ -72,22 +77,26 @@ const App = () => {
   }
 
   return (
-    // <RegistrationScreen
-    //   // windowHeight={windowHeight ? windowHeight : null}
-    //   onLayout={onLayoutRootView}
-    //   keyboardIsShown={keyboardIsShown}
-    //   passwordIsShown={passwordIsShown}
-    //   setPasswordIsShown={setPasswordIsShown}
-    //   handleActiveKeyboard={handleActiveKeyboard}
-    //   hideKeyboard={hideKeyboard}
-    // />
-    <LoginScreen
-      keyboardIsShown={keyboardIsShown}
-      passwordIsShown={passwordIsShown}
-      setPasswordIsShown={setPasswordIsShown}
-      handleActiveKeyboard={handleActiveKeyboard}
-      hideKeyboard={hideKeyboard}
-    ></LoginScreen>
+    <>
+      {/* <RegistrationScreen
+        // windowHeight={windowHeight ? windowHeight : null}
+        keyboardIsShown={keyboardIsShown}
+        passwordIsShown={passwordIsShown}
+        focusedInput={focusedInput}
+        setPasswordIsShown={setPasswordIsShown}
+        handleActiveKeyboard={handleActiveKeyboard}
+        hideKeyboard={hideKeyboard}
+      /> */}
+
+      <LoginScreen
+        keyboardIsShown={keyboardIsShown}
+        passwordIsShown={passwordIsShown}
+        focusedInput={focusedInput}
+        setPasswordIsShown={setPasswordIsShown}
+        handleActiveKeyboard={handleActiveKeyboard}
+        hideKeyboard={hideKeyboard}
+      ></LoginScreen>
+    </>
   );
 };
 
