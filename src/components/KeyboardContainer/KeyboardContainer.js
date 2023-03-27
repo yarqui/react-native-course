@@ -21,7 +21,7 @@ const KeyboardContainer = ({ hideKeyboard, children }) => {
 
         <KeyboardAvoidingView
           style={globalStyles.keyboardAvoiding}
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          behavior={Platform.OS == "ios" ? "padding" : ""}
         >
           {children}
         </KeyboardAvoidingView>

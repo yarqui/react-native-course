@@ -35,7 +35,7 @@ const LoginScreen = ({
       <View
         style={{
           ...regScreenStyles.regUnderlay,
-          marginTop: keyboardIsShown ? 229 : 360,
+          marginTop: keyboardIsShown ? 200 : 320,
         }}
       >
         <View style={globalStyles.appContainer}>

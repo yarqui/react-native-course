@@ -4,8 +4,6 @@ const regScreenStyles = StyleSheet.create({
   regUnderlay: {
     flex: 1,
 
-    marginTop: 240,
-
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
 
