@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 // TODO: ?? Consider making appContainer ON THE TOP of regUnderlay
 // to make top and bottom paddings global (maybe horizontal too?)
 // In this case, use regUnderlay with position: absolute?
-// Check the relative parent in this case from which it'll be positioned
+// Check the relative parent in this case from which it'll be positioned.
 
 SplashScreen.preventAutoHideAsync();
 
