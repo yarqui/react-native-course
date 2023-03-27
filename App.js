@@ -2,9 +2,18 @@ import { useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import * as Font from "expo-font";
 import fonts from "./src/utils/fonts";
-import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
-import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
+import CommentsScreen from "./src/screens/CommentsScreen";
+import CreatePostsScreen from "./src/screens/CreatePostsScreen";
+import Home from "./src/screens/Home";
+import LoginScreen from "./src/screens/LoginScreen";
+import MapScreen from "./src/screens/MapScreen";
+import PostsScreen from "./src/screens/PostsScreen";
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+import ProfileScreen from "./src/screens/ProfileScreen";
+
 import * as SplashScreen from "expo-splash-screen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 // TODO: ?? Consider making appContainer ON THE TOP of regUnderlay
 // to make top and bottom paddings global (maybe horizontal too?)
@@ -12,6 +21,8 @@ import * as SplashScreen from "expo-splash-screen";
 // Check the relative parent in this case from which it'll be positioned
 
 SplashScreen.preventAutoHideAsync();
+
+const MainStack = createStackNavigator();
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
@@ -77,8 +88,27 @@ const App = () => {
   }
 
   return (
-    <>
-      {/* <RegistrationScreen
+    <NavigationContainer>
+      <MainStack.Navigator initialRouteName="Register">
+        <MainStack.Screen name="Login" component={LoginScreen} />
+        <MainStack.Screen name="Home" component={Home} />
+        <MainStack.Screen name="CommentsScreen" component={CommentsScreen} />
+        <MainStack.Screen name="MapScreen" component={MapScreen} />
+        <MainStack.Screen
+          name="CreatePostsScreen"
+          component={CreatePostsScreen}
+        />
+        <MainStack.Screen name="PostsScreen" component={PostsScreen} />
+        <MainStack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <MainStack.Screen name="Registration" component={RegistrationScreen} />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
+
+/* <RegistrationScreen
         // windowHeight={windowHeight ? windowHeight : null}
         keyboardIsShown={keyboardIsShown}
         passwordIsShown={passwordIsShown}
@@ -86,18 +116,13 @@ const App = () => {
         setPasswordIsShown={setPasswordIsShown}
         handleActiveKeyboard={handleActiveKeyboard}
         hideKeyboard={hideKeyboard}
-      /> */}
+      /> */
 
-      <LoginScreen
-        keyboardIsShown={keyboardIsShown}
-        passwordIsShown={passwordIsShown}
-        focusedInput={focusedInput}
-        setPasswordIsShown={setPasswordIsShown}
-        handleActiveKeyboard={handleActiveKeyboard}
-        hideKeyboard={hideKeyboard}
-      ></LoginScreen>
-    </>
-  );
-};
-
-export default App;
+/* <LoginScreen
+          keyboardIsShown={keyboardIsShown}
+          passwordIsShown={passwordIsShown}
+          focusedInput={focusedInput}
+          setPasswordIsShown={setPasswordIsShown}
+          handleActiveKeyboard={handleActiveKeyboard}
+          hideKeyboard={hideKeyboard}
+        ></LoginScreen> */
