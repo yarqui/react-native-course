@@ -2,7 +2,7 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  View,
+  SafeAreaView,
 } from "react-native";
 import PropTypes from "prop-types";
 import globalStyles from "../../utils/globalStyles";
@@ -13,7 +13,7 @@ const KeyboardContainer = ({ hideKeyboard, children }) => {
       style={{ flex: 1, backgroundColor: "#fff" }}
       onPress={hideKeyboard}
     >
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Image
           style={globalStyles.bgImage}
           source={require("../../images/bg.jpg")}
@@ -25,7 +25,7 @@ const KeyboardContainer = ({ hideKeyboard, children }) => {
         >
           {children}
         </KeyboardAvoidingView>
-      </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };

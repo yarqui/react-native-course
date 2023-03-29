@@ -39,7 +39,7 @@ const RegistrationScreen = ({
       <View
         style={{
           ...regScreenStyles.regUnderlay,
-          marginTop: keyboardIsShown ? 200 : 320,
+          marginTop: keyboardIsShown ? 200 : 280,
         }}
       >
         <View style={globalStyles.appContainer}>

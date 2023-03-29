@@ -91,8 +91,26 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Registration">
-        <MainStack.Screen name="Login" component={LoginScreen} />
+      <MainStack.Navigator
+        initialRouteName="Register"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <MainStack.Screen name="Login">
+          {(props) => (
+            <LoginScreen
+              {...props}
+              keyboardIsShown={keyboardIsShown}
+              passwordIsShown={passwordIsShown}
+              focusedInput={focusedInput}
+              setPasswordIsShown={setPasswordIsShown}
+              hideKeyboard={hideKeyboard}
+              handleActiveKeyboard={handleActiveKeyboard}
+            />
+          )}
+        </MainStack.Screen>
+
         <MainStack.Screen name="Home" component={Home} />
         <MainStack.Screen name="CommentsScreen" component={CommentsScreen} />
         <MainStack.Screen name="MapScreen" component={MapScreen} />
@@ -102,7 +120,20 @@ const App = () => {
         />
         <MainStack.Screen name="PostsScreen" component={PostsScreen} />
         <MainStack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <MainStack.Screen name="Registration" component={RegistrationScreen} />
+
+        <MainStack.Screen name="Register">
+          {(props) => (
+            <RegistrationScreen
+              {...props}
+              keyboardIsShown={keyboardIsShown}
+              passwordIsShown={passwordIsShown}
+              focusedInput={focusedInput}
+              setPasswordIsShown={setPasswordIsShown}
+              hideKeyboard={hideKeyboard}
+              handleActiveKeyboard={handleActiveKeyboard}
+            />
+          )}
+        </MainStack.Screen>
       </MainStack.Navigator>
     </NavigationContainer>
   );

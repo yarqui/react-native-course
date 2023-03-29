@@ -135,7 +135,7 @@ const LoginScreen = ({
                   <Text
                     style={globalStyles.authAccountPrompt}
                     onPress={() => {
-                      navigation.navigate("Registration");
+                      navigation.navigate("Register");
                     }}
                   >
                     No account? Sign Up
