@@ -76,6 +76,8 @@ const App = () => {
   };
 
   const hideKeyboard = () => {
+    // TODO: add if (!keyboardIsShown) => return; Test it.
+
     setKeyboardIsShown(false);
 
     setFocusedInput(null);
@@ -89,7 +91,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Register">
+      <MainStack.Navigator initialRouteName="Login">
         <MainStack.Screen name="Login" component={LoginScreen} />
         <MainStack.Screen name="Home" component={Home} />
         <MainStack.Screen name="CommentsScreen" component={CommentsScreen} />
@@ -100,7 +102,11 @@ const App = () => {
         />
         <MainStack.Screen name="PostsScreen" component={PostsScreen} />
         <MainStack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <MainStack.Screen name="Registration" component={RegistrationScreen} />
+        <MainStack.Screen
+          name="Registration"
+          component={RegistrationScreen}
+          options={{}}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );

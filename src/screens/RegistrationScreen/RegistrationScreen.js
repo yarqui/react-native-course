@@ -14,6 +14,7 @@ const initialUserState = {
 };
 
 const RegistrationScreen = ({
+  navigation,
   keyboardIsShown,
   passwordIsShown,
   focusedInput,
@@ -156,7 +157,12 @@ const RegistrationScreen = ({
                     console.log("future navigation to log in screen");
                   }}
                 >
-                  <Text style={globalStyles.authAccountPrompt}>
+                  <Text
+                    style={globalStyles.authAccountPrompt}
+                    onPress={() => {
+                      navigation.navigate("Login");
+                    }}
+                  >
                     Have an account? Sign In
                   </Text>
                 </TouchableOpacity>

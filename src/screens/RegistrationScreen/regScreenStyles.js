@@ -6,7 +6,6 @@ const regScreenStyles = StyleSheet.create({
 
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-
     backgroundColor: "#ffffff",
   },
 
@@ -15,14 +14,14 @@ const regScreenStyles = StyleSheet.create({
     top: -60,
     left: "50%",
     transform: [{ translateX: -48 }],
-    // overflow: "hidden",
 
     width: 120,
     height: 120,
 
     borderRadius: 16,
-
     backgroundColor: "#F6F6F6",
+
+    // overflow: "hidden",
   },
 
   plusIcon: {

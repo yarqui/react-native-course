@@ -11,7 +11,6 @@ const globalStyles = StyleSheet.create({
   appContainer: {
     flex: 1,
     justifyContent: "flex-end",
-
     paddingBottom: 34,
     paddingHorizontal: 16,
   },
@@ -23,7 +22,6 @@ const globalStyles = StyleSheet.create({
 
     paddingTop: 44,
     justifyContent: "flex-end",
-
     width: "100%",
   },
 
@@ -32,6 +30,7 @@ const globalStyles = StyleSheet.create({
     fontSize: 30,
     lineHeight: 35,
     textAlign: "center",
+
     color: "#212121",
   },
 
@@ -51,31 +50,32 @@ const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E8E8E8",
     borderRadius: 8,
-
     backgroundColor: "#F6F6F6",
   },
 
   passwordContainer: {
-    flexDirection: "row",
     position: "relative",
+
+    flexDirection: "row",
   },
 
   showPasswordText: {
     position: "absolute",
     right: 0,
     top: 0,
+
     padding: 15,
+
     fontSize: 16,
     lineHeight: 19,
+
     color: "#1B4371",
   },
 
   authBtn: {
-    marginTop: 12,
-
     alignItems: "center",
-
     width: "100%",
+    marginTop: 12,
     paddingVertical: 16,
     paddingHorizontal: 32,
 
