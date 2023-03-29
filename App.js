@@ -91,7 +91,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Login">
+      <MainStack.Navigator initialRouteName="Registration">
         <MainStack.Screen name="Login" component={LoginScreen} />
         <MainStack.Screen name="Home" component={Home} />
         <MainStack.Screen name="CommentsScreen" component={CommentsScreen} />
@@ -102,11 +102,7 @@ const App = () => {
         />
         <MainStack.Screen name="PostsScreen" component={PostsScreen} />
         <MainStack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <MainStack.Screen
-          name="Registration"
-          component={RegistrationScreen}
-          options={{}}
-        />
+        <MainStack.Screen name="Registration" component={RegistrationScreen} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
