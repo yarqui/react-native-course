@@ -1,14 +1,6 @@
 import { StyleSheet } from "react-native";
 
 const regScreenStyles = StyleSheet.create({
-  regUnderlay: {
-    flex: 1,
-
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    backgroundColor: "#ffffff",
-  },
-
   regAvatarUnderlay: {
     position: "absolute",
     top: -60,

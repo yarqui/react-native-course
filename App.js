@@ -15,9 +15,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-// TODO: ?? Consider making appContainer ON THE TOP of regUnderlay
+// TODO: ?? Consider making appContainer ON THE TOP of authUnderlay
 // to make top and bottom paddings global (maybe horizontal too?)
-// In this case, use regUnderlay with position: absolute?
+// In this case, use authUnderlay with position: absolute?
 // Check the relative parent in this case from which it'll be positioned
 
 SplashScreen.preventAutoHideAsync();

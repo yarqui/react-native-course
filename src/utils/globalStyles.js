@@ -8,13 +8,6 @@ const globalStyles = StyleSheet.create({
     flex: 1,
   },
 
-  appContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingBottom: 34,
-    paddingHorizontal: 16,
-  },
-
   bgImage: {
     position: "absolute",
     top: 0,
@@ -23,6 +16,21 @@ const globalStyles = StyleSheet.create({
     paddingTop: 44,
     justifyContent: "flex-end",
     width: "100%",
+  },
+
+  authUnderlay: {
+    flex: 1,
+
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    backgroundColor: "#ffffff",
+  },
+
+  appContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingBottom: 34,
+    paddingHorizontal: 16,
   },
 
   authTitle: {

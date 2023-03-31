@@ -35,7 +35,7 @@ const LoginScreen = ({
     <KeyboardContainer hideKeyboard={hideKeyboard}>
       <View
         style={{
-          ...regScreenStyles.regUnderlay,
+          ...globalStyles.authUnderlay,
           marginTop: keyboardIsShown ? 200 : 320,
         }}
       >
