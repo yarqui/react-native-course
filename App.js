@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import * as Font from "expo-font";
 import fonts from "./src/utils/fonts";
-import CommentsScreen from "./src/screens/CommentsScreen";
-import CreatePostsScreen from "./src/screens/CreatePostsScreen";
-import Home from "./src/screens/Home";
-import LoginScreen from "./src/screens/LoginScreen";
-import MapScreen from "./src/screens/MapScreen";
-import PostsScreen from "./src/screens/PostsScreen";
-import RegistrationScreen from "./src/screens/RegistrationScreen";
-import ProfileScreen from "./src/screens/ProfileScreen";
+import CommentsScreen from "./src/screens/auxScreens/CommentsScreen";
+import CreatePostsScreen from "./src/screens/mainScreens/CreatePostsScreen";
+import Home from "./src/screens/mainScreens/Home";
+import LoginScreen from "./src/screens/authScreens/LoginScreen";
+import MapScreen from "./src/screens/auxScreens/MapScreen";
+import PostsScreen from "./src/screens/mainScreens/PostsScreen";
+import RegistrationScreen from "./src/screens/authScreens/RegistrationScreen";
+import ProfileScreen from "./src/screens/mainScreens/ProfileScreen";
 
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -22,7 +22,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 SplashScreen.preventAutoHideAsync();
 
-const MainStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
@@ -91,13 +91,13 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator
+      <AuthStack.Navigator
         initialRouteName="Register"
         screenOptions={{
           headerShown: false,
         }}
       >
-        <MainStack.Screen name="Login">
+        <AuthStack.Screen name="Login">
           {(props) => (
             <LoginScreen
               {...props}
@@ -109,19 +109,19 @@ const App = () => {
               handleActiveKeyboard={handleActiveKeyboard}
             />
           )}
-        </MainStack.Screen>
+        </AuthStack.Screen>
 
-        <MainStack.Screen name="Home" component={Home} />
-        <MainStack.Screen name="CommentsScreen" component={CommentsScreen} />
-        <MainStack.Screen name="MapScreen" component={MapScreen} />
-        <MainStack.Screen
+        <AuthStack.Screen name="Home" component={Home} />
+        <AuthStack.Screen name="CommentsScreen" component={CommentsScreen} />
+        <AuthStack.Screen name="MapScreen" component={MapScreen} />
+        <AuthStack.Screen
           name="CreatePostsScreen"
           component={CreatePostsScreen}
         />
-        <MainStack.Screen name="PostsScreen" component={PostsScreen} />
-        <MainStack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <AuthStack.Screen name="PostsScreen" component={PostsScreen} />
+        <AuthStack.Screen name="ProfileScreen" component={ProfileScreen} />
 
-        <MainStack.Screen name="Register">
+        <AuthStack.Screen name="Register">
           {(props) => (
             <RegistrationScreen
               {...props}
@@ -133,8 +133,8 @@ const App = () => {
               handleActiveKeyboard={handleActiveKeyboard}
             />
           )}
-        </MainStack.Screen>
-      </MainStack.Navigator>
+        </AuthStack.Screen>
+      </AuthStack.Navigator>
     </NavigationContainer>
   );
 };

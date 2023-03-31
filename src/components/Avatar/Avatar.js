@@ -1,5 +1,5 @@
 import { Image, TouchableOpacity, View } from "react-native";
-import regScreenStyles from "../../screens/RegistrationScreen/regScreenStyles";
+import regScreenStyles from "../../screens/authScreens/RegistrationScreen/regScreenStyles";
 import { AntDesign } from "@expo/vector-icons";
 
 const Avatar = () => {
