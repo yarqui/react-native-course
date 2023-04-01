@@ -3,7 +3,6 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import PropTypes from "prop-types";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
-import regScreenStyles from "../RegistrationScreen/regScreenStyles";
 
 const initialUserState = {
   email: "",
@@ -33,12 +32,14 @@ const LoginScreen = ({
 
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
-      <View
-        style={{
-          ...globalStyles.authUnderlay,
-          marginTop: keyboardIsShown ? 200 : 320,
-        }}
-      >
+      <>
+        <View
+          style={{
+            ...globalStyles.authUnderlay,
+            marginTop: keyboardIsShown ? 200 : 320,
+          }}
+        ></View>
+
         <View style={globalStyles.appContainer}>
           <View style={globalStyles.authInputContainer}>
             <Text style={globalStyles.authTitle}>Login</Text>
@@ -64,7 +65,7 @@ const LoginScreen = ({
               onChangeText={(value) =>
                 setUserData((prevUserData) => ({
                   ...prevUserData,
-                  email: value.trim().toLocaleLowerCase(),
+                  email: value.trim(),
                 }))
               }
             />
@@ -145,7 +146,7 @@ const LoginScreen = ({
             )}
           </View>
         </View>
-      </View>
+      </>
     </KeyboardContainer>
   );
 };

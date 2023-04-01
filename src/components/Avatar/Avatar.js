@@ -1,28 +1,36 @@
 import { Image, TouchableOpacity, View } from "react-native";
-import regScreenStyles from "../../screens/authScreens/RegistrationScreen/regScreenStyles";
-import { AntDesign } from "@expo/vector-icons";
+// import { AntDesign } from "@expo/vector-icons";
+import AddAvatarIcon from "../svg/AddAvatarIcon";
+import avatarStyles from "./AvatarStyles";
 
 const Avatar = () => {
   return (
-    <View style={regScreenStyles.regAvatarUnderlay}>
+    <>
       <TouchableOpacity
+        style={avatarStyles.avatarUnderlay}
         activeOpacity={0.8}
         onPress={() => {
           console.log("future add avatar logic");
         }}
       >
-        {/* <Image
-          style={{ borderRadius: 16 }}
-          source={require("../../images/avatar.jpg")}
-        /> */}
-        <AntDesign
-          name="pluscircle"
-          size={25}
-          style={regScreenStyles.plusIcon}
-        />
+        <AddAvatarIcon style={avatarStyles.plusIcon} />
       </TouchableOpacity>
-    </View>
+    </>
   );
 };
 
 export default Avatar;
+
+// {
+/* <AntDesign
+          name="pluscircle"
+          size={25}
+          style={avatarStyles.plusIcon}
+        /> */
+// }
+// {
+/* <Image
+          style={{ borderRadius: 16 }}
+          source={require("../../images/avatar.jpg")}
+        /> */
+// }

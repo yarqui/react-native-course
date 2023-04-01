@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Avatar from "../../../components/Avatar";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
-import regScreenStyles from "./regScreenStyles";
 
 const initialUserState = {
   login: "",
@@ -36,14 +35,16 @@ const RegistrationScreen = ({
 
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
-      <View
-        style={{
-          ...globalStyles.authUnderlay,
-          marginTop: keyboardIsShown ? 200 : 280,
-        }}
-      >
+      <>
+        <View
+          style={{
+            ...globalStyles.authUnderlay,
+            height: keyboardIsShown ? "72%" : "66%",
+          }}
+        >
+          <Avatar />
+        </View>
         <View style={globalStyles.appContainer}>
-          <Avatar style={regScreenStyles.regAvatarUnderlay}></Avatar>
           <View style={globalStyles.authInputContainer}>
             <Text style={globalStyles.authTitle}>Registration</Text>
 
@@ -90,7 +91,7 @@ const RegistrationScreen = ({
               onChangeText={(value) =>
                 setUserData((prevUserData) => ({
                   ...prevUserData,
-                  email: value.trim().toLocaleLowerCase(),
+                  email: value.trim(),
                 }))
               }
             />
@@ -170,7 +171,7 @@ const RegistrationScreen = ({
             )}
           </View>
         </View>
-      </View>
+      </>
     </KeyboardContainer>
   );
 };
