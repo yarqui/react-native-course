@@ -10,7 +10,7 @@ import globalStyles from "../../utils/globalStyles";
 const KeyboardContainer = ({ hideKeyboard, children }) => {
   return (
     <TouchableWithoutFeedback
-      style={{ flex: 1, backgroundColor: "#fff" }}
+      style={{ flex: 1, backgroundColor: "#ffffff" }}
       onPress={hideKeyboard}
     >
       <SafeAreaView style={{ flex: 1 }}>

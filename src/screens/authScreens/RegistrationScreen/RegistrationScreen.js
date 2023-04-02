@@ -45,56 +45,59 @@ const RegistrationScreen = ({
           <Avatar />
         </View>
         <View style={globalStyles.appContainer}>
-          <View style={globalStyles.authInputContainer}>
-            <Text style={globalStyles.authTitle}>Registration</Text>
+          <Text style={globalStyles.authTitle}>Registration</Text>
+          <View style={globalStyles.formContainer}>
+            <View style={globalStyles.inputContainer}>
+              <TextInput
+                style={{
+                  ...globalStyles.authInput,
+                  borderColor: focusedInput === "login" ? "#FF6C00" : "#E8E8E8",
+                  backgroundColor:
+                    focusedInput === "login" ? "#FFFFFF" : "#F6F6F6",
+                }}
+                placeholder="Login"
+                placeholderTextColor={"#BDBDBD"}
+                name="login"
+                keyboardType={"default"}
+                value={userData.login}
+                onFocus={() => {
+                  handleActiveKeyboard("login");
+                }}
+                onSubmitEditing={hideKeyboard}
+                onChangeText={(value) =>
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    login: value,
+                  }))
+                }
+              />
+            </View>
 
-            <TextInput
-              style={{
-                ...globalStyles.authInput,
-                borderColor: focusedInput === "login" ? "#FF6C00" : "#E8E8E8",
-                backgroundColor:
-                  focusedInput === "login" ? "#FFFFFF" : "#F6F6F6",
-              }}
-              placeholder="Login"
-              placeholderTextColor={"#BDBDBD"}
-              name="login"
-              keyboardType={"default"}
-              value={userData.login}
-              onFocus={() => {
-                handleActiveKeyboard("login");
-              }}
-              onSubmitEditing={hideKeyboard}
-              onChangeText={(value) =>
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  login: value,
-                }))
-              }
-            />
-
-            <TextInput
-              style={{
-                ...globalStyles.authInput,
-                borderColor: focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
-                backgroundColor:
-                  focusedInput === "email" ? "#FFFFFF" : "#F6F6F6",
-              }}
-              placeholder="Email"
-              placeholderTextColor={"#BDBDBD"}
-              name="email"
-              keyboardType={"email-address"}
-              value={userData.email}
-              onFocus={() => {
-                handleActiveKeyboard("email");
-              }}
-              onSubmitEditing={hideKeyboard}
-              onChangeText={(value) =>
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  email: value.trim(),
-                }))
-              }
-            />
+            <View style={globalStyles.inputContainer}>
+              <TextInput
+                style={{
+                  ...globalStyles.authInput,
+                  borderColor: focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
+                  backgroundColor:
+                    focusedInput === "email" ? "#FFFFFF" : "#F6F6F6",
+                }}
+                placeholder="Email"
+                placeholderTextColor={"#BDBDBD"}
+                name="email"
+                keyboardType={"email-address"}
+                value={userData.email}
+                onFocus={() => {
+                  handleActiveKeyboard("email");
+                }}
+                onSubmitEditing={hideKeyboard}
+                onChangeText={(value) =>
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    email: value.trim(),
+                  }))
+                }
+              />
+            </View>
 
             <View style={globalStyles.passwordContainer}>
               <TextInput
@@ -137,20 +140,24 @@ const RegistrationScreen = ({
 
             {!keyboardIsShown && (
               <>
-                <TouchableOpacity
-                  style={{
-                    ...globalStyles.authBtn,
-                    backgroundColor: readyToSubmit ? "#FF6C00" : "#878787",
-                  }}
-                  disabled={!readyToSubmit}
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    console.log("future submit form logic", userData);
-                    setUserData(initialUserState);
-                  }}
-                >
-                  <Text style={globalStyles.authBtnText}>Sign Up</Text>
-                </TouchableOpacity>
+                <View style={globalStyles.inputContainer}>
+                  <TouchableOpacity
+                    style={{
+                      ...globalStyles.authBtn,
+                      backgroundColor: readyToSubmit ? "#FF6C00" : "#878787",
+                    }}
+                    disabled={!readyToSubmit}
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      console.log("future submit form logic", userData);
+                      navigation.navigate("Home");
+
+                      setUserData(initialUserState);
+                    }}
+                  >
+                    <Text style={globalStyles.authBtnText}>Sign Up</Text>
+                  </TouchableOpacity>
+                </View>
 
                 <TouchableOpacity
                   activeOpacity={0.7}

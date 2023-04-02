@@ -17,8 +17,8 @@ const globalStyles = StyleSheet.create({
   },
 
   authUnderlay: {
-    borderWidth: 1,
-    borderColor: "lime",
+    // borderWidth: 1,
+    // borderColor: "lime",
 
     position: "absolute",
     bottom: 0,
@@ -33,28 +33,38 @@ const globalStyles = StyleSheet.create({
   },
 
   appContainer: {
-    borderWidth: 1,
-    borderColor: "#ff7301",
+    // borderWidth: 1,
+    // borderColor: "#ff7301",
 
     flex: 1,
     justifyContent: "flex-end",
+    alignItems: "center",
     marginTop: 44,
     marginBottom: 34,
     marginHorizontal: "4%",
   },
 
   authTitle: {
+    marginBottom: 16,
+
+    textAlign: "center",
     fontFamily: fonts.robotoMedium,
     fontSize: 30,
     lineHeight: 35,
-    textAlign: "center",
 
     color: "#212121",
   },
 
-  authInputContainer: {
+  formContainer: {
+    // borderWidth: 1,
+    // borderColor: "#0ee4e0",
+
     alignItems: "center",
     gap: 16,
+  },
+
+  inputContainer: {
+    flexDirection: "row",
   },
 
   authInput: {

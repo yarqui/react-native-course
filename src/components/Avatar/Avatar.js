@@ -1,6 +1,7 @@
 import { Image, TouchableOpacity, View } from "react-native";
 // import { AntDesign } from "@expo/vector-icons";
-import AddAvatarIcon from "../svg/AddAvatarIcon";
+// import AddAvatarIcon from "../svg/AddAvatarIcon";
+import { AddAvatarIcon } from "../svg";
 import avatarStyles from "./AvatarStyles";
 
 const Avatar = () => {

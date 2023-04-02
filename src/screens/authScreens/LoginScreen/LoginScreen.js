@@ -10,6 +10,7 @@ const initialUserState = {
 };
 
 const LoginScreen = ({
+  isLoggedIn,
   navigation,
   keyboardIsShown,
   passwordIsShown,
@@ -41,34 +42,35 @@ const LoginScreen = ({
         ></View>
 
         <View style={globalStyles.appContainer}>
-          <View style={globalStyles.authInputContainer}>
-            <Text style={globalStyles.authTitle}>Login</Text>
-
-            <TextInput
-              style={{
-                ...globalStyles.authInput,
-                borderColor: focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
-                backgroundColor:
-                  focusedInput === "email" ? "#FFFFFF" : "#F6F6F6",
-              }}
-              placeholder="Email"
-              placeholderTextColor={"#BDBDBD"}
-              name="email"
-              keyboardType={"email-address"}
-              value={userData.email}
-              onFocus={() => {
-                handleActiveKeyboard("email");
-              }}
-              onBlur={() => {}}
-              onSubmitEditing={hideKeyboard}
-              onEndEditing={() => {}}
-              onChangeText={(value) =>
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  email: value.trim(),
-                }))
-              }
-            />
+          <Text style={globalStyles.authTitle}>Login</Text>
+          <View style={globalStyles.formContainer}>
+            <View style={globalStyles.inputContainer}>
+              <TextInput
+                style={{
+                  ...globalStyles.authInput,
+                  borderColor: focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
+                  backgroundColor:
+                    focusedInput === "email" ? "#FFFFFF" : "#F6F6F6",
+                }}
+                placeholder="Email"
+                placeholderTextColor={"#BDBDBD"}
+                name="email"
+                keyboardType={"email-address"}
+                value={userData.email}
+                onFocus={() => {
+                  handleActiveKeyboard("email");
+                }}
+                onBlur={() => {}}
+                onSubmitEditing={hideKeyboard}
+                onEndEditing={() => {}}
+                onChangeText={(value) =>
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    email: value.trim(),
+                  }))
+                }
+              />
+            </View>
 
             <View style={globalStyles.passwordContainer}>
               <TextInput
@@ -112,20 +114,24 @@ const LoginScreen = ({
 
             {!keyboardIsShown && (
               <>
-                <TouchableOpacity
-                  style={{
-                    ...globalStyles.authBtn,
-                    backgroundColor: readyToSubmit ? "#FF6C00" : "#878787",
-                  }}
-                  disabled={!readyToSubmit}
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    console.log("future submit logic:", userData);
-                    setUserData(initialUserState);
-                  }}
-                >
-                  <Text style={globalStyles.authBtnText}>Sign In</Text>
-                </TouchableOpacity>
+                <View style={globalStyles.inputContainer}>
+                  <TouchableOpacity
+                    style={{
+                      ...globalStyles.authBtn,
+                      backgroundColor: readyToSubmit ? "#FF6C00" : "#878787",
+                    }}
+                    disabled={!readyToSubmit}
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      console.log("future submit logic:", userData);
+
+                      navigation.navigate("Home");
+                      setUserData(initialUserState);
+                    }}
+                  >
+                    <Text style={globalStyles.authBtnText}>Sign In</Text>
+                  </TouchableOpacity>
+                </View>
 
                 <TouchableOpacity
                   activeOpacity={0.7}
