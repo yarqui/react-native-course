@@ -14,6 +14,8 @@ import {
   PlusIcon,
   UserIcon,
 } from "../../../components/svg";
+import useRoute from "../../../navigation/router";
+import { useNavigation } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 
@@ -24,7 +26,14 @@ const Home = ({ navigation }) => {
         headerStyle: { borderBottomWidth: 1 },
         headerTitleAlign: "center",
         headerRight: () => {
-          return <LogOutIcon></LogOutIcon>;
+          return (
+            <LogOutIcon
+              onPress={() => {
+                console.log("future log out logic");
+                // navigation.navigate("Login");
+              }}
+            ></LogOutIcon>
+          );
         },
         headerRightContainerStyle: { paddingRight: 16 },
         tabBarShowLabel: false,
