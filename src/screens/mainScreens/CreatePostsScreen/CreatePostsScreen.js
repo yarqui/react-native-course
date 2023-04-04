@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ScrollView } from "react-native";
 import { Pressable, Keyboard, TextInput, View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import KeyboardContainer from "../../../components/KeyboardContainer";
@@ -43,7 +44,7 @@ const CreatePostsScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
         >
-          <View
+          <ScrollView
             style={{
               // borderWidth: 1,
               flex: 1,
@@ -51,6 +52,7 @@ const CreatePostsScreen = ({ navigation }) => {
               // alignItems: "center",
             }}
           >
+            {/* Here lies a container to upload image */}
             <Pressable
               style={{
                 width: "100%",
@@ -81,7 +83,6 @@ const CreatePostsScreen = ({ navigation }) => {
                 <CameraIcon></CameraIcon>
               </View>
             </Pressable>
-
             <Pressable style={{ flexDirection: "row" }}>
               <Text
                 style={{
@@ -99,7 +100,6 @@ const CreatePostsScreen = ({ navigation }) => {
                 Upload a photo
               </Text>
             </Pressable>
-
             <View style={{ marginTop: 32 }}>
               <TextInput
                 style={{
@@ -166,7 +166,6 @@ const CreatePostsScreen = ({ navigation }) => {
                 ></MapPinIcon>
               </View>
             </View>
-
             <TouchableOpacity
               style={{
                 ...globalStyles.authBtn,
@@ -184,9 +183,7 @@ const CreatePostsScreen = ({ navigation }) => {
             >
               <Text style={globalStyles.authBtnText}>Submit</Text>
             </TouchableOpacity>
-
-            {/* here lies button */}
-          </View>
+          </ScrollView>
 
           {!keyboardIsShown && (
             <Pressable

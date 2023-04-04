@@ -38,6 +38,8 @@ const useRoute = (isLoggedIn) => {
       initialRouteName="Login"
       screenOptions={{
         headerShown: false,
+        headerTitleAlign: "center",
+        headerStyle: { borderBottomWidth: 1 },
       }}
     >
       {!isLoggedIn && (
@@ -78,11 +80,14 @@ const useRoute = (isLoggedIn) => {
 
       {isLoggedIn && (
         <>
-          <AuthStack.Screen name="Home" component={Home}></AuthStack.Screen>
-          <AuthStack.Screen name="Posts" component={PostsScreen} />
-          <AuthStack.Screen name="Create Post" component={CreatePostsScreen} />
-          <AuthStack.Screen name="Profile" component={ProfileScreen} />
-          <AuthStack.Screen name="Comments" component={CommentsScreen} />
+          <AuthStack.Screen name="Home" component={Home} />
+          {/* <AuthStack.Screen name="Create Post" component={CreatePostsScreen} /> */}
+          {/* <AuthStack.Screen name="Profile" component={ProfileScreen} /> */}
+          <AuthStack.Screen
+            name="Comments"
+            component={CommentsScreen}
+            options={{ headerShown: true }}
+          />
           <AuthStack.Screen name="Map" component={MapScreen} />
         </>
       )}

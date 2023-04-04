@@ -142,6 +142,7 @@ const PostsScreen = ({ navigation }) => {
                       marginTop: 11,
                     }}
                   >
+                    {/* /**Comments section */}
                     <Pressable
                       style={{
                         flexDirection: "row",
@@ -163,7 +164,6 @@ const PostsScreen = ({ navigation }) => {
                         {item.comments.length}
                       </Text>
                     </Pressable>
-
                     <Pressable
                       style={{ flexDirection: "row" }}
                       onPress={() => {

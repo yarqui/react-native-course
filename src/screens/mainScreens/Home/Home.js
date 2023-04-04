@@ -2,7 +2,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useState } from "react";
 import { View } from "react-native";
 import { Text } from "react-native";
-import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
 import CreatePostsScreen from "../CreatePostsScreen";
 import PostsScreen from "../PostsScreen";
@@ -15,7 +14,6 @@ import {
   UserIcon,
 } from "../../../components/svg";
 import useRoute from "../../../navigation/router";
-import { useNavigation } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 
@@ -55,6 +53,7 @@ const Home = ({ navigation }) => {
         name="Create Post"
         component={CreatePostsScreen}
         options={{
+          unmountOnBlur: true,
           headerRight: () => null,
           headerLeft: () => (
             <ArrowLeftIcon
