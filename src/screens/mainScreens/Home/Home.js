@@ -53,7 +53,6 @@ const Home = ({ navigation }) => {
         name="Create Post"
         component={CreatePostsScreen}
         options={{
-          unmountOnBlur: true,
           headerRight: () => null,
           headerLeft: () => (
             <ArrowLeftIcon
