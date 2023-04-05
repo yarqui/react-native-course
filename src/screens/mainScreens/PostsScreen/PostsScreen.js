@@ -35,19 +35,7 @@ const POSTS = [
 ];
 
 const PostsScreen = ({ navigation }) => {
-  const [isReady, setIsReady] = useState(false);
-  const [keyboardIsShown, setKeyboardIsShown] = useState(false);
-  const [passwordIsShown, setPasswordIsShown] = useState(false);
-  const [focusedInput, setFocusedInput] = useState(null);
   const [posts, setPosts] = useState(POSTS);
-
-  const hideKeyboard = () => {
-    if (!keyboardIsShown) return;
-
-    setKeyboardIsShown(false);
-    setFocusedInput(null);
-    Keyboard.dismiss();
-  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>

@@ -75,6 +75,8 @@ const CommentsScreen = ({ navigation }) => {
   };
 
   const onSubmit = () => {
+    if (!inputComment) return;
+
     console.log("submit comment logic");
 
     setComments((prevComments) => {
@@ -95,6 +97,7 @@ const CommentsScreen = ({ navigation }) => {
       ];
     });
     setInputComment("");
+    hideKeyboard();
   };
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
@@ -114,6 +117,7 @@ const CommentsScreen = ({ navigation }) => {
             style={{
               width: "100%",
             }}
+            scrollEnabled={true}
             data={comments}
             renderItem={({ item }) => {
               return (

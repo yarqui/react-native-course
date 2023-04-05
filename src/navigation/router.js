@@ -107,6 +107,22 @@ const useRoute = (isLoggedIn) => {
               />
             )}
           </AuthStack.Screen>
+
+          <AuthStack.Screen name="Register">
+            {(props) => (
+              <RegistrationScreen
+                {...props}
+                isLoggedIn={isLoggedIn}
+                keyboardIsShown={keyboardIsShown}
+                passwordIsShown={passwordIsShown}
+                focusedInput={focusedInput}
+                setPasswordIsShown={setPasswordIsShown}
+                hideKeyboard={hideKeyboard}
+                handleActiveKeyboard={handleActiveKeyboard}
+              />
+            )}
+          </AuthStack.Screen>
+
           <AuthStack.Screen
             name="Comments"
             component={CommentsScreen}

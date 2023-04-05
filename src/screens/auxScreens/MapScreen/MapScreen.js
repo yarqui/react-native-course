@@ -4,7 +4,7 @@ const MapScreen = () => {
   return (
     <View
       style={{
-        borderWidth: 1,
+        // borderWidth: 1,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
