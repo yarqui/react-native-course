@@ -24,7 +24,7 @@ SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
-  const routing = useRoute(true);
+  const routing = useRoute(false);
 
   useEffect(() => {
     const loadFonts = async () => {

@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 const avatarStyles = StyleSheet.create({
   avatarUnderlay: {
+    position: "relative",
     marginTop: -60,
     alignSelf: "center",
     width: 120,
@@ -13,9 +14,16 @@ const avatarStyles = StyleSheet.create({
     // overflow: "hidden",
   },
 
-  plusIcon: {
-    bottom: -81,
-    right: -107,
+  addAvatarIcon: {
+    position: "absolute",
+    bottom: 10,
+    right: -10,
+  },
+
+  removeAvatarIcon: {
+    position: "absolute",
+    bottom: 10,
+    right: -20,
   },
 });
 

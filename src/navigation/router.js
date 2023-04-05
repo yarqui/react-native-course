@@ -88,7 +88,11 @@ const useRoute = (isLoggedIn) => {
             component={CommentsScreen}
             options={{ headerShown: true }}
           />
-          <AuthStack.Screen name="Map" component={MapScreen} />
+          <AuthStack.Screen
+            name="Map"
+            component={MapScreen}
+            options={{ headerShown: true }}
+          />
         </>
       )}
     </AuthStack.Navigator>

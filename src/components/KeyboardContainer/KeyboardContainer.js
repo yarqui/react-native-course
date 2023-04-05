@@ -32,7 +32,7 @@ const KeyboardContainer = ({ hideKeyboard, children }) => {
 
 KeyboardContainer.propTypes = {
   hideKeyboard: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default KeyboardContainer;

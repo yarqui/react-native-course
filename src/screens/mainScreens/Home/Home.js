@@ -14,6 +14,7 @@ import {
   UserIcon,
 } from "../../../components/svg";
 import useRoute from "../../../navigation/router";
+import { Alert } from "react-native";
 
 const Tabs = createBottomTabNavigator();
 
@@ -28,6 +29,7 @@ const Home = ({ navigation }) => {
             <LogOutIcon
               onPress={() => {
                 console.log("future log out logic");
+
                 // navigation.navigate("Login");
               }}
             ></LogOutIcon>
@@ -71,6 +73,7 @@ const Home = ({ navigation }) => {
         component={ProfileScreen}
         options={{
           tabBarIcon: () => <UserIcon />,
+          headerShown: false,
         }}
       />
     </Tabs.Navigator>

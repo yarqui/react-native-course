@@ -44,7 +44,6 @@ const CommentsScreen = ({ navigation }) => {
   const [comments, setComments] = useState(initialComments);
   const [inputComment, setInputComment] = useState("");
   console.log("comments.length:", comments.length);
-  console.log("inputComment:", inputComment);
 
   const handleActiveKeyboard = () => {
     if (keyboardIsShown) return;
