@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import Avatar from "../../components/Avatar";
-import KeyboardContainer from "../../components/KeyboardContainer";
-import globalStyles from "../../utils/globalStyles";
-import regScreenStyles from "./regScreenStyles";
+import Avatar from "../../../components/Avatar";
+import KeyboardContainer from "../../../components/KeyboardContainer";
+import globalStyles from "../../../utils/globalStyles";
 
 const initialUserState = {
   login: "",
@@ -14,6 +13,7 @@ const initialUserState = {
 };
 
 const RegistrationScreen = ({
+  navigation,
   keyboardIsShown,
   passwordIsShown,
   focusedInput,
@@ -37,15 +37,16 @@ const RegistrationScreen = ({
     <KeyboardContainer hideKeyboard={hideKeyboard}>
       <View
         style={{
-          ...regScreenStyles.regUnderlay,
-          marginTop: keyboardIsShown ? 200 : 320,
+          ...globalStyles.authUnderlay,
+          height: keyboardIsShown ? "72%" : "66%",
         }}
       >
-        <View style={globalStyles.appContainer}>
-          <Avatar style={regScreenStyles.regAvatarUnderlay}></Avatar>
-          <View style={globalStyles.authInputContainer}>
-            <Text style={globalStyles.authTitle}>Registration</Text>
-
+        <Avatar />
+      </View>
+      <View style={globalStyles.appContainer}>
+        <Text style={globalStyles.authTitle}>Registration</Text>
+        <View style={globalStyles.formContainer}>
+          <View style={globalStyles.inputContainer}>
             <TextInput
               style={{
                 ...globalStyles.authInput,
@@ -69,7 +70,9 @@ const RegistrationScreen = ({
                 }))
               }
             />
+          </View>
 
+          <View style={globalStyles.inputContainer}>
             <TextInput
               style={{
                 ...globalStyles.authInput,
@@ -89,52 +92,54 @@ const RegistrationScreen = ({
               onChangeText={(value) =>
                 setUserData((prevUserData) => ({
                   ...prevUserData,
-                  email: value.trim().toLocaleLowerCase(),
+                  email: value.trim(),
+                }))
+              }
+            />
+          </View>
+
+          <View style={globalStyles.passwordContainer}>
+            <TextInput
+              style={{
+                ...globalStyles.authInput,
+                borderColor:
+                  focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
+                backgroundColor:
+                  focusedInput === "password" ? "#FFFFFF" : "#F6F6F6",
+              }}
+              placeholder="Password"
+              name="password"
+              keyboardType={"default"}
+              value={userData.password}
+              onFocus={() => {
+                handleActiveKeyboard("password");
+              }}
+              secureTextEntry={!passwordIsShown}
+              placeholderTextColor={"#BDBDBD"}
+              onSubmitEditing={hideKeyboard}
+              onChangeText={(value) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  password: value.trim(),
                 }))
               }
             />
 
-            <View style={globalStyles.passwordContainer}>
-              <TextInput
-                style={{
-                  ...globalStyles.authInput,
-                  borderColor:
-                    focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
-                  backgroundColor:
-                    focusedInput === "password" ? "#FFFFFF" : "#F6F6F6",
+            <TouchableOpacity activeOpacity={0.8}>
+              <Text
+                style={globalStyles.showPasswordText}
+                onPress={() => {
+                  setPasswordIsShown(!passwordIsShown);
                 }}
-                placeholder="Password"
-                name="password"
-                keyboardType={"default"}
-                value={userData.password}
-                onFocus={() => {
-                  handleActiveKeyboard("password");
-                }}
-                secureTextEntry={!passwordIsShown}
-                placeholderTextColor={"#BDBDBD"}
-                onSubmitEditing={hideKeyboard}
-                onChangeText={(value) =>
-                  setUserData((prevUserData) => ({
-                    ...prevUserData,
-                    password: value.trim(),
-                  }))
-                }
-              />
+              >
+                {passwordIsShown ? "Hide" : "Show"}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-              <TouchableOpacity activeOpacity={0.8}>
-                <Text
-                  style={globalStyles.showPasswordText}
-                  onPress={() => {
-                    setPasswordIsShown(!passwordIsShown);
-                  }}
-                >
-                  {passwordIsShown ? "Hide" : "Show"}
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            {!keyboardIsShown && (
-              <>
+          {!keyboardIsShown && (
+            <>
+              <View style={globalStyles.inputContainer}>
                 <TouchableOpacity
                   style={{
                     ...globalStyles.authBtn,
@@ -144,25 +149,32 @@ const RegistrationScreen = ({
                   activeOpacity={0.8}
                   onPress={() => {
                     console.log("future submit form logic", userData);
+                    navigation.navigate("Home");
+
                     setUserData(initialUserState);
                   }}
                 >
                   <Text style={globalStyles.authBtnText}>Sign Up</Text>
                 </TouchableOpacity>
+              </View>
 
-                <TouchableOpacity
-                  activeOpacity={0.7}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                  console.log("future navigation to log in screen");
+                }}
+              >
+                <Text
+                  style={globalStyles.authAccountPrompt}
                   onPress={() => {
-                    console.log("future navigation to log in screen");
+                    navigation.navigate("Login");
                   }}
                 >
-                  <Text style={globalStyles.authAccountPrompt}>
-                    Have an account? Sign In
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
+                  Have an account? Sign In
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
     </KeyboardContainer>

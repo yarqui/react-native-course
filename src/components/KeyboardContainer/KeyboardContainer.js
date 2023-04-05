@@ -2,18 +2,19 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  View,
+  SafeAreaView,
 } from "react-native";
 import PropTypes from "prop-types";
 import globalStyles from "../../utils/globalStyles";
 
 const KeyboardContainer = ({ hideKeyboard, children }) => {
   return (
+    // FIXME: This👇 TouchableWithoutFeedback prevents scrollable content scrolling for some reason. You may encounter this issue in CommentScreen's FlatList
     <TouchableWithoutFeedback
-      style={{ flex: 1, backgroundColor: "#fff" }}
+      style={{ flex: 1, backgroundColor: "#ffffff" }}
       onPress={hideKeyboard}
     >
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Image
           style={globalStyles.bgImage}
           source={require("../../images/bg.jpg")}
@@ -25,14 +26,14 @@ const KeyboardContainer = ({ hideKeyboard, children }) => {
         >
           {children}
         </KeyboardAvoidingView>
-      </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
 
 KeyboardContainer.propTypes = {
   hideKeyboard: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default KeyboardContainer;

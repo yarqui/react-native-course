@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import PropTypes from "prop-types";
-import KeyboardContainer from "../../components/KeyboardContainer";
-import globalStyles from "../../utils/globalStyles";
-import regScreenStyles from "../RegistrationScreen/regScreenStyles";
+import KeyboardContainer from "../../../components/KeyboardContainer";
+import globalStyles from "../../../utils/globalStyles";
 
 const initialUserState = {
   email: "",
@@ -11,6 +10,8 @@ const initialUserState = {
 };
 
 const LoginScreen = ({
+  isLoggedIn,
+  navigation,
   keyboardIsShown,
   passwordIsShown,
   focusedInput,
@@ -34,14 +35,15 @@ const LoginScreen = ({
     <KeyboardContainer hideKeyboard={hideKeyboard}>
       <View
         style={{
-          ...regScreenStyles.regUnderlay,
+          ...globalStyles.authUnderlay,
           marginTop: keyboardIsShown ? 200 : 320,
         }}
-      >
-        <View style={globalStyles.appContainer}>
-          <View style={globalStyles.authInputContainer}>
-            <Text style={globalStyles.authTitle}>Login</Text>
+      ></View>
 
+      <View style={globalStyles.appContainer}>
+        <Text style={globalStyles.authTitle}>Login</Text>
+        <View style={globalStyles.formContainer}>
+          <View style={globalStyles.inputContainer}>
             <TextInput
               style={{
                 ...globalStyles.authInput,
@@ -63,53 +65,55 @@ const LoginScreen = ({
               onChangeText={(value) =>
                 setUserData((prevUserData) => ({
                   ...prevUserData,
-                  email: value.trim().toLocaleLowerCase(),
+                  email: value.trim(),
+                }))
+              }
+            />
+          </View>
+
+          <View style={globalStyles.passwordContainer}>
+            <TextInput
+              style={{
+                ...globalStyles.authInput,
+                borderColor:
+                  focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
+                backgroundColor:
+                  focusedInput === "password" ? "#FFFFFF" : "#F6F6F6",
+              }}
+              placeholder="Password"
+              name="password"
+              keyboardType={"default"}
+              value={userData.password}
+              onFocus={() => {
+                handleActiveKeyboard("password");
+              }}
+              onBlur={() => {}}
+              secureTextEntry={!passwordIsShown}
+              placeholderTextColor={"#BDBDBD"}
+              onSubmitEditing={hideKeyboard}
+              onChangeText={(value) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  password: value.trim(),
                 }))
               }
             />
 
-            <View style={globalStyles.passwordContainer}>
-              <TextInput
-                style={{
-                  ...globalStyles.authInput,
-                  borderColor:
-                    focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
-                  backgroundColor:
-                    focusedInput === "password" ? "#FFFFFF" : "#F6F6F6",
+            <TouchableOpacity activeOpacity={0.8}>
+              <Text
+                style={globalStyles.showPasswordText}
+                onPress={() => {
+                  setPasswordIsShown(!passwordIsShown);
                 }}
-                placeholder="Password"
-                name="password"
-                keyboardType={"default"}
-                value={userData.password}
-                onFocus={() => {
-                  handleActiveKeyboard("password");
-                }}
-                onBlur={() => {}}
-                secureTextEntry={!passwordIsShown}
-                placeholderTextColor={"#BDBDBD"}
-                onSubmitEditing={hideKeyboard}
-                onChangeText={(value) =>
-                  setUserData((prevUserData) => ({
-                    ...prevUserData,
-                    password: value.trim(),
-                  }))
-                }
-              />
+              >
+                {passwordIsShown ? "Hide" : "Show"}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-              <TouchableOpacity activeOpacity={0.8}>
-                <Text
-                  style={globalStyles.showPasswordText}
-                  onPress={() => {
-                    setPasswordIsShown(!passwordIsShown);
-                  }}
-                >
-                  {passwordIsShown ? "Hide" : "Show"}
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            {!keyboardIsShown && (
-              <>
+          {!keyboardIsShown && (
+            <>
+              <View style={globalStyles.inputContainer}>
                 <TouchableOpacity
                   style={{
                     ...globalStyles.authBtn,
@@ -119,25 +123,32 @@ const LoginScreen = ({
                   activeOpacity={0.8}
                   onPress={() => {
                     console.log("future submit logic:", userData);
+
+                    navigation.navigate("Home");
                     setUserData(initialUserState);
                   }}
                 >
                   <Text style={globalStyles.authBtnText}>Sign In</Text>
                 </TouchableOpacity>
+              </View>
 
-                <TouchableOpacity
-                  activeOpacity={0.7}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                  console.log("future navigation to sign up screen");
+                }}
+              >
+                <Text
+                  style={globalStyles.authAccountPrompt}
                   onPress={() => {
-                    console.log("future navigation to sign up screen");
+                    navigation.navigate("Register");
                   }}
                 >
-                  <Text style={globalStyles.authAccountPrompt}>
-                    No account? Sign Up
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
+                  No account? Sign Up
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
     </KeyboardContainer>
