@@ -10,8 +10,6 @@ const avatarStyles = StyleSheet.create({
 
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
-
-    // overflow: "hidden",
   },
 
   addAvatarIcon: {

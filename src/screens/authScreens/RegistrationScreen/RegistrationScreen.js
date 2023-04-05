@@ -41,11 +41,7 @@ const RegistrationScreen = ({
           height: keyboardIsShown ? "72%" : "66%",
         }}
       >
-        <Avatar
-          onPress={() => {
-            console.log("does logic work?");
-          }}
-        />
+        <Avatar />
       </View>
       <View style={globalStyles.appContainer}>
         <Text style={globalStyles.authTitle}>Registration</Text>

@@ -75,14 +75,38 @@ const useRoute = (isLoggedIn) => {
           </AuthStack.Screen>
 
           <AuthStack.Screen name="Home" component={Home} />
+          <AuthStack.Screen
+            name="Comments"
+            component={CommentsScreen}
+            options={{ headerShown: true }}
+          />
+          <AuthStack.Screen
+            name="Map"
+            component={MapScreen}
+            options={{ headerShown: true }}
+          />
         </>
       )}
 
       {isLoggedIn && (
         <>
           <AuthStack.Screen name="Home" component={Home} />
-          {/* <AuthStack.Screen name="Create Post" component={CreatePostsScreen} /> */}
-          {/* <AuthStack.Screen name="Profile" component={ProfileScreen} /> */}
+          {/* <AuthStack.Screen name="Create Post" component={CreatePostsScreen} />
+          <AuthStack.Screen name="Profile" component={ProfileScreen} /> */}
+          <AuthStack.Screen name="Login">
+            {(props) => (
+              <LoginScreen
+                {...props}
+                isLoggedIn={isLoggedIn}
+                keyboardIsShown={keyboardIsShown}
+                passwordIsShown={passwordIsShown}
+                focusedInput={focusedInput}
+                setPasswordIsShown={setPasswordIsShown}
+                hideKeyboard={hideKeyboard}
+                handleActiveKeyboard={handleActiveKeyboard}
+              />
+            )}
+          </AuthStack.Screen>
           <AuthStack.Screen
             name="Comments"
             component={CommentsScreen}

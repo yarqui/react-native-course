@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
               onPress={() => {
                 console.log("future log out logic");
 
-                // navigation.navigate("Login");
+                navigation.navigate("Login");
               }}
             ></LogOutIcon>
           );
