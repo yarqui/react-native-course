@@ -10,7 +10,13 @@ import {
 } from "react-native";
 import globalStyles from "../../../utils/globalStyles";
 import Avatar from "../../../components/Avatar/Avatar";
-import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
+import {
+  LogOutIcon,
+  MapPinIcon,
+  MessageOffIcon,
+  RemoveAvatarIcon,
+} from "../../../components/svg";
+import { ScrollView } from "react-native";
 
 const POSTS = [
   {
@@ -48,97 +54,107 @@ const ProfileScreen = ({ navigation }) => {
 
       <View style={{ ...globalStyles.authUnderlay, height: "80%" }}>
         <Avatar />
-      </View>
+        <LogOutIcon
+          style={{ position: "absolute", right: 16, top: 22 }}
+          onPress={() => {
+            console.log("future log out logic");
 
-      <View
-        style={{
-          ...globalStyles.appContainer,
-          marginTop: "60%",
-          marginBottom: 0,
-          justifyContent: "flex-start",
-        }}
-      >
-        <Text style={styles.userTitle}>Yaroslav Pelykh</Text>
-        <FlatList
-          style={{
-            width: "100%",
-            flex: 1,
+            navigation.navigate("Login");
           }}
-          data={posts}
-          renderItem={({ item }) => {
-            return (
-              <View style={{ width: "100%", marginTop: 32 }}>
-                <Image
-                  style={{
-                    width: "100%",
-                    height: 240,
-                    marginBottom: 8,
-                    borderRadius: 8,
+        ></LogOutIcon>
 
-                    resizeMode: "contain",
-                  }}
-                  source={item.photo}
-                />
+        <View
+          style={{
+            ...globalStyles.appContainer,
+            marginTop: 10,
+            marginBottom: 0,
+          }}
+        >
+          <ScrollView style={{ width: "100%" }}>
+            <Text style={styles.userTitle}>Yaroslav Pelykh</Text>
+            <FlatList
+              style={{
+                width: "100%",
+                flex: 1,
+                marginTop: -32,
+              }}
+              data={posts}
+              renderItem={({ item }) => {
+                return (
+                  <View style={{ width: "100%", marginTop: 32 }}>
+                    <Image
+                      style={{
+                        width: "100%",
+                        height: 240,
+                        marginBottom: 8,
+                        borderRadius: 8,
 
-                <Text
-                  style={{
-                    fontWeight: 500,
-                    fontSize: 16,
-                    lineHeight: 19,
-                  }}
-                >
-                  {item.name}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginTop: 11,
-                  }}
-                >
-                  {/* /**Comments section */}
-                  <Pressable
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                    onPress={() => {
-                      navigation.navigate("Comments");
-                    }}
-                  >
-                    <MessageOffIcon></MessageOffIcon>
+                        resizeMode: "contain",
+                      }}
+                      source={item.photo}
+                    />
+
                     <Text
                       style={{
-                        marginLeft: 6,
+                        fontWeight: 500,
                         fontSize: 16,
                         lineHeight: 19,
-                        color: "#BDBDBD",
                       }}
                     >
-                      {item.comments.length}
+                      {item.name}
                     </Text>
-                  </Pressable>
-                  <Pressable
-                    style={{ flexDirection: "row" }}
-                    onPress={() => {
-                      navigation.navigate("Map");
-                    }}
-                  >
-                    <MapPinIcon></MapPinIcon>
-                    <Text
+                    <View
                       style={{
-                        textDecorationLine: "underline",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: 11,
                       }}
                     >
-                      {item.location}
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
-            );
-          }}
-          keyExtractor={(item) => item.id}
-        />
+                      {/* /**Comments section */}
+                      <Pressable
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                        onPress={() => {
+                          navigation.navigate("Comments");
+                        }}
+                      >
+                        <MessageOffIcon></MessageOffIcon>
+                        <Text
+                          style={{
+                            marginLeft: 6,
+                            fontSize: 16,
+                            lineHeight: 19,
+                            color: "#BDBDBD",
+                          }}
+                        >
+                          {item.comments.length}
+                        </Text>
+                      </Pressable>
+                      <Pressable
+                        style={{ flexDirection: "row" }}
+                        onPress={() => {
+                          navigation.navigate("Map");
+                        }}
+                      >
+                        <MapPinIcon></MapPinIcon>
+                        <Text
+                          style={{
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          {item.location}
+                        </Text>
+                      </Pressable>
+                    </View>
+                  </View>
+                );
+              }}
+              keyExtractor={(item) => item.id}
+            />
+          </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
