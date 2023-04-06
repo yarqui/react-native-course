@@ -33,8 +33,8 @@ const globalStyles = StyleSheet.create({
   },
 
   appContainer: {
-    // borderWidth: 1,
-    // borderColor: "#ff7301",
+    borderWidth: 1,
+    borderColor: "#ff7301",
 
     flex: 1,
     justifyContent: "flex-end",

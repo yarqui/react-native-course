@@ -42,139 +42,139 @@ const RegistrationScreen = ({
         }}
       >
         <Avatar />
-      </View>
-      <View style={globalStyles.appContainer}>
-        <Text style={globalStyles.authTitle}>Registration</Text>
-        <View style={globalStyles.formContainer}>
-          <View style={globalStyles.inputContainer}>
-            <TextInput
-              style={{
-                ...globalStyles.authInput,
-                borderColor: focusedInput === "login" ? "#FF6C00" : "#E8E8E8",
-                backgroundColor:
-                  focusedInput === "login" ? "#FFFFFF" : "#F6F6F6",
-              }}
-              placeholder="Login"
-              placeholderTextColor={"#BDBDBD"}
-              name="login"
-              keyboardType={"default"}
-              value={userData.login}
-              onFocus={() => {
-                handleActiveKeyboard("login");
-              }}
-              onSubmitEditing={hideKeyboard}
-              onChangeText={(value) =>
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  login: value,
-                }))
-              }
-            />
-          </View>
-
-          <View style={globalStyles.inputContainer}>
-            <TextInput
-              style={{
-                ...globalStyles.authInput,
-                borderColor: focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
-                backgroundColor:
-                  focusedInput === "email" ? "#FFFFFF" : "#F6F6F6",
-              }}
-              placeholder="Email"
-              placeholderTextColor={"#BDBDBD"}
-              name="email"
-              keyboardType={"email-address"}
-              value={userData.email}
-              onFocus={() => {
-                handleActiveKeyboard("email");
-              }}
-              onSubmitEditing={hideKeyboard}
-              onChangeText={(value) =>
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  email: value.trim(),
-                }))
-              }
-            />
-          </View>
-
-          <View style={globalStyles.passwordContainer}>
-            <TextInput
-              style={{
-                ...globalStyles.authInput,
-                borderColor:
-                  focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
-                backgroundColor:
-                  focusedInput === "password" ? "#FFFFFF" : "#F6F6F6",
-              }}
-              placeholder="Password"
-              name="password"
-              keyboardType={"default"}
-              value={userData.password}
-              onFocus={() => {
-                handleActiveKeyboard("password");
-              }}
-              secureTextEntry={!passwordIsShown}
-              placeholderTextColor={"#BDBDBD"}
-              onSubmitEditing={hideKeyboard}
-              onChangeText={(value) =>
-                setUserData((prevUserData) => ({
-                  ...prevUserData,
-                  password: value.trim(),
-                }))
-              }
-            />
-
-            <TouchableOpacity activeOpacity={0.8}>
-              <Text
-                style={globalStyles.showPasswordText}
-                onPress={() => {
-                  setPasswordIsShown(!passwordIsShown);
+        <View style={globalStyles.appContainer}>
+          <Text style={globalStyles.authTitle}>Registration</Text>
+          <View style={globalStyles.formContainer}>
+            <View style={globalStyles.inputContainer}>
+              <TextInput
+                style={{
+                  ...globalStyles.authInput,
+                  borderColor: focusedInput === "login" ? "#FF6C00" : "#E8E8E8",
+                  backgroundColor:
+                    focusedInput === "login" ? "#FFFFFF" : "#F6F6F6",
                 }}
-              >
-                {passwordIsShown ? "Hide" : "Show"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          {!keyboardIsShown && (
-            <>
-              <View style={globalStyles.inputContainer}>
-                <TouchableOpacity
-                  style={{
-                    ...globalStyles.authBtn,
-                    backgroundColor: readyToSubmit ? "#FF6C00" : "#878787",
-                  }}
-                  disabled={!readyToSubmit}
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    console.log("future submit form logic", userData);
-                    navigation.navigate("Home");
-
-                    setUserData(initialUserState);
-                  }}
-                >
-                  <Text style={globalStyles.authBtnText}>Sign Up</Text>
-                </TouchableOpacity>
-              </View>
-
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => {
-                  console.log("future navigation to log in screen");
+                placeholder="Login"
+                placeholderTextColor={"#BDBDBD"}
+                name="login"
+                keyboardType={"default"}
+                value={userData.login}
+                onFocus={() => {
+                  handleActiveKeyboard("login");
                 }}
-              >
+                onSubmitEditing={hideKeyboard}
+                onChangeText={(value) =>
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    login: value,
+                  }))
+                }
+              />
+            </View>
+
+            <View style={globalStyles.inputContainer}>
+              <TextInput
+                style={{
+                  ...globalStyles.authInput,
+                  borderColor: focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
+                  backgroundColor:
+                    focusedInput === "email" ? "#FFFFFF" : "#F6F6F6",
+                }}
+                placeholder="Email"
+                placeholderTextColor={"#BDBDBD"}
+                name="email"
+                keyboardType={"email-address"}
+                value={userData.email}
+                onFocus={() => {
+                  handleActiveKeyboard("email");
+                }}
+                onSubmitEditing={hideKeyboard}
+                onChangeText={(value) =>
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    email: value.trim(),
+                  }))
+                }
+              />
+            </View>
+
+            <View style={globalStyles.passwordContainer}>
+              <TextInput
+                style={{
+                  ...globalStyles.authInput,
+                  borderColor:
+                    focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
+                  backgroundColor:
+                    focusedInput === "password" ? "#FFFFFF" : "#F6F6F6",
+                }}
+                placeholder="Password"
+                name="password"
+                keyboardType={"default"}
+                value={userData.password}
+                onFocus={() => {
+                  handleActiveKeyboard("password");
+                }}
+                secureTextEntry={!passwordIsShown}
+                placeholderTextColor={"#BDBDBD"}
+                onSubmitEditing={hideKeyboard}
+                onChangeText={(value) =>
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    password: value.trim(),
+                  }))
+                }
+              />
+
+              <TouchableOpacity activeOpacity={0.8}>
                 <Text
-                  style={globalStyles.authAccountPrompt}
+                  style={globalStyles.showPasswordText}
                   onPress={() => {
-                    navigation.navigate("Login");
+                    setPasswordIsShown(!passwordIsShown);
                   }}
                 >
-                  Have an account? Sign In
+                  {passwordIsShown ? "Hide" : "Show"}
                 </Text>
               </TouchableOpacity>
-            </>
-          )}
+            </View>
+
+            {!keyboardIsShown && (
+              <>
+                <View style={globalStyles.inputContainer}>
+                  <TouchableOpacity
+                    style={{
+                      ...globalStyles.authBtn,
+                      backgroundColor: readyToSubmit ? "#FF6C00" : "#878787",
+                    }}
+                    disabled={!readyToSubmit}
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      console.log("future submit form logic", userData);
+                      navigation.navigate("Home");
+
+                      setUserData(initialUserState);
+                    }}
+                  >
+                    <Text style={globalStyles.authBtnText}>Sign Up</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    console.log("future navigation to log in screen");
+                  }}
+                >
+                  <Text
+                    style={globalStyles.authAccountPrompt}
+                    onPress={() => {
+                      navigation.navigate("Login");
+                    }}
+                  >
+                    Have an account? Sign In
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
         </View>
       </View>
     </KeyboardContainer>
