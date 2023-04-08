@@ -1,29 +1,69 @@
 import { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
-import { Pressable, Keyboard, TextInput, View, Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  Pressable,
+  Keyboard,
+  TextInput,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { Camera, CameraType } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
+import { MaterialIcons } from "@expo/vector-icons";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import { CameraIcon, MapPinIcon, TrashIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
+import { Image } from "react-native";
 
-const initialSubmitData = {
+const initialPostData = {
+  id: "",
   name: "",
   location: "",
+  locationDescription: "",
+  photo: "",
 };
 
 const CreatePostsScreen = ({ navigation }) => {
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
-  const [submitData, setSubmitData] = useState(initialSubmitData);
+  const [postData, setPostData] = useState(initialPostData);
   const [readyToSubmit, setReadyToSubmit] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
 
-  const { name, location } = submitData;
+  const { id, name, location, locationDescription, photo } = postData;
 
   useEffect(() => {
-    if (name && location) {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (name && location && locationDescription && photo) {
       return setReadyToSubmit(true);
     }
     setReadyToSubmit(false);
-  }, [name, location]);
+  }, [name, location, locationDescription, photo]);
 
   const hideKeyboard = () => {
     if (!keyboardIsShown) return;
@@ -31,6 +71,47 @@ const CreatePostsScreen = ({ navigation }) => {
     setKeyboardIsShown(false);
     Keyboard.dismiss();
   };
+
+  const toggleCameraType = () => {
+    setCameraType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+  };
+
+  const takePhoto = async () => {
+    if (cameraRef) {
+      console.log("take photo");
+      const { uri } = await cameraRef.takePictureAsync();
+      await MediaLibrary.createAssetAsync(uri);
+
+      const { coords } = await Location.getCurrentPositionAsync();
+
+      setPostData((prevUserData) => ({
+        ...prevUserData,
+        photo: uri,
+        location: coords,
+      }));
+    }
+  };
+
+  const submitPost = () => {
+    console.log("postDataToSubmit:", postData);
+
+    navigation.navigate("Posts", { postData });
+    setPostData(initialPostData);
+  };
+
+  const erasePost = () => {
+    setPostData(initialPostData);
+    navigation.navigate("Posts");
+  };
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>All requested permissions are need to use the App</Text>;
+  }
 
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
@@ -44,48 +125,88 @@ const CreatePostsScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
         >
-          <ScrollView
+          <View
             style={{
               // borderWidth: 1,
               flex: 1,
               width: "100%",
-              // alignItems: "center",
             }}
           >
-            {/* Here lies a container to upload image */}
-            <Pressable
+            <Camera
               style={{
                 width: "100%",
                 height: 240,
-                justifyContent: "center",
+                justifyContent: "space-between",
                 alignItems: "center",
-
-                backgroundColor: "#F6F6F6",
-                borderWidth: 1,
-                borderColor: "#E8E8E8",
-                borderRadius: 8,
               }}
-              onPress={() => {
-                console.log("upload photo logic");
-              }}
+              type={cameraType}
+              ref={(ref) => setCameraRef(ref)}
+              ratio="1:1"
             >
-              <View
-                style={{
-                  height: 60,
-                  width: 60,
-                  justifyContent: "center",
-                  alignItems: "center",
+              {photo ? (
+                <View
+                  style={{
+                    alignSelf: "flex-end",
+                    // borderWidth: 1,
+                  }}
+                >
+                  <Image
+                    style={{ width: 100, height: 100 }}
+                    source={{ uri: postData.photo }}
+                  />
+                </View>
+              ) : (
+                <View
+                  style={{
+                    alignSelf: "flex-end",
+                    width: 100,
+                    height: 100,
+                  }}
+                ></View>
+              )}
 
-                  backgroundColor: "#FFFFFF",
-                  borderRadius: 50,
+              {/* Container to upload image */}
+              <Pressable
+                style={{
+                  opacity: 0.5,
                 }}
+                onPress={takePhoto}
               >
-                <CameraIcon></CameraIcon>
-              </View>
-            </Pressable>
+                {/* Container for camera icon */}
+                <View
+                  style={{
+                    height: 60,
+                    width: 60,
+                    justifyContent: "center",
+                    alignItems: "center",
+
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: 50,
+                  }}
+                >
+                  <CameraIcon />
+                </View>
+              </Pressable>
+
+              <Pressable
+                style={{ alignSelf: "center" }}
+                onPress={toggleCameraType}
+              >
+                <MaterialIcons
+                  name="flip-camera-ios"
+                  size={32}
+                  color="white"
+                  style={{ opacity: 0.5 }}
+                />
+              </Pressable>
+            </Camera>
+
+            {/* Container for upload-photo-title */}
             <Pressable style={{ flexDirection: "row" }}>
               <Text
                 style={{
+                  // borderWidth: 1,
+
                   marginTop: 8,
 
                   fontSize: 16,
@@ -93,13 +214,15 @@ const CreatePostsScreen = ({ navigation }) => {
 
                   color: "#BDBDBD",
                 }}
-                onPress={() => {
-                  console.log("upload photo logic");
-                }}
+                // onPress={() => {
+                //   console.log("upload photo logic");
+                // }}
               >
                 Upload a photo
               </Text>
             </Pressable>
+
+            {/* Form container */}
             <View style={{ marginTop: 32 }}>
               <TextInput
                 style={{
@@ -119,13 +242,14 @@ const CreatePostsScreen = ({ navigation }) => {
                   setKeyboardIsShown(true);
                 }}
                 onChangeText={(inputValue) =>
-                  setSubmitData((prevUserData) => ({
+                  setPostData((prevUserData) => ({
                     ...prevUserData,
                     name: inputValue,
                   }))
                 }
-              ></TextInput>
+              />
 
+              {/* Location input container */}
               <View
                 style={{
                   position: "relative",
@@ -146,7 +270,7 @@ const CreatePostsScreen = ({ navigation }) => {
                     borderBottomWidth: 1,
                     borderBottomColor: "#E8E8E8",
                   }}
-                  value={location}
+                  value={locationDescription}
                   placeholder="Location..."
                   placeholderTextColor="#BDBDBD"
                   onSubmitEditing={hideKeyboard}
@@ -154,18 +278,18 @@ const CreatePostsScreen = ({ navigation }) => {
                     setKeyboardIsShown(true);
                   }}
                   onChangeText={(inputValue) =>
-                    setSubmitData((prevUserData) => ({
+                    setPostData((prevUserData) => ({
                       ...prevUserData,
-                      location: inputValue,
+                      locationDescription: inputValue,
                     }))
                   }
-                ></TextInput>
+                />
 
-                <MapPinIcon
-                  style={{ position: "absolute", bottom: 13 }}
-                ></MapPinIcon>
+                <MapPinIcon style={{ position: "absolute", bottom: 13 }} />
               </View>
             </View>
+
+            {/* Submit button  */}
             <TouchableOpacity
               style={{
                 ...globalStyles.authBtn,
@@ -174,17 +298,13 @@ const CreatePostsScreen = ({ navigation }) => {
               }}
               disabled={!readyToSubmit}
               activeOpacity={0.8}
-              onPress={() => {
-                console.log("future submit logic:", submitData);
-
-                navigation.navigate("Posts");
-                setSubmitData(initialSubmitData);
-              }}
+              onPress={submitPost}
             >
               <Text style={globalStyles.authBtnText}>Submit</Text>
             </TouchableOpacity>
-          </ScrollView>
+          </View>
 
+          {/* Erase post button is shown, when keyboard is inactive */}
           {!keyboardIsShown && (
             <Pressable
               style={{
@@ -193,12 +313,9 @@ const CreatePostsScreen = ({ navigation }) => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={() => {
-                setSubmitData(initialSubmitData);
-                navigation.navigate("Posts");
-              }}
+              onPress={erasePost}
             >
-              <TrashIcon></TrashIcon>
+              <TrashIcon />
             </Pressable>
           )}
         </View>

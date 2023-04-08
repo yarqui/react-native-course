@@ -1,41 +1,51 @@
-import { useState } from "react";
-import { Pressable } from "react-native";
-import { SafeAreaView } from "react-native";
-import { View, Text, Image, FlatList } from "react-native";
-import KeyboardContainer from "../../../components/KeyboardContainer";
+import { useEffect, useState } from "react";
 import {
-  MapPinIcon,
-  MessageOffIcon,
-  MessageOnIcon,
-} from "../../../components/svg";
+  View,
+  Text,
+  Image,
+  FlatList,
+  Pressable,
+  SafeAreaView,
+} from "react-native";
+import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
 
-const POSTS = [
+const initialPosts = [
   {
     id: 1,
     photo: require("../../../images/bali.jpg"),
     name: "Temple of Rest",
-    location: "Bali",
+    location: "",
+    locationDescription: "Bali",
     comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
   },
   {
     id: 2,
     photo: require("../../../images/lviv.jpg"),
     name: "Lviv main square",
-    location: "Lviv",
+    location: "",
+    locationDescription: "Lviv",
     comments: [{ id: 3 }, { id: 4 }],
   },
   {
     id: 3,
     photo: require("../../../images/carpathians.jpg"),
     name: "Khomiak mountain",
-    location: "Khomiak mountain",
+    location: "",
+    locationDescription: "Khomiak mountain",
     comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
   },
 ];
 
-const PostsScreen = ({ navigation }) => {
-  const [posts, setPosts] = useState(POSTS);
+const PostsScreen = ({ route, navigation }) => {
+  const [posts, setPosts] = useState(initialPosts);
+  console.log("posts:", posts);
+
+  const newPost = route.params;
+
+  // useEffect(() => {
+  //   setPosts((prevPosts) => ([ ...prevPosts, newPost ]));
+  // }, [newPost]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -164,7 +174,7 @@ const PostsScreen = ({ navigation }) => {
                           textDecorationLine: "underline",
                         }}
                       >
-                        {item.location}
+                        {item.locationDescription}
                       </Text>
                     </Pressable>
                   </View>
