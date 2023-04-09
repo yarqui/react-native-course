@@ -89,7 +89,7 @@ const ProfileScreen = ({ navigation }) => {
                         marginBottom: 8,
                         borderRadius: 8,
 
-                        resizeMode: "contain",
+                        resizeMode: "cover",
                       }}
                       source={item.photo}
                     />

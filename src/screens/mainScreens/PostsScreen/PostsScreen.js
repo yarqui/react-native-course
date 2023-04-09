@@ -163,10 +163,17 @@ const PostsScreen = ({ route, navigation }) => {
                         {item.comments ? item.comments.length : 0}
                       </Text>
                     </Pressable>
+
+                    {/* Map section */}
                     <Pressable
                       style={{ flexDirection: "row" }}
                       onPress={() => {
-                        navigation.navigate("Map");
+                        navigation.navigate("Map", {
+                          name: item.name,
+                          locationDescription: item.locationDescription,
+                          longitude: item.location.longitude,
+                          latitude: item.location.latitude,
+                        });
                       }}
                     >
                       <MapPinIcon></MapPinIcon>
@@ -182,7 +189,7 @@ const PostsScreen = ({ route, navigation }) => {
                 </View>
               );
             }}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index.toString()}
           />
         </SafeAreaView>
       </View>
