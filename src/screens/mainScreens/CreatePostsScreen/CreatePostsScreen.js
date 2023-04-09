@@ -31,8 +31,9 @@ const CreatePostsScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [resetCamera, setResetCamera] = useState(false);
 
-  const { id, name, location, locationDescription, photo } = postData;
+  const { /*id,*/ name, location, locationDescription, photo } = postData;
 
   useEffect(() => {
     (async () => {
@@ -81,6 +82,7 @@ const CreatePostsScreen = ({ navigation }) => {
   const takePhoto = async () => {
     if (cameraRef) {
       console.log("take photo");
+      setResetCamera(true);
       const { uri } = await cameraRef.takePictureAsync();
       await MediaLibrary.createAssetAsync(uri);
 
@@ -88,8 +90,12 @@ const CreatePostsScreen = ({ navigation }) => {
 
       setPostData((prevUserData) => ({
         ...prevUserData,
+        // id: "1",
         photo: uri,
-        location: coords,
+        location: {
+          longitude: coords.longitude,
+          latitude: coords.latitude,
+        },
       }));
     }
   };
@@ -97,7 +103,13 @@ const CreatePostsScreen = ({ navigation }) => {
   const submitPost = () => {
     console.log("postDataToSubmit:", postData);
 
-    navigation.navigate("Posts", { postData });
+    navigation.navigate("Posts", {
+      // id,
+      name,
+      location,
+      locationDescription,
+      photo,
+    });
     setPostData(initialPostData);
   };
 
@@ -110,7 +122,7 @@ const CreatePostsScreen = ({ navigation }) => {
     return <View />;
   }
   if (hasPermission === false) {
-    return <Text>All requested permissions are need to use the App</Text>;
+    return <Text>All requested permissions are needed to use the App</Text>;
   }
 
   return (
@@ -141,7 +153,8 @@ const CreatePostsScreen = ({ navigation }) => {
               }}
               type={cameraType}
               ref={(ref) => setCameraRef(ref)}
-              ratio="1:1"
+              ratio="4:3"
+              key={resetCamera ? "reset" : undefined}
             >
               {photo ? (
                 <View

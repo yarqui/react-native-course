@@ -11,41 +11,41 @@ import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
 
 const initialPosts = [
-  {
-    id: 1,
-    photo: require("../../../images/bali.jpg"),
-    name: "Temple of Rest",
-    location: "",
-    locationDescription: "Bali",
-    comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-  },
-  {
-    id: 2,
-    photo: require("../../../images/lviv.jpg"),
-    name: "Lviv main square",
-    location: "",
-    locationDescription: "Lviv",
-    comments: [{ id: 3 }, { id: 4 }],
-  },
-  {
-    id: 3,
-    photo: require("../../../images/carpathians.jpg"),
-    name: "Khomiak mountain",
-    location: "",
-    locationDescription: "Khomiak mountain",
-    comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
-  },
+  // {
+  //   id: 1,
+  //   photo: require("../../../images/bali.jpg"),
+  //   name: "Temple of Rest",
+  //   location: "",
+  //   locationDescription: "Bali",
+  //   comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+  // },
+  // {
+  //   id: 2,
+  //   photo: require("../../../images/lviv.jpg"),
+  //   name: "Lviv main square",
+  //   location: "",
+  //   locationDescription: "Lviv",
+  //   comments: [{ id: 3 }, { id: 4 }],
+  // },
+  // {
+  //   id: 3,
+  //   photo: require("../../../images/carpathians.jpg"),
+  //   name: "Khomiak mountain",
+  //   location: "",
+  //   locationDescription: "Khomiak mountain",
+  //   comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
+  // },
 ];
 
 const PostsScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState(initialPosts);
-  console.log("posts:", posts);
 
-  const newPost = route.params;
+  // const { /*id,*/ name, location, locationDescription, photo } = route.params;
+  // console.log("route.params:", route.params);
 
-  // useEffect(() => {
-  //   setPosts((prevPosts) => ([ ...prevPosts, newPost ]));
-  // }, [newPost]);
+  useEffect(() => {
+    route.params && setPosts((prevPosts) => [...prevPosts, route.params]);
+  }, [route.params]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -119,9 +119,9 @@ const PostsScreen = ({ route, navigation }) => {
                       marginBottom: 8,
                       borderRadius: 8,
 
-                      resizeMode: "contain",
+                      resizeMode: "cover",
                     }}
-                    source={item.photo}
+                    source={{ uri: item.photo }}
                   />
 
                   <Text
@@ -147,7 +147,8 @@ const PostsScreen = ({ route, navigation }) => {
                         alignItems: "center",
                       }}
                       onPress={() => {
-                        navigation.navigate("Comments");
+                        const img = item.photo;
+                        navigation.navigate("Comments", { img });
                       }}
                     >
                       <MessageOffIcon></MessageOffIcon>
@@ -159,7 +160,7 @@ const PostsScreen = ({ route, navigation }) => {
                           color: "#BDBDBD",
                         }}
                       >
-                        {item.comments.length}
+                        {item.comments ? item.comments.length : 0}
                       </Text>
                     </Pressable>
                     <Pressable
@@ -181,7 +182,7 @@ const PostsScreen = ({ route, navigation }) => {
                 </View>
               );
             }}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item, index) => index}
           />
         </SafeAreaView>
       </View>
