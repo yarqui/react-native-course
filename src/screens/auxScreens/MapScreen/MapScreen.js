@@ -8,11 +8,7 @@ const MapScreen = ({ route }) => {
   return (
     <View
       style={{
-        // borderWidth: 1,
         flex: 1,
-        // width: "100%",
-        // justifyContent: "center",
-        // alignItems: "center",
       }}
     >
       <MapView
@@ -34,7 +30,6 @@ const MapScreen = ({ route }) => {
           coordinate={{ latitude: latitude, longitude: longitude }}
           description={locationDescription}
         />
-        <Text>Future Map Screen</Text>
       </MapView>
     </View>
   );
