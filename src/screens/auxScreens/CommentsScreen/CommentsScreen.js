@@ -13,37 +13,38 @@ import { TextInput } from "react-native-gesture-handler";
 import { SendIcon } from "../../../components/svg";
 
 const initialComments = [
-  {
-    user: {
-      name: "Pablo",
-      email: "pablo32@gmail.com",
-      photo: require("../../../images/defaultCommentator.png"),
-      id: 10,
-    },
-    comment:
-      "Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!",
-    time: "04 april, 2023 | 10:47",
-    id: 10,
-  },
-  {
-    user: {
-      name: "Ron",
-      email: "yulia@gmail.com",
-      photo: require("../../../images/defaultCommentator.png"),
-      id: 12,
-    },
-    comment:
-      "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
-    time: "08 february, 2022 | 13:12",
-    id: 12,
-  },
+  // {
+  //   user: {
+  //     name: "Pablo",
+  //     email: "pablo32@gmail.com",
+  //     photo: require("../../../images/defaultCommentator.png"),
+  //     id: 10,
+  //   },
+  //   comment:
+  //     "Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!",
+  //   time: "04 april, 2023 | 10:47",
+  //   id: 10,
+  // },
+  // {
+  //   user: {
+  //     name: "Ron",
+  //     email: "yulia@gmail.com",
+  //     photo: require("../../../images/defaultCommentator.png"),
+  //     id: 12,
+  //   },
+  //   comment:
+  //     "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
+  //   time: "08 february, 2022 | 13:12",
+  //   id: 12,
+  // },
 ];
 
-const CommentsScreen = ({ navigation }) => {
+const CommentsScreen = ({ route, navigation }) => {
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
   const [comments, setComments] = useState(initialComments);
   const [inputComment, setInputComment] = useState("");
   console.log("comments.length:", comments.length);
+  console.log("route.params:", route.params);
 
   const handleActiveKeyboard = () => {
     if (keyboardIsShown) return;
@@ -109,10 +110,7 @@ const CommentsScreen = ({ navigation }) => {
             marginBottom: 16,
           }}
         >
-          <Image
-            source={require("../../../images/bali.jpg")}
-            style={styles.postImage}
-          />
+          <Image source={{ uri: route.params.img }} style={styles.postImage} />
           <FlatList
             style={{
               width: "100%",
@@ -167,7 +165,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 8,
 
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
 
   commentsContainer: { width: "100%", marginTop: 32 },

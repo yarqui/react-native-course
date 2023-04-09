@@ -1,41 +1,51 @@
-import { useState } from "react";
-import { Pressable } from "react-native";
-import { SafeAreaView } from "react-native";
-import { View, Text, Image, FlatList } from "react-native";
-import KeyboardContainer from "../../../components/KeyboardContainer";
+import { useEffect, useState } from "react";
 import {
-  MapPinIcon,
-  MessageOffIcon,
-  MessageOnIcon,
-} from "../../../components/svg";
+  View,
+  Text,
+  Image,
+  FlatList,
+  Pressable,
+  SafeAreaView,
+} from "react-native";
+import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
 
-const POSTS = [
-  {
-    id: 1,
-    photo: require("../../../images/bali.jpg"),
-    name: "Temple of Rest",
-    location: "Bali",
-    comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-  },
-  {
-    id: 2,
-    photo: require("../../../images/lviv.jpg"),
-    name: "Lviv main square",
-    location: "Lviv",
-    comments: [{ id: 3 }, { id: 4 }],
-  },
-  {
-    id: 3,
-    photo: require("../../../images/carpathians.jpg"),
-    name: "Khomiak mountain",
-    location: "Khomiak mountain",
-    comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
-  },
+const initialPosts = [
+  // {
+  //   id: 1,
+  //   photo: require("../../../images/bali.jpg"),
+  //   name: "Temple of Rest",
+  //   location: "",
+  //   locationDescription: "Bali",
+  //   comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+  // },
+  // {
+  //   id: 2,
+  //   photo: require("../../../images/lviv.jpg"),
+  //   name: "Lviv main square",
+  //   location: "",
+  //   locationDescription: "Lviv",
+  //   comments: [{ id: 3 }, { id: 4 }],
+  // },
+  // {
+  //   id: 3,
+  //   photo: require("../../../images/carpathians.jpg"),
+  //   name: "Khomiak mountain",
+  //   location: "",
+  //   locationDescription: "Khomiak mountain",
+  //   comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
+  // },
 ];
 
-const PostsScreen = ({ navigation }) => {
-  const [posts, setPosts] = useState(POSTS);
+const PostsScreen = ({ route, navigation }) => {
+  const [posts, setPosts] = useState(initialPosts);
+
+  // const { /*id,*/ name, location, locationDescription, photo } = route.params;
+  // console.log("route.params:", route.params);
+
+  useEffect(() => {
+    route.params && setPosts((prevPosts) => [...prevPosts, route.params]);
+  }, [route.params]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -109,9 +119,9 @@ const PostsScreen = ({ navigation }) => {
                       marginBottom: 8,
                       borderRadius: 8,
 
-                      resizeMode: "contain",
+                      resizeMode: "cover",
                     }}
-                    source={item.photo}
+                    source={{ uri: item.photo }}
                   />
 
                   <Text
@@ -137,7 +147,8 @@ const PostsScreen = ({ navigation }) => {
                         alignItems: "center",
                       }}
                       onPress={() => {
-                        navigation.navigate("Comments");
+                        const img = item.photo;
+                        navigation.navigate("Comments", { img });
                       }}
                     >
                       <MessageOffIcon></MessageOffIcon>
@@ -149,13 +160,20 @@ const PostsScreen = ({ navigation }) => {
                           color: "#BDBDBD",
                         }}
                       >
-                        {item.comments.length}
+                        {item.comments ? item.comments.length : 0}
                       </Text>
                     </Pressable>
+
+                    {/* Map section */}
                     <Pressable
                       style={{ flexDirection: "row" }}
                       onPress={() => {
-                        navigation.navigate("Map");
+                        navigation.navigate("Map", {
+                          name: item.name,
+                          locationDescription: item.locationDescription,
+                          longitude: item.location.longitude,
+                          latitude: item.location.latitude,
+                        });
                       }}
                     >
                       <MapPinIcon></MapPinIcon>
@@ -164,14 +182,14 @@ const PostsScreen = ({ navigation }) => {
                           textDecorationLine: "underline",
                         }}
                       >
-                        {item.location}
+                        {item.locationDescription}
                       </Text>
                     </Pressable>
                   </View>
                 </View>
               );
             }}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item, index) => index.toString()}
           />
         </SafeAreaView>
       </View>

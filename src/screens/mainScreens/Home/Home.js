@@ -21,6 +21,7 @@ const Tabs = createBottomTabNavigator();
 const Home = ({ navigation }) => {
   return (
     <Tabs.Navigator
+      initialRouteName="Posts"
       screenOptions={{
         headerStyle: { borderBottomWidth: 1 },
         headerTitleAlign: "center",
