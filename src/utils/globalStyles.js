@@ -60,7 +60,7 @@ const globalStyles = StyleSheet.create({
     // borderColor: "#0ee4e0",
 
     alignItems: "center",
-    gap: 16,
+    // gap: 16,
   },
 
   inputContainer: {
@@ -71,6 +71,7 @@ const globalStyles = StyleSheet.create({
     width: "100%",
     height: 50,
     padding: 16,
+    marginTop: 16,
 
     fontSize: 16,
     lineHeight: 19,
