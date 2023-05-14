@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import Avatar from "../../../components/Avatar";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
+import { authRegistration } from "../../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
 const initialUserState = {
   login: "",
@@ -23,6 +25,7 @@ const RegistrationScreen = ({
 }) => {
   const [userData, setUserData] = useState(initialUserState);
   const [readyToSubmit, setReadyToSubmit] = useState(false);
+  const dispatch = useDispatch();
 
   const { login, email, password } = userData;
 
@@ -148,6 +151,9 @@ const RegistrationScreen = ({
                     activeOpacity={0.8}
                     onPress={() => {
                       console.log("future submit form logic", userData);
+
+                      dispatch(authRegistration(userData));
+
                       navigation.navigate("Home");
 
                       setUserData(initialUserState);

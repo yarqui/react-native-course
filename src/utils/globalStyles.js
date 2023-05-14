@@ -91,7 +91,7 @@ const globalStyles = StyleSheet.create({
   showPasswordText: {
     position: "absolute",
     right: 0,
-    top: 0,
+    top: 16,
 
     padding: 15,
 
