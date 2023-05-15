@@ -8,30 +8,61 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authSlice } from "./authSlice";
 import { auth } from "../../../firebase/config";
 
+const { updateUserProfile } = authSlice.actions;
+
 export const authRegistration =
-  ({ login, email, password }) =>
+  ({ userName, userEmail, password, avatar }) =>
   async (dispatch) => {
     try {
-      const normalizedEmail = email.toLocaleLowerCase().trim();
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        normalizedEmail,
-        password
+      const normalizedEmail = userEmail.toLocaleLowerCase().trim();
+      await createUserWithEmailAndPassword(auth, normalizedEmail, password);
+
+      // updates created user profile in Firebase with additional user credentials from the form
+      await updateProfile(auth.currentUser, {
+        displayName: userName,
+        photoURL: avatar,
+      });
+
+      // gets user credentials from current user object in Firebase (from auth instance) and dispatches it to Redux state
+      const { displayName, email, photoURL, uid } = auth.currentUser;
+      dispatch(
+        updateUserProfile({
+          userId: uid,
+          userName: displayName,
+          userEmail: email,
+          avatar: photoURL,
+          isCurrentUser: true,
+        })
       );
-      console.log("user:", user);
     } catch (error) {
       console.log("error:", error);
       console.log("error.message:", error.message);
     }
   };
 
-export const authLogin = () => async (dispatch) => {
-  try {
-  } catch (error) {
-    console.log("error:", error);
-    console.log("error.message:", error.message);
-  }
-};
+export const authLogin =
+  ({ userEmail, password }) =>
+  async (dispatch) => {
+    try {
+      const normalizedEmail = userEmail.toLocaleLowerCase().trim();
+      await signInWithEmailAndPassword(auth, normalizedEmail, password);
+
+      // gets user credentials from current user object in Firebase (from auth instance) and dispatches it to Redux state
+      const { displayName, email, photoURL, uid } = auth.currentUser;
+      dispatch(
+        updateUserProfile({
+          userId: uid,
+          userName: displayName,
+          userEmail: email,
+          avatar: photoURL,
+          isCurrentUser: true,
+        })
+      );
+    } catch (error) {
+      console.log("error:", error);
+      console.log("error.message:", error.message);
+    }
+  };
 
 export const authLogout = () => async (dispatch) => {
   try {

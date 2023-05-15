@@ -8,8 +8,8 @@ import { authRegistration } from "../../../redux/auth/authOperations";
 import { useDispatch } from "react-redux";
 
 const initialUserState = {
-  login: "",
-  email: "",
+  userName: "",
+  userEmail: "",
   password: "",
   avatar: null,
 };
@@ -27,14 +27,14 @@ const RegistrationScreen = ({
   const [readyToSubmit, setReadyToSubmit] = useState(false);
   const dispatch = useDispatch();
 
-  const { login, email, password } = userData;
+  const { userName, userEmail, password } = userData;
 
   useEffect(() => {
-    if (login && email && password) {
+    if (userName && userEmail && password) {
       return setReadyToSubmit(true);
     }
     setReadyToSubmit(false);
-  }, [login, email, password]);
+  }, [userName, userEmail, password]);
 
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
@@ -60,7 +60,7 @@ const RegistrationScreen = ({
                 placeholderTextColor={"#BDBDBD"}
                 name="login"
                 keyboardType={"default"}
-                value={userData.login}
+                value={userData.userName}
                 onFocus={() => {
                   handleActiveKeyboard("login");
                 }}
@@ -68,7 +68,7 @@ const RegistrationScreen = ({
                 onChangeText={(value) =>
                   setUserData((prevUserData) => ({
                     ...prevUserData,
-                    login: value,
+                    userName: value,
                   }))
                 }
               />
@@ -86,7 +86,7 @@ const RegistrationScreen = ({
                 placeholderTextColor={"#BDBDBD"}
                 name="email"
                 keyboardType={"email-address"}
-                value={userData.email}
+                value={userData.userEmail}
                 onFocus={() => {
                   handleActiveKeyboard("email");
                 }}
@@ -94,7 +94,7 @@ const RegistrationScreen = ({
                 onChangeText={(value) =>
                   setUserData((prevUserData) => ({
                     ...prevUserData,
-                    email: value.trim(),
+                    userEmail: value.trim(),
                   }))
                 }
               />
@@ -150,12 +150,8 @@ const RegistrationScreen = ({
                     disabled={!readyToSubmit}
                     activeOpacity={0.8}
                     onPress={() => {
-                      console.log("future submit form logic", userData);
-
                       dispatch(authRegistration(userData));
-
                       navigation.navigate("Home");
-
                       setUserData(initialUserState);
                     }}
                   >
