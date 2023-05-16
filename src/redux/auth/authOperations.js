@@ -81,8 +81,6 @@ export const authStateChanged = () => async (dispatch) => {
     const userData = { userEmail: authEmail, userPassword: authPassword };
     console.log("userData:", userData);
 
-    dispatch(authStateChanged());
-
     //
   } catch (error) {
     console.log("error:", error);
