@@ -25,13 +25,18 @@ export const authRegistration =
 
       // gets user credentials from current user object in Firebase (from auth instance) and dispatches it to Redux state
       const { displayName, email, photoURL, uid } = auth.currentUser;
-      dispatch(
+
+      // Sets email and password to AsyncStorage
+      await AsyncStorage.setItem("auth_email", email);
+      await AsyncStorage.setItem("auth_password", password);
+
+      await dispatch(
         updateUserProfile({
           userId: uid,
           userName: displayName,
           userEmail: email,
           avatar: photoURL,
-          isCurrentUser: true,
+          hasCurrentUser: true,
         })
       );
     } catch (error) {
@@ -49,13 +54,18 @@ export const authLogin =
 
       // gets user credentials from current user object in Firebase (from auth instance) and dispatches it to Redux state
       const { displayName, email, photoURL, uid } = auth.currentUser;
-      dispatch(
+
+      // Sets email and password to AsyncStorage
+      await AsyncStorage.setItem("auth_email", email);
+      await AsyncStorage.setItem("auth_password", password);
+
+      await dispatch(
         updateUserProfile({
           userId: uid,
           userName: displayName,
           userEmail: email,
           avatar: photoURL,
-          isCurrentUser: true,
+          hasCurrentUser: true,
         })
       );
     } catch (error) {
@@ -74,14 +84,26 @@ export const authLogout = () => async (dispatch) => {
 
 export const authStateChanged = () => async (dispatch) => {
   try {
+    // gets email & password from AsyncStorage to dispatch it with updateUserProfile
+    // ❗❗❗ it not safe to store a password in AsyncStorage?
     const authEmail = await AsyncStorage.getItem("auth_email");
     const authPassword = await AsyncStorage.getItem("auth_password");
+    console.log("authEmail:", authEmail);
     console.log("authPassword:", authPassword);
 
-    const userData = { userEmail: authEmail, userPassword: authPassword };
+    // FIXME: why does key values in userData have double quotes?
+    const userData = { userEmail: authEmail, password: authPassword };
     console.log("userData:", userData);
 
-    //
+    // TODO: check userData after logout and clearing AsyncStorage. Maybe we should check only userData
+    if (userData.userEmail) {
+      try {
+        await dispatch(authLogin(userData));
+      } catch (error) {
+        console.log("error:", error);
+        console.log("error.message:", error.message);
+      }
+    }
   } catch (error) {
     console.log("error:", error);
     console.log("error.message:", error.message);

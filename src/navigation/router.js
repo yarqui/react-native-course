@@ -13,6 +13,7 @@ import ProfileScreen from "../screens/mainScreens/ProfileScreen";
 const AuthStack = createStackNavigator();
 
 const useRoute = (isLoggedIn) => {
+  console.log("isLoggedIn in router:", isLoggedIn);
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
   const [passwordIsShown, setPasswordIsShown] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);
@@ -35,7 +36,7 @@ const useRoute = (isLoggedIn) => {
 
   return (
     <AuthStack.Navigator
-      initialRouteName="Login"
+      // initialRouteName="Login"
       screenOptions={{
         headerShown: false,
         headerTitleAlign: "center",
@@ -93,7 +94,7 @@ const useRoute = (isLoggedIn) => {
           <AuthStack.Screen name="Home" component={Home} />
           {/* <AuthStack.Screen name="Create Post" component={CreatePostsScreen} />
           <AuthStack.Screen name="Profile" component={ProfileScreen} /> */}
-          <AuthStack.Screen name="Login">
+          {/* <AuthStack.Screen name="Login">
             {(props) => (
               <LoginScreen
                 {...props}
@@ -121,7 +122,7 @@ const useRoute = (isLoggedIn) => {
                 handleActiveKeyboard={handleActiveKeyboard}
               />
             )}
-          </AuthStack.Screen>
+          </AuthStack.Screen> */}
 
           <AuthStack.Screen
             name="Comments"
