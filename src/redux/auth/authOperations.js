@@ -71,3 +71,21 @@ export const authLogout = () => async (dispatch) => {
     console.log("error.message:", error.message);
   }
 };
+
+export const authStateChanged = () => async (dispatch) => {
+  try {
+    const authEmail = await AsyncStorage.getItem("auth_email");
+    const authPassword = await AsyncStorage.getItem("auth_password");
+    console.log("authPassword:", authPassword);
+
+    const userData = { userEmail: authEmail, userPassword: authPassword };
+    console.log("userData:", userData);
+
+    dispatch(authStateChanged());
+
+    //
+  } catch (error) {
+    console.log("error:", error);
+    console.log("error.message:", error.message);
+  }
+};

@@ -16,5 +16,9 @@ export const authSlice = createSlice({
       const { userId, userName, userEmail, avatar, isCurrentUser } = payload;
       return { ...state, userId, userName, userEmail, avatar, isCurrentUser };
     },
+    authStateChanged: (state, { payload }) => {
+      const { userId, userName, userEmail, avatar, isCurrentUser } = payload;
+      return { ...state, userId, userName, userEmail, avatar, isCurrentUser };
+    },
   },
 });
