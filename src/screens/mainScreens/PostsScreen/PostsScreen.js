@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -9,6 +10,10 @@ import {
 } from "react-native";
 import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
+import {
+  selectUserName,
+  selectUserEmail,
+} from "../../../redux/auth/authSelectors";
 
 const initialPosts = [
   // {
@@ -39,6 +44,8 @@ const initialPosts = [
 
 const PostsScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState(initialPosts);
+  const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
 
   // const { /*id,*/ name, location, locationDescription, photo } = route.params;
   // console.log("route.params:", route.params);
@@ -81,7 +88,7 @@ const PostsScreen = ({ route, navigation }) => {
                 lineHeight: 15,
               }}
             >
-              Yaroslav Pelykh
+              {userName}
             </Text>
             <Text
               style={{
@@ -91,7 +98,7 @@ const PostsScreen = ({ route, navigation }) => {
                 color: "#4d4d4d",
               }}
             >
-              y.pelykh@gmail.com
+              {userEmail}
             </Text>
           </View>
         </View>

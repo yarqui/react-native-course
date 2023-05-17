@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -8,7 +9,6 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
-import globalStyles from "../../../utils/globalStyles";
 import Avatar from "../../../components/Avatar/Avatar";
 import {
   LogOutIcon,
@@ -16,9 +16,9 @@ import {
   MessageOffIcon,
   RemoveAvatarIcon,
 } from "../../../components/svg";
-import { ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
+import globalStyles from "../../../utils/globalStyles";
 import { authLogout } from "../../../redux/auth/authOperations";
+import { selectUserName } from "../../../redux/auth/authSelectors";
 
 const POSTS = [
   {
@@ -47,6 +47,7 @@ const POSTS = [
 const ProfileScreen = ({ navigation }) => {
   const [posts, setPosts] = useState(POSTS);
   const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -71,7 +72,7 @@ const ProfileScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
         >
-          <Text style={styles.userTitle}>Yaroslav Pelykh</Text>
+          <Text style={styles.userTitle}>{userName}</Text>
           <FlatList
             style={{
               width: "100%",
