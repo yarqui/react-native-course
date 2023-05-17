@@ -100,8 +100,6 @@ export const authStateChanged = () => async (dispatch) => {
     const authPassword = await AsyncStorage.getItem(
       [asyncStorage.password].toString()
     );
-    console.log("authEmail:", authEmail);
-    console.log("authPassword:", authPassword);
 
     const userData = { userEmail: authEmail, password: authPassword };
     console.log("userData:", userData);

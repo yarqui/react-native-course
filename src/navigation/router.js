@@ -13,7 +13,6 @@ import ProfileScreen from "../screens/mainScreens/ProfileScreen";
 const AuthStack = createStackNavigator();
 
 const useRoute = (isLoggedIn) => {
-  console.log("isLoggedIn in router:", isLoggedIn);
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
   const [passwordIsShown, setPasswordIsShown] = useState(false);
   const [focusedInput, setFocusedInput] = useState(null);

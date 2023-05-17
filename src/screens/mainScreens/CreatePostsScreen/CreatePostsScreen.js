@@ -30,14 +30,21 @@ const CreatePostsScreen = ({ navigation }) => {
   const [readyToSubmit, setReadyToSubmit] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [cameraType, setCameraType] = useState(CameraType.back);
   const [resetCamera, setResetCamera] = useState(false);
+  const [isCameraReady, setIsCameraReady] = useState(false);
+
+  console.log("1 cameraRef:", cameraRef);
+  console.log("1 isCameraReady:", isCameraReady);
+  // console.log("1 cameraType:", cameraType);
+  console.log("1 resetCamera:", resetCamera);
 
   const { /*id,*/ name, location, locationDescription, photo } = postData;
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
+      // console.log("requestCameraPermissionsAsync:", status);
 
       setHasPermission(status === "granted");
     })();
@@ -46,6 +53,7 @@ const CreatePostsScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       const { status } = await MediaLibrary.requestPermissionsAsync();
+      // console.log("requestPermissionsAsync:", status);
 
       setHasPermission(status === "granted");
     })();
@@ -54,6 +62,7 @@ const CreatePostsScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
+      // console.log("requestForegroundPermissionsAsync:", status);
 
       setHasPermission(status === "granted");
     })();
@@ -80,10 +89,13 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const takePhoto = async () => {
-    if (cameraRef) {
-      console.log("take photo");
+    // setResetCamera(true);
+    if (cameraRef && isCameraReady) {
       setResetCamera(true);
+      console.log("cameraRef :", cameraRef);
+      console.log("photo is taken");
       const { uri } = await cameraRef.takePictureAsync();
+      console.log("uri:", uri);
       await MediaLibrary.createAssetAsync(uri);
 
       const { coords } = await Location.getCurrentPositionAsync();
@@ -98,6 +110,8 @@ const CreatePostsScreen = ({ navigation }) => {
         },
       }));
     }
+
+    console.log("In takePhoto: camera is not ready");
   };
 
   const submitPost = () => {
@@ -155,6 +169,13 @@ const CreatePostsScreen = ({ navigation }) => {
               ref={(ref) => setCameraRef(ref)}
               ratio="4:3"
               key={resetCamera ? "reset" : undefined}
+              onCameraReady={() => {
+                console.log("onCameraReady: camera is ready to take a picture");
+                setIsCameraReady(true);
+              }}
+              onMountError={() => {
+                console.log("Camera mount error: ", error);
+              }}
             >
               {photo ? (
                 <View

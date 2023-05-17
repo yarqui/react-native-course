@@ -7,7 +7,6 @@ import { authStateChanged } from "../../redux/auth/authOperations";
 
 export const Main = () => {
   const hasCurrentUser = useSelector(selectHasCurrentUser);
-  console.log("hasCurrentUser:", hasCurrentUser);
 
   const routing = useRoute(hasCurrentUser);
   const dispatch = useDispatch();
