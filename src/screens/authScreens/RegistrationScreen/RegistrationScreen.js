@@ -151,7 +151,6 @@ const RegistrationScreen = ({
                     activeOpacity={0.8}
                     onPress={() => {
                       dispatch(authRegistration(userData));
-                      navigation.navigate("Home");
                       setUserData(initialUserState);
                     }}
                   >

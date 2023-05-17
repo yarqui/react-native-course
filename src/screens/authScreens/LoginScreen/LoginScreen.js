@@ -126,7 +126,6 @@ const LoginScreen = ({
                   activeOpacity={0.8}
                   onPress={() => {
                     dispatch(authLogin(userData));
-                    navigation.navigate("Home");
                     setUserData(initialUserState);
                   }}
                 >

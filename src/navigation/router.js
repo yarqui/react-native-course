@@ -75,8 +75,8 @@ const useRoute = (isLoggedIn) => {
             )}
           </AuthStack.Screen>
 
-          <AuthStack.Screen name="Home" component={Home} />
-          <AuthStack.Screen
+          {/* <AuthStack.Screen name="Home" component={Home} /> */}
+          {/* <AuthStack.Screen
             name="Comments"
             component={CommentsScreen}
             options={{ headerShown: true }}
@@ -85,7 +85,7 @@ const useRoute = (isLoggedIn) => {
             name="Map"
             component={MapScreen}
             options={{ headerShown: true }}
-          />
+          /> */}
         </>
       )}
 

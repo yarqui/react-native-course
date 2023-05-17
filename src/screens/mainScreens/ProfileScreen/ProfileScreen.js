@@ -17,6 +17,8 @@ import {
   RemoveAvatarIcon,
 } from "../../../components/svg";
 import { ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { authLogout } from "../../../redux/auth/authOperations";
 
 const POSTS = [
   {
@@ -44,6 +46,7 @@ const POSTS = [
 
 const ProfileScreen = ({ navigation }) => {
   const [posts, setPosts] = useState(POSTS);
+  const dispatch = useDispatch();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -57,9 +60,7 @@ const ProfileScreen = ({ navigation }) => {
         <LogOutIcon
           style={{ position: "absolute", right: 16, top: 22 }}
           onPress={() => {
-            console.log("future log out logic");
-
-            navigation.navigate("Login");
+            dispatch(authLogout());
           }}
         ></LogOutIcon>
 
@@ -70,90 +71,88 @@ const ProfileScreen = ({ navigation }) => {
             marginBottom: 0,
           }}
         >
-          <ScrollView style={{ width: "100%" }}>
-            <Text style={styles.userTitle}>Yaroslav Pelykh</Text>
-            <FlatList
-              style={{
-                width: "100%",
-                flex: 1,
-                marginTop: -32,
-              }}
-              data={posts}
-              renderItem={({ item }) => {
-                return (
-                  <View style={{ width: "100%", marginTop: 32 }}>
-                    <Image
-                      style={{
-                        width: "100%",
-                        height: 240,
-                        marginBottom: 8,
-                        borderRadius: 8,
+          <Text style={styles.userTitle}>Yaroslav Pelykh</Text>
+          <FlatList
+            style={{
+              width: "100%",
+              flex: 1,
+              // marginTop: -32,
+            }}
+            data={posts}
+            renderItem={({ item }) => {
+              return (
+                <View style={{ width: "100%", marginTop: 32 }}>
+                  <Image
+                    style={{
+                      width: "100%",
+                      height: 240,
+                      marginBottom: 8,
+                      borderRadius: 8,
 
-                        resizeMode: "cover",
-                      }}
-                      source={item.photo}
-                    />
+                      resizeMode: "cover",
+                    }}
+                    source={item.photo}
+                  />
 
-                    <Text
-                      style={{
-                        fontWeight: 500,
-                        fontSize: 16,
-                        lineHeight: 19,
-                      }}
-                    >
-                      {item.name}
-                    </Text>
-                    <View
+                  <Text
+                    style={{
+                      fontWeight: 500,
+                      fontSize: 16,
+                      lineHeight: 19,
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginTop: 11,
+                    }}
+                  >
+                    {/* /**Comments section */}
+                    <Pressable
                       style={{
                         flexDirection: "row",
-                        justifyContent: "space-between",
-                        marginTop: 11,
+                        alignItems: "center",
+                      }}
+                      onPress={() => {
+                        navigation.navigate("Comments");
                       }}
                     >
-                      {/* /**Comments section */}
-                      <Pressable
+                      <MessageOffIcon></MessageOffIcon>
+                      <Text
                         style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                        onPress={() => {
-                          navigation.navigate("Comments");
-                        }}
-                      >
-                        <MessageOffIcon></MessageOffIcon>
-                        <Text
-                          style={{
-                            marginLeft: 6,
-                            fontSize: 16,
-                            lineHeight: 19,
-                            color: "#BDBDBD",
-                          }}
-                        >
-                          {item.comments.length}
-                        </Text>
-                      </Pressable>
-                      <Pressable
-                        style={{ flexDirection: "row" }}
-                        onPress={() => {
-                          navigation.navigate("Map");
+                          marginLeft: 6,
+                          fontSize: 16,
+                          lineHeight: 19,
+                          color: "#BDBDBD",
                         }}
                       >
-                        <MapPinIcon></MapPinIcon>
-                        <Text
-                          style={{
-                            textDecorationLine: "underline",
-                          }}
-                        >
-                          {item.location}
-                        </Text>
-                      </Pressable>
-                    </View>
+                        {item.comments.length}
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{ flexDirection: "row" }}
+                      onPress={() => {
+                        navigation.navigate("Map");
+                      }}
+                    >
+                      <MapPinIcon></MapPinIcon>
+                      <Text
+                        style={{
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        {item.location}
+                      </Text>
+                    </Pressable>
                   </View>
-                );
-              }}
-              keyExtractor={(item) => item.id}
-            />
-          </ScrollView>
+                </View>
+              );
+            }}
+            keyExtractor={(item) => item.id}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -164,7 +163,7 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   userTitle: {
-    fontWeight: 500,
+    fontWeight: "500",
     fontSize: 30,
     lineHeight: 35,
     textAlign: "center",
