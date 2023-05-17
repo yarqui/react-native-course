@@ -92,8 +92,8 @@ const useRoute = (isLoggedIn) => {
       {isLoggedIn && (
         <>
           <AuthStack.Screen name="Home" component={Home} />
-          {/* <AuthStack.Screen name="Create Post" component={CreatePostsScreen} />
-          <AuthStack.Screen name="Profile" component={ProfileScreen} /> */}
+          <AuthStack.Screen name="Create Post" component={CreatePostsScreen} />
+          <AuthStack.Screen name="Profile" component={ProfileScreen} />
           {/* <AuthStack.Screen name="Login">
             {(props) => (
               <LoginScreen

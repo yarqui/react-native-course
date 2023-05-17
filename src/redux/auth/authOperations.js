@@ -5,10 +5,11 @@ import {
   signOut,
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { asyncStorage } from "../../utils/asyncStorage";
 import { authSlice } from "./authSlice";
 import { auth } from "../../../firebase/config";
 
-const { updateUserProfile } = authSlice.actions;
+const { updateUserProfile, logoutUser } = authSlice.actions;
 
 export const authRegistration =
   ({ userName, userEmail, password, avatar }) =>
@@ -27,8 +28,8 @@ export const authRegistration =
       const { displayName, email, photoURL, uid } = auth.currentUser;
 
       // Sets email and password to AsyncStorage
-      await AsyncStorage.setItem("auth_email", email);
-      await AsyncStorage.setItem("auth_password", password);
+      await AsyncStorage.setItem([asyncStorage.email].toString(), email);
+      await AsyncStorage.setItem([asyncStorage.password].toString(), password);
 
       await dispatch(
         updateUserProfile({
@@ -56,8 +57,8 @@ export const authLogin =
       const { displayName, email, photoURL, uid } = auth.currentUser;
 
       // Sets email and password to AsyncStorage
-      await AsyncStorage.setItem("auth_email", email);
-      await AsyncStorage.setItem("auth_password", password);
+      await AsyncStorage.setItem([asyncStorage.email].toString(), email);
+      await AsyncStorage.setItem([asyncStorage.password].toString(), password);
 
       await dispatch(
         updateUserProfile({
@@ -76,6 +77,13 @@ export const authLogin =
 
 export const authLogout = () => async (dispatch) => {
   try {
+    const currentUserCredentials = [
+      [asyncStorage.email].toString(),
+      [asyncStorage.password].toString(),
+    ];
+    await signOut(auth);
+    await dispatch(logoutUser());
+    await AsyncStorage.multiRemove(currentUserCredentials);
   } catch (error) {
     console.log("error:", error);
     console.log("error.message:", error.message);
@@ -85,17 +93,19 @@ export const authLogout = () => async (dispatch) => {
 export const authStateChanged = () => async (dispatch) => {
   try {
     // gets email & password from AsyncStorage to dispatch it with updateUserProfile
-    // ❗❗❗ it not safe to store a password in AsyncStorage?
-    const authEmail = await AsyncStorage.getItem("auth_email");
-    const authPassword = await AsyncStorage.getItem("auth_password");
+    // ❗❗❗ it not safe to store a password in AsyncStorage!
+    const authEmail = await AsyncStorage.getItem(
+      [asyncStorage.email].toString()
+    );
+    const authPassword = await AsyncStorage.getItem(
+      [asyncStorage.password].toString()
+    );
     console.log("authEmail:", authEmail);
     console.log("authPassword:", authPassword);
 
-    // FIXME: why does key values in userData have double quotes?
     const userData = { userEmail: authEmail, password: authPassword };
     console.log("userData:", userData);
 
-    // TODO: check userData after logout and clearing AsyncStorage. Maybe we should check only userData
     if (userData.userEmail) {
       try {
         await dispatch(authLogin(userData));
