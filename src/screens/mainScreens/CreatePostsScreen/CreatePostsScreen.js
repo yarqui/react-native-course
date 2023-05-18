@@ -6,6 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -14,7 +15,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import { CameraIcon, MapPinIcon, TrashIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
-import { Image } from "react-native";
+import { storage } from "../../../../firebase/config";
+import { uploadBytes, ref } from "firebase/storage";
 
 const initialPostData = {
   id: "",
@@ -39,7 +41,7 @@ const CreatePostsScreen = ({ navigation }) => {
   // console.log("1 cameraType:", cameraType);
   console.log("1 resetCamera:", resetCamera);
 
-  const { /*id,*/ name, location, locationDescription, photo } = postData;
+  const { id, name, location, locationDescription, photo } = postData;
 
   useEffect(() => {
     (async () => {
@@ -88,21 +90,39 @@ const CreatePostsScreen = ({ navigation }) => {
     );
   };
 
+  const uploadPhotoToServer = async () => {
+    // fetching photo URL from state
+    const response = await fetch(photo);
+    // creating a Binary Large Object file from a relative path of the photo
+    const file = await response.blob();
+    const uniqueId = Date.now().toString();
+    // Returns a StorageReference for the given url.
+    const storageRef = ref(storage, `postsImages/post-${uniqueId}`);
+
+    try {
+      // uploads file to the storage reference
+      await uploadBytes(storageRef, file);
+    } catch (error) {
+      console.log("error:", error);
+      console.log("error.message:", error.message);
+    }
+  };
+
   const takePhoto = async () => {
-    // setResetCamera(true);
+    setResetCamera(true);
     if (cameraRef && isCameraReady) {
       setResetCamera(true);
-      console.log("cameraRef :", cameraRef);
       console.log("photo is taken");
       const { uri } = await cameraRef.takePictureAsync();
-      console.log("uri:", uri);
       await MediaLibrary.createAssetAsync(uri);
 
       const { coords } = await Location.getCurrentPositionAsync();
 
+      let imageId = Date.now();
+
       setPostData((prevUserData) => ({
         ...prevUserData,
-        // id: "1",
+        id: imageId,
         photo: uri,
         location: {
           longitude: coords.longitude,
@@ -117,8 +137,10 @@ const CreatePostsScreen = ({ navigation }) => {
   const submitPost = () => {
     console.log("postDataToSubmit:", postData);
 
+    uploadPhotoToServer();
+
     navigation.navigate("Posts", {
-      // id,
+      id,
       name,
       location,
       locationDescription,

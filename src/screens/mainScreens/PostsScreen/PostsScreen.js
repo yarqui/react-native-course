@@ -47,8 +47,8 @@ const PostsScreen = ({ route, navigation }) => {
   const userName = useSelector(selectUserName);
   const userEmail = useSelector(selectUserEmail);
 
-  // const { /*id,*/ name, location, locationDescription, photo } = route.params;
-  // console.log("route.params:", route.params);
+  // const { id, name, location, locationDescription, photo } = route.params;
+  console.log("route.params:", route.params);
 
   useEffect(() => {
     route.params && setPosts((prevPosts) => [...prevPosts, route.params]);
