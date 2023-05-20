@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -8,51 +8,27 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
 import {
   selectUserName,
   selectUserEmail,
+  selectUserId,
 } from "../../../redux/auth/authSelectors";
-
-const initialPosts = [
-  // {
-  //   id: 1,
-  //   photo: require("../../../images/bali.jpg"),
-  //   name: "Temple of Rest",
-  //   location: "",
-  //   locationDescription: "Bali",
-  //   comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-  // },
-  // {
-  //   id: 2,
-  //   photo: require("../../../images/lviv.jpg"),
-  //   name: "Lviv main square",
-  //   location: "",
-  //   locationDescription: "Lviv",
-  //   comments: [{ id: 3 }, { id: 4 }],
-  // },
-  // {
-  //   id: 3,
-  //   photo: require("../../../images/carpathians.jpg"),
-  //   name: "Khomiak mountain",
-  //   location: "",
-  //   locationDescription: "Khomiak mountain",
-  //   comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
-  // },
-];
+import { getOwnPosts } from "../../../redux/posts/postsOperations";
+import { selectOwnPosts } from "../../../redux/posts/postsSelectors";
 
 const PostsScreen = ({ route, navigation }) => {
-  const [posts, setPosts] = useState(initialPosts);
   const userName = useSelector(selectUserName);
   const userEmail = useSelector(selectUserEmail);
-
-  // const { id, name, location, locationDescription, photo } = route.params;
-  console.log("route.params:", route.params);
+  const ownPosts = useSelector(selectOwnPosts);
+  // const userId = useSelector(selectUserId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    route.params && setPosts((prevPosts) => [...prevPosts, route.params]);
-  }, [route.params]);
+    dispatch(getOwnPosts());
+  }, [dispatch]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -115,7 +91,7 @@ const PostsScreen = ({ route, navigation }) => {
               width: "100%",
             }}
             scrollEnabled={true}
-            data={posts}
+            data={ownPosts}
             renderItem={({ item }) => {
               return (
                 <View style={{ width: "100%", marginTop: 32 }}>

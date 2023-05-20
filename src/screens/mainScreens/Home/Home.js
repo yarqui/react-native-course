@@ -54,13 +54,13 @@ const Home = ({ navigation }) => {
         component={CreatePostsScreen}
         options={{
           headerRight: () => null,
-          headerLeft: () => (
-            <ArrowLeftIcon
-              onPress={() => {
-                navigation.navigate("Posts");
-              }}
-            />
-          ),
+          // headerLeft: () => (
+          //   <ArrowLeftIcon
+          //     onPress={() => {
+          //       navigation.navigate("Posts");
+          //     }}
+          //   />
+          // ),
           headerLeftContainerStyle: { paddingLeft: 16 },
           tabBarIcon: () => <PlusIcon />,
           tabBarStyle: { display: "none" },
