@@ -21,9 +21,12 @@ import globalStyles from "../../../utils/globalStyles";
 import { storage, db } from "../../../../firebase/config";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserId } from "../../../redux/auth/authSelectors";
-import { getOwnPosts } from "../../../redux/posts/postsOperations";
+import {
+  getAllPosts,
+  getOwnPosts,
+  uploadPostToServer,
+} from "../../../redux/posts/postsOperations";
 const initialPostData = {
-  // id: "",
   name: "",
   location: "",
   locationDescription: "",
@@ -111,50 +114,54 @@ const CreatePostsScreen = ({ navigation }) => {
     );
   };
 
-  const uploadPhotoToServer = async () => {
-    setResetCamera(false);
-    // manipulates the image provided via uri. 2nd arg - actions, 3d - save options
-    const { uri } = await manipulateAsync(photo, [{ resize: { width: 600 } }], {
-      compress: 0.8,
-      format: SaveFormat.JPEG,
-    });
-    // fetches photo URL from state
-    const response = await fetch(uri);
-    // creates a Binary Large Object file from a relative path of the photo
-    const file = await response.blob();
-    const photoId = Date.now().toString();
-    // returns a StorageReference for the given url.
-    const storageRef = ref(storage, `postsImages/img-${photoId}`);
-    try {
-      // uploads file to the storage reference
-      await uploadBytes(storageRef, file);
-      // returns the download URL for the storage ref
-      const processedImg = await getDownloadURL(storageRef);
-      return processedImg;
-    } catch (error) {
-      console.log("error:", error);
-      console.log("error.message:", error.message);
-    }
-  };
+  // const uploadPhotoToServer = async () => {
+  //   setResetCamera(false);
+  //   // manipulates the image provided via uri. 2nd arg - actions, 3d - save options
+  //   const { uri } = await manipulateAsync(photo, [{ resize: { width: 600 } }], {
+  //     compress: 0.8,
+  //     format: SaveFormat.JPEG,
+  //   });
+  //   // fetches photo URL from state
+  //   const response = await fetch(uri);
+  //   // creates a Binary Large Object file from a relative path of the photo
+  //   const file = await response.blob();
+  //   const photoId = Date.now().toString();
+  //   // returns a StorageReference for the given url.
+  //   const storageRef = ref(storage, `postsImages/img-${photoId}`);
+  //   try {
+  //     // uploads file to the storage reference
+  //     await uploadBytes(storageRef, file);
+  //     // returns the download URL for the storage ref
+  //     const processedImg = await getDownloadURL(storageRef);
+  //     return processedImg;
+  //   } catch (error) {
+  //     console.log("error:", error);
+  //     console.log("error.message:", error.message);
+  //   }
+  // };
 
-  const uploadPostToServer = async () => {
-    try {
-      // uploads a photo to Storage & gets an imgURL from Storage
-      const imgURL = await uploadPhotoToServer();
+  // const uploadPostToServer = async () => {
+  //   try {
+  //     // uploads a photo to Storage & gets an imgURL from Storage
+  //     const imgURL = await uploadPhotoToServer();
 
-      // add a post to collection in Database
-      await addDoc(collection(db, "posts"), {
-        name,
-        location,
-        locationDescription,
-        photo: imgURL,
-        userId,
-      });
-    } catch (error) {
-      console.log("error:", error);
-      console.log("error.message:", error.message);
-    }
-  };
+  //     // add a post to collection in Database
+  //     await addDoc(collection(db, "posts"), {
+  //       name,
+  //       location,
+  //       locationDescription,
+  //       photo: imgURL,
+
+  //       userId,
+  //     });
+  //     // ❗ it appeared crucial to dispatch fetching posts HERE to update profile and posts screens
+  //     dispatch(getAllPosts());
+  //     dispatch(getOwnPosts());
+  //   } catch (error) {
+  //     console.log("error:", error);
+  //     console.log("error.message:", error.message);
+  //   }
+  // };
 
   const takePhoto = async () => {
     if (cameraRef && isCameraReady) {
@@ -180,7 +187,10 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const submitPost = () => {
-    uploadPostToServer();
+    setResetCamera(false);
+    dispatch(uploadPostToServer(postData, "postsScreen"));
+    // uploadPostToServer(postData, "postsScreen");
+    dispatch(getAllPosts());
     dispatch(getOwnPosts());
     setPostData(initialPostData);
     navigation.navigate("Posts");
@@ -230,7 +240,7 @@ const CreatePostsScreen = ({ navigation }) => {
               ratio="4:3"
               key={resetCamera ? "reset" : undefined}
               onCameraReady={() => {
-                console.log("onCameraReady: camera is ready to take a picture");
+                console.log("Camera is ready to take a picture");
                 setIsCameraReady(true);
               }}
               onMountError={() => {

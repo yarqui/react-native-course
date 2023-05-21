@@ -16,18 +16,19 @@ import {
   selectUserEmail,
   selectUserId,
 } from "../../../redux/auth/authSelectors";
-import { getOwnPosts } from "../../../redux/posts/postsOperations";
-import { selectOwnPosts } from "../../../redux/posts/postsSelectors";
+import { getAllPosts } from "../../../redux/posts/postsOperations";
+import { selectAllPosts } from "../../../redux/posts/postsSelectors";
+import PostItem from "../../../components/PostItem/PostItem";
 
 const PostsScreen = ({ route, navigation }) => {
+  const allPosts = useSelector(selectAllPosts);
   const userName = useSelector(selectUserName);
   const userEmail = useSelector(selectUserEmail);
-  const ownPosts = useSelector(selectOwnPosts);
-  // const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOwnPosts());
+    console.log("getAllPosts");
+    dispatch(getAllPosts());
   }, [dispatch]);
 
   return (
@@ -91,88 +92,10 @@ const PostsScreen = ({ route, navigation }) => {
               width: "100%",
             }}
             scrollEnabled={true}
-            data={ownPosts}
-            renderItem={({ item }) => {
-              return (
-                <View style={{ width: "100%", marginTop: 32 }}>
-                  <Image
-                    style={{
-                      width: "100%",
-                      height: 240,
-                      marginBottom: 8,
-                      borderRadius: 8,
-
-                      resizeMode: "cover",
-                    }}
-                    source={{ uri: item.photo }}
-                  />
-
-                  <Text
-                    style={{
-                      fontWeight: 500,
-                      fontSize: 16,
-                      lineHeight: 19,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginTop: 11,
-                    }}
-                  >
-                    {/* /**Comments section */}
-                    <Pressable
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                      onPress={() => {
-                        const img = item.photo;
-                        navigation.navigate("Comments", { img });
-                      }}
-                    >
-                      <MessageOffIcon></MessageOffIcon>
-                      <Text
-                        style={{
-                          marginLeft: 6,
-                          fontSize: 16,
-                          lineHeight: 19,
-                          color: "#BDBDBD",
-                        }}
-                      >
-                        {item.comments ? item.comments.length : 0}
-                      </Text>
-                    </Pressable>
-
-                    {/* Map section */}
-                    <Pressable
-                      style={{ flexDirection: "row" }}
-                      onPress={() => {
-                        navigation.navigate("Map", {
-                          name: item.name,
-                          locationDescription: item.locationDescription,
-                          longitude: item.location.longitude,
-                          latitude: item.location.latitude,
-                        });
-                      }}
-                    >
-                      <MapPinIcon></MapPinIcon>
-                      <Text
-                        style={{
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        {item.locationDescription}
-                      </Text>
-                    </Pressable>
-                  </View>
-                </View>
-              );
-            }}
-            keyExtractor={(item, index) => index.toString()}
+            data={allPosts}
+            renderItem={({ item }) => <PostItem item={item} />}
+            keyExtractor={(item) => item.postId}
+            key={allPosts}
           />
         </SafeAreaView>
       </View>

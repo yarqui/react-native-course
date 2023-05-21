@@ -12,39 +12,38 @@ import globalStyles from "../../../utils/globalStyles";
 import { TextInput } from "react-native-gesture-handler";
 import { SendIcon } from "../../../components/svg";
 
-const initialComments = [
-  // {
-  //   user: {
-  //     name: "Pablo",
-  //     email: "pablo32@gmail.com",
-  //     photo: require("../../../images/defaultCommentator.png"),
-  //     id: 10,
-  //   },
-  //   comment:
-  //     "Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!",
-  //   time: "04 april, 2023 | 10:47",
-  //   id: 10,
-  // },
-  // {
-  //   user: {
-  //     name: "Ron",
-  //     email: "yulia@gmail.com",
-  //     photo: require("../../../images/defaultCommentator.png"),
-  //     id: 12,
-  //   },
-  //   comment:
-  //     "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
-  //   time: "08 february, 2022 | 13:12",
-  //   id: 12,
-  // },
-];
+// const initialComments = [
+//   // {
+//   //   user: {
+//   //     name: "Pablo",
+//   //     email: "pablo32@gmail.com",
+//   //     photo: require("../../../images/defaultCommentator.png"),
+//   //     id: 10,
+//   //   },
+//   //   comment:
+//   //     "Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!",
+//   //   time: "04 april, 2023 | 10:47",
+//   //   id: 10,
+//   // },
+//   // {
+//   //   user: {
+//   //     name: "Ron",
+//   //     email: "yulia@gmail.com",
+//   //     photo: require("../../../images/defaultCommentator.png"),
+//   //     id: 12,
+//   //   },
+//   //   comment:
+//   //     "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
+//   //   time: "08 february, 2022 | 13:12",
+//   //   id: 12,
+//   // },
+// ];
 
 const CommentsScreen = ({ route, navigation }) => {
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
-  const [comments, setComments] = useState(initialComments);
+  const [comments, setComments] = useState([]);
   const [inputComment, setInputComment] = useState("");
-  console.log("comments.length:", comments.length);
-  console.log("route.params:", route.params);
+  const { postId } = route.params;
 
   const handleActiveKeyboard = () => {
     if (keyboardIsShown) return;
@@ -68,7 +67,7 @@ const CommentsScreen = ({ route, navigation }) => {
       minute: "numeric",
     };
     const date = new Date();
-    const formattedDate = date.toLocaleDateString("en-US", options);
+    const formattedDate = date.toLocaleDateString("uk-UA", options);
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
 
@@ -78,7 +77,7 @@ const CommentsScreen = ({ route, navigation }) => {
   const onSubmit = () => {
     if (!inputComment) return;
 
-    console.log("submit comment logic");
+    console.log("comment submitted");
 
     setComments((prevComments) => {
       return [

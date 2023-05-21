@@ -102,7 +102,6 @@ export const authStateChanged = () => async (dispatch) => {
     );
 
     const userData = { userEmail: authEmail, password: authPassword };
-    console.log("userData:", userData);
 
     if (userData.userEmail) {
       try {

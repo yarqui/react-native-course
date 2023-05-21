@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   View,
@@ -19,35 +19,20 @@ import {
 import globalStyles from "../../../utils/globalStyles";
 import { authLogout } from "../../../redux/auth/authOperations";
 import { selectUserName } from "../../../redux/auth/authSelectors";
-
-const POSTS = [
-  {
-    id: 1,
-    photo: require("../../../images/bali.jpg"),
-    name: "Temple of Rest",
-    location: "Bali",
-    comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-  },
-  {
-    id: 2,
-    photo: require("../../../images/lviv.jpg"),
-    name: "Lviv main square",
-    location: "Lviv",
-    comments: [{ id: 3 }, { id: 4 }],
-  },
-  {
-    id: 3,
-    photo: require("../../../images/carpathians.jpg"),
-    name: "Khomiak mountain",
-    location: "Khomiak mountain",
-    comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
-  },
-];
+import { selectOwnPosts } from "../../../redux/posts/postsSelectors";
+import { getOwnPosts } from "../../../redux/posts/postsOperations";
+import PostItem from "../../../components/PostItem/PostItem";
 
 const ProfileScreen = ({ navigation }) => {
-  const [posts, setPosts] = useState(POSTS);
-  const dispatch = useDispatch();
+  const ownPosts = useSelector(selectOwnPosts);
   const userName = useSelector(selectUserName);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("getOwnPosts");
+
+    dispatch(getOwnPosts());
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -79,80 +64,10 @@ const ProfileScreen = ({ navigation }) => {
               flex: 1,
               // marginTop: -32,
             }}
-            data={posts}
-            renderItem={({ item }) => {
-              return (
-                <View style={{ width: "100%", marginTop: 32 }}>
-                  <Image
-                    style={{
-                      width: "100%",
-                      height: 240,
-                      marginBottom: 8,
-                      borderRadius: 8,
-
-                      resizeMode: "cover",
-                    }}
-                    source={item.photo}
-                  />
-
-                  <Text
-                    style={{
-                      fontWeight: 500,
-                      fontSize: 16,
-                      lineHeight: 19,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginTop: 11,
-                    }}
-                  >
-                    {/* /**Comments section */}
-                    <Pressable
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                      onPress={() => {
-                        navigation.navigate("Comments");
-                      }}
-                    >
-                      <MessageOffIcon></MessageOffIcon>
-                      <Text
-                        style={{
-                          marginLeft: 6,
-                          fontSize: 16,
-                          lineHeight: 19,
-                          color: "#BDBDBD",
-                        }}
-                      >
-                        {item.comments.length}
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      style={{ flexDirection: "row" }}
-                      onPress={() => {
-                        navigation.navigate("Map");
-                      }}
-                    >
-                      <MapPinIcon></MapPinIcon>
-                      <Text
-                        style={{
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        {item.location}
-                      </Text>
-                    </Pressable>
-                  </View>
-                </View>
-              );
-            }}
-            keyExtractor={(item) => item.id}
+            data={ownPosts}
+            renderItem={({ item }) => <PostItem item={item} />}
+            keyExtractor={(item) => item.postId}
+            key={ownPosts}
           />
         </View>
       </View>
