@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,44 +17,23 @@ import { selectComments } from "../../../redux/posts/postsSelectors";
 import CurrentUserComment from "../../../components/Comments/CurrentUserComment/CurrentUserComment";
 import RegularComment from "../../../components/Comments/RegularComment/RegularComment";
 import { CommentsStyles } from "../../../components/Comments/CommentsStyles";
-import { uploadComments } from "../../../redux/posts/postsOperations";
-
-// const initialComments = [
-//   // {
-//   //   user: {
-//   //     name: "Pablo",
-//   //     email: "pablo32@gmail.com",
-//   //     photo: require("../../../images/defaultCommentator.png"),
-//   //     id: 10,
-//   //   },
-//   //   comment:
-//   //     "Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!",
-//   //   time: "04 april, 2023 | 10:47",
-//   //   id: 10,
-//   // },
-//   // {
-//   //   user: {
-//   //     name: "Ron",
-//   //     email: "yulia@gmail.com",
-//   //     photo: require("../../../images/defaultCommentator.png"),
-//   //     id: 12,
-//   //   },
-//   //   comment:
-//   //     "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
-//   //   time: "08 february, 2022 | 13:12",
-//   //   id: 12,
-//   // },
-// ];
+import {
+  getCommentsByPostId,
+  uploadComments,
+} from "../../../redux/posts/postsOperations";
 
 const CommentsScreen = ({ route, navigation }) => {
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
   const [commentText, setCommentText] = useState("");
   const comments = useSelector(selectComments);
   const avatar = useSelector(selectAvatar);
-  const { postId } = route.params;
-
   const currentUserId = useSelector(selectUserId);
   const dispatch = useDispatch();
+  const { postId } = route.params;
+
+  useEffect(() => {
+    dispatch(getCommentsByPostId(postId));
+  }, [dispatch]);
 
   const handleActiveKeyboard = () => {
     if (keyboardIsShown) return;
@@ -78,7 +57,7 @@ const CommentsScreen = ({ route, navigation }) => {
       minute: "numeric",
     };
     const date = new Date();
-    const formattedDate = date.toLocaleDateString("uk-UA", options);
+    const formattedDate = date.toLocaleDateString("en-UA", options);
 
     return formattedDate;
     // const hours = date.getHours().toString().padStart(2, "0");
@@ -99,29 +78,12 @@ const CommentsScreen = ({ route, navigation }) => {
       commentTxt,
       commentDate,
       photo: avatar,
-      postId,
     };
 
-    dispatch(uploadComments(commentData));
+    // console.log("postId in screen:", postId);
+    dispatch(uploadComments(postId, commentData));
+    dispatch(getCommentsByPostId(postId));
 
-    // TODO: make dispatch to update comment array in state
-    // setComments((prevComments) => {
-    //   return [
-    //     ...prevComments,
-    //     {
-    //       user: {
-    //         name: "Yar",
-    //         email: "y.pelykh@gmail.com",
-    //         photo: require("../../../images/defaultCommentator.png"),
-    //         id: 13,
-    //       },
-    //       comment: commentText,
-    //       // time: "04 april, 2023 | 10:47",
-    //       time: getFormattedDateTime(),
-    //       id: 15,
-    //     },
-    //   ];
-    // });
     setCommentText("");
     hideKeyboard();
   };
@@ -152,7 +114,7 @@ const CommentsScreen = ({ route, navigation }) => {
                 <RegularComment comment={item} />
               )
             }
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.commentId}
           ></FlatList>
 
           <View style={CommentsStyles.inputWrap}>
