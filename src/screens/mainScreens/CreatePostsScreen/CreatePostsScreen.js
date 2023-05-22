@@ -186,12 +186,13 @@ const CreatePostsScreen = ({ navigation }) => {
     }
   };
 
-  const submitPost = () => {
+  // without async-await it won't upload post to server
+  const submitPost = async () => {
     setResetCamera(false);
-    dispatch(uploadPostToServer(postData, "postsScreen"));
+    await dispatch(uploadPostToServer(postData, "postsScreen"));
     // uploadPostToServer(postData, "postsScreen");
-    dispatch(getAllPosts());
-    dispatch(getOwnPosts());
+    await dispatch(getAllPosts());
+    await dispatch(getOwnPosts());
     setPostData(initialPostData);
     navigation.navigate("Posts");
   };

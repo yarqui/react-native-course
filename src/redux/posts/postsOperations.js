@@ -68,7 +68,12 @@ export const uploadPostToServer =
 
 export const uploadComments = (comment) => async (dispatch, getState) => {
   const { userId } = getState.auth();
+
   try {
+    await addDoc(collection(db, "comments"), {
+      ...comment,
+      userId,
+    });
   } catch (error) {
     console.log("error:", error);
     console.log("error.message:", error.message);
