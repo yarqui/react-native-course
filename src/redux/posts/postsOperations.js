@@ -1,4 +1,12 @@
-import { query, where, collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  query,
+  where,
+  collection,
+  getDocs,
+  addDoc,
+  getCountFromServer,
+  updateDoc,
+} from "firebase/firestore";
 import { postsSlice } from "./postsSlice";
 import { db } from "../../../firebase/config";
 import { uploadPhotoToServer } from "../../utils/uploadPhotoToServer";
@@ -8,12 +16,24 @@ const { updateOwnPosts, updateAllPosts, updateComments } = postsSlice.actions;
 export const getAllPosts = () => async (dispatch, _) => {
   try {
     let allPosts = [];
-    const q = query(collection(db, "posts"));
-    const postsSnapshot = await getDocs(q);
-    postsSnapshot.forEach((post) => {
-      allPosts.push({ ...post.data(), postId: post.id });
-    });
+    const postsQuery = query(collection(db, "posts"));
+    const postsSnapshot = await getDocs(postsQuery);
+
+    // we use for of loop to use await
+    for (const post of postsSnapshot.docs) {
+      const postWithId = { ...post.data(), postId: post.id };
+      const commentsQuery = query(collection(db, "posts", post.id, "comments"));
+      const commentsSnapshot = await getCountFromServer(commentsQuery);
+      const commentsQuantity = commentsSnapshot.data().count;
+      console.log("commentsQuantity:", commentsQuantity);
+
+      await updateDoc(post.ref, { comments: commentsQuantity });
+
+      allPosts.push({ ...postWithId, comments: commentsQuantity });
+    }
+
     dispatch(updateAllPosts(allPosts));
+
     return allPosts;
   } catch (error) {
     console.log("error:", error);
@@ -63,21 +83,22 @@ export const uploadPostToServer = (post, screenName) => async (_, getState) => {
   }
 };
 
-export const uploadComments = (postId, comment) => async (_, getState) => {
-  const { userId } = getState().auth;
+export const uploadComments =
+  (postId, comment) => async (dispatch, getState) => {
+    const { userId } = getState().auth;
 
-  try {
-    await addDoc(collection(db, "posts", postId, "comments"), {
-      ...comment,
-      userId,
-    });
-    getAllPosts();
-    getOwnPosts();
-  } catch (error) {
-    console.log("error:", error);
-    console.log("error.message:", error.message);
-  }
-};
+    try {
+      await addDoc(collection(db, "posts", postId, "comments"), {
+        ...comment,
+        userId,
+      });
+      dispatch(getAllPosts());
+      dispatch(getOwnPosts());
+    } catch (error) {
+      console.log("error:", error);
+      console.log("error.message:", error.message);
+    }
+  };
 
 export const getCommentsByPostId = (postId) => async (dispatch, _) => {
   try {
@@ -88,8 +109,7 @@ export const getCommentsByPostId = (postId) => async (dispatch, _) => {
 
     commentsSnapshot.forEach((comment) => postComments.push(comment.data()));
     dispatch(updateComments(postComments));
-    // TODO: dispatch updateCommentsCounter here
-    // FIXME: should we return anything here?
+    // TODO: should we return anything here?
     return postComments;
   } catch (error) {
     console.log("error:", error);

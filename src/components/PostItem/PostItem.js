@@ -1,9 +1,10 @@
 import { Image, Pressable, Text, View } from "react-native";
-import { MapPinIcon, MessageOffIcon } from "../svg";
+import { MapPinIcon, MessageOffIcon, MessageOnIcon } from "../svg";
 import { useNavigation } from "@react-navigation/native";
 
 const PostItem = ({ item }) => {
   const navigation = useNavigation();
+
   return (
     <View style={{ width: "100%", marginTop: 32 }}>
       <Image
@@ -48,7 +49,12 @@ const PostItem = ({ item }) => {
             navigation.navigate("Comments", { img, postId });
           }}
         >
-          <MessageOffIcon></MessageOffIcon>
+          {item.comments ? (
+            <MessageOnIcon></MessageOnIcon>
+          ) : (
+            <MessageOffIcon></MessageOffIcon>
+          )}
+
           <Text
             style={{
               marginLeft: 6,
@@ -57,7 +63,7 @@ const PostItem = ({ item }) => {
               color: "#BDBDBD",
             }}
           >
-            {item.comments ? item.comments.length : 0}
+            {item.comments ? item.comments : 0}
           </Text>
         </Pressable>
 

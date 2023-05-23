@@ -52,6 +52,7 @@ const PostsScreen = ({ route, navigation }) => {
           }}
         >
           <View>
+            {/* TODO: replace avatar with uri: photo */}
             <Image
               source={require("../../../images/avatar.jpg")}
               style={{ width: 60, height: 60, borderRadius: 16 }}
