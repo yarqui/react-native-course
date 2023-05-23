@@ -18,19 +18,22 @@ import {
 } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
 import { authLogout } from "../../../redux/auth/authOperations";
-import { selectUserName } from "../../../redux/auth/authSelectors";
+import {
+  selectAvatar,
+  selectUserName,
+} from "../../../redux/auth/authSelectors";
 import { selectOwnPosts } from "../../../redux/posts/postsSelectors";
 import { getOwnPosts } from "../../../redux/posts/postsOperations";
 import PostItem from "../../../components/PostItem/PostItem";
+import { uploadPhotoToServer } from "../../../utils/uploadPhotoToServer";
 
 const ProfileScreen = ({ navigation }) => {
   const ownPosts = useSelector(selectOwnPosts);
   const userName = useSelector(selectUserName);
   const dispatch = useDispatch();
+  const avatar = useSelector(selectAvatar);
 
   useEffect(() => {
-    console.log("getOwnPosts");
-
     dispatch(getOwnPosts());
   }, [dispatch]);
 
@@ -42,7 +45,7 @@ const ProfileScreen = ({ navigation }) => {
       />
 
       <View style={{ ...globalStyles.authUnderlay, height: "80%" }}>
-        <Avatar />
+        <Avatar avatar={avatar} />
         <LogOutIcon
           style={{ position: "absolute", right: 16, top: 22 }}
           onPress={() => {

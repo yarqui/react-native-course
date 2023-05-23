@@ -6,7 +6,7 @@ const PostItem = ({ item }) => {
   const navigation = useNavigation();
 
   return (
-    <View style={{ width: "100%", marginTop: 32 }}>
+    <View style={{ width: "100%", marginTop: 32, marginBottom: 4 }}>
       <Image
         style={{
           width: "100%",

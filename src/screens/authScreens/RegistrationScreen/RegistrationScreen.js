@@ -5,7 +5,13 @@ import Avatar from "../../../components/Avatar";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
 import { authRegistration } from "../../../redux/auth/authOperations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAvatar } from "../../../redux/auth/authSelectors";
+import {
+  launchImageLibraryAsync,
+  requestMediaLibraryPermissionsAsync,
+} from "expo-image-picker";
+import { uploadPhotoToServer } from "../../../utils/uploadPhotoToServer";
 
 const initialUserState = {
   userName: "",
@@ -26,8 +32,10 @@ const RegistrationScreen = ({
   const [userData, setUserData] = useState(initialUserState);
   const [readyToSubmit, setReadyToSubmit] = useState(false);
   const dispatch = useDispatch();
+  // const avatar = useSelector(selectAvatar);
+  // console.log("avatar in registration:", avatar);
 
-  const { userName, userEmail, password } = userData;
+  const { userName, userEmail, password, avatar } = userData;
 
   useEffect(() => {
     if (userName && userEmail && password) {
@@ -35,6 +43,33 @@ const RegistrationScreen = ({
     }
     setReadyToSubmit(false);
   }, [userName, userEmail, password]);
+
+  const pickImageOnRegistration = async () => {
+    try {
+      // Asks the user to grant permissions for accessing user's photo.
+      let permissionResult = await requestMediaLibraryPermissionsAsync();
+      if (permissionResult.status !== "granted") {
+        alert("Permission to access Media Library is required!");
+        return;
+      }
+      // Displays the system UI for choosing an image or a video from the phone's library
+      let imgPickerResult = await launchImageLibraryAsync();
+      console.log("imgPickerResult:", imgPickerResult);
+
+      if (imgPickerResult.canceled) return;
+
+      const img = imgPickerResult.assets[0].uri;
+      const uploadedImg = await uploadPhotoToServer(img, "avatar");
+      console.log("uploadedImg:", uploadedImg);
+
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        avatar: uploadedImg,
+      }));
+    } catch (error) {
+      console.log("error.message:", error.message);
+    }
+  };
 
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
@@ -44,7 +79,10 @@ const RegistrationScreen = ({
           height: keyboardIsShown ? "72%" : "66%",
         }}
       >
-        <Avatar />
+        <Avatar
+          avatar={avatar}
+          pickImageOnRegistration={pickImageOnRegistration}
+        />
         <View style={globalStyles.appContainer}>
           <Text style={globalStyles.authTitle}>Registration</Text>
           <View style={globalStyles.formContainer}>
@@ -149,8 +187,8 @@ const RegistrationScreen = ({
                     }}
                     disabled={!readyToSubmit}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      dispatch(authRegistration(userData));
+                    onPress={async () => {
+                      await dispatch(authRegistration(userData));
                       setUserData(initialUserState);
                     }}
                   >

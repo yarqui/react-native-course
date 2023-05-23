@@ -6,6 +6,7 @@ import {
   FlatList,
   Keyboard,
   Image,
+  SafeAreaView,
 } from "react-native";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
@@ -80,7 +81,6 @@ const CommentsScreen = ({ route, navigation }) => {
       photo: avatar,
     };
 
-    // console.log("postId in screen:", postId);
     dispatch(uploadComments(postId, commentData));
     dispatch(getCommentsByPostId(postId));
 
@@ -88,53 +88,51 @@ const CommentsScreen = ({ route, navigation }) => {
     hideKeyboard();
   };
   return (
-    <KeyboardContainer hideKeyboard={hideKeyboard}>
-      <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-        <View
+    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <SafeAreaView
+        style={{
+          ...globalStyles.appContainer,
+          marginTop: 32,
+          marginBottom: 16,
+        }}
+      >
+        <Image
+          source={{ uri: route.params.img }}
+          style={CommentsStyles.postImage}
+        />
+        <FlatList
           style={{
-            ...globalStyles.appContainer,
-            marginTop: 32,
-            marginBottom: 16,
+            width: "100%",
           }}
-        >
-          <Image
-            source={{ uri: route.params.img }}
-            style={CommentsStyles.postImage}
-          />
-          <FlatList
-            style={{
-              width: "100%",
+          scrollEnabled={true}
+          data={comments}
+          renderItem={({ item }) =>
+            item.userId === currentUserId ? (
+              <CurrentUserComment comment={item} />
+            ) : (
+              <RegularComment comment={item} />
+            )
+          }
+          keyExtractor={(item) => item.commentId}
+        ></FlatList>
+
+        <View style={CommentsStyles.inputWrap}>
+          <TextInput
+            style={CommentsStyles.input}
+            placeholder="Comment..."
+            placeholderTextColor="#BDBDBD"
+            value={commentText}
+            onChangeText={(inputValue) => setCommentText(inputValue)}
+            onFocus={() => {
+              handleActiveKeyboard();
             }}
-            scrollEnabled={true}
-            data={comments}
-            renderItem={({ item }) =>
-              item.userId === currentUserId ? (
-                <CurrentUserComment comment={item} />
-              ) : (
-                <RegularComment comment={item} />
-              )
-            }
-            keyExtractor={(item) => item.commentId}
-          ></FlatList>
+            onSubmitEditing={hideKeyboard}
+          ></TextInput>
 
-          <View style={CommentsStyles.inputWrap}>
-            <TextInput
-              style={CommentsStyles.input}
-              placeholder="Comment..."
-              placeholderTextColor="#BDBDBD"
-              value={commentText}
-              onChangeText={(inputValue) => setCommentText(inputValue)}
-              onFocus={() => {
-                handleActiveKeyboard();
-              }}
-              onSubmitEditing={hideKeyboard}
-            ></TextInput>
-
-            <SendIcon style={CommentsStyles.iconSend} onPress={onSubmit} />
-          </View>
+          <SendIcon style={CommentsStyles.iconSend} onPress={onSubmit} />
         </View>
-      </View>
-    </KeyboardContainer>
+      </SafeAreaView>
+    </View>
   );
 };
 export default CommentsScreen;

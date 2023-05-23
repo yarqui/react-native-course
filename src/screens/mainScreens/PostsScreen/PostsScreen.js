@@ -15,6 +15,7 @@ import {
   selectUserName,
   selectUserEmail,
   selectUserId,
+  selectAvatar,
 } from "../../../redux/auth/authSelectors";
 import { getAllPosts } from "../../../redux/posts/postsOperations";
 import { selectAllPosts } from "../../../redux/posts/postsSelectors";
@@ -24,10 +25,11 @@ const PostsScreen = ({ route, navigation }) => {
   const allPosts = useSelector(selectAllPosts);
   const userName = useSelector(selectUserName);
   const userEmail = useSelector(selectUserEmail);
+  const avatar = useSelector(selectAvatar);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("getAllPosts");
+    // console.log("getAllPosts");
     dispatch(getAllPosts());
   }, [dispatch]);
 
@@ -52,9 +54,8 @@ const PostsScreen = ({ route, navigation }) => {
           }}
         >
           <View>
-            {/* TODO: replace avatar with uri: photo */}
             <Image
-              source={require("../../../images/avatar.jpg")}
+              source={{ uri: avatar }}
               style={{ width: 60, height: 60, borderRadius: 16 }}
             />
           </View>

@@ -7,15 +7,16 @@ export const RegularComment = ({ comment }) => {
       <View style={CommentsStyles.commentWrap}>
         {comment.photo ? (
           <Image
-            style={CommentsStyles.userAvatar}
+            style={CommentsStyles.commentatorAvatar}
             source={{ uri: comment.photo }}
           />
         ) : (
           <Image
-            style={CommentsStyles.userAvatar}
+            style={CommentsStyles.commentatorAvatar}
             source={require("../../../images/defaultCommentator.png")}
           />
         )}
+
         <View style={CommentsStyles.textWrap}>
           <Text style={CommentsStyles.text}>{comment.commentTxt}</Text>
           <Text style={CommentsStyles.textTime}>{comment.commentDate}</Text>

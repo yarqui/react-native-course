@@ -9,7 +9,7 @@ import { asyncStorage } from "../../utils/asyncStorage";
 import { authSlice } from "./authSlice";
 import { auth } from "../../../firebase/config";
 
-const { updateUserProfile, logoutUser } = authSlice.actions;
+const { updateUserProfile, logoutUser, updateUserAvatar } = authSlice.actions;
 
 export const authRegistration =
   ({ userName, userEmail, password, avatar }) =>
@@ -93,7 +93,7 @@ export const authLogout = () => async (dispatch) => {
 export const authStateChanged = () => async (dispatch) => {
   try {
     // gets email & password from AsyncStorage to dispatch it with updateUserProfile
-    // ❗❗❗ it not safe to store a password in AsyncStorage!
+    // ❗❗❗ it's not safe to store a password in AsyncStorage!
     const authEmail = await AsyncStorage.getItem(
       [asyncStorage.email].toString()
     );
@@ -111,6 +111,17 @@ export const authStateChanged = () => async (dispatch) => {
         console.log("error.message:", error.message);
       }
     }
+  } catch (error) {
+    console.log("error:", error);
+    console.log("error.message:", error.message);
+  }
+};
+
+export const changeUserAvatar = (avatar) => async (dispatch, _) => {
+  console.log("avatar in changeUserAvatar:", avatar);
+  try {
+    await dispatch(updateUserAvatar(avatar));
+    await updateProfile(auth.currentUser, { photoURL: avatar });
   } catch (error) {
     console.log("error:", error);
     console.log("error.message:", error.message);

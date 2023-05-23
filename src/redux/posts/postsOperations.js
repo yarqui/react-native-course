@@ -25,14 +25,13 @@ export const getAllPosts = () => async (dispatch, _) => {
       const commentsQuery = query(collection(db, "posts", post.id, "comments"));
       const commentsSnapshot = await getCountFromServer(commentsQuery);
       const commentsQuantity = commentsSnapshot.data().count;
-      console.log("commentsQuantity:", commentsQuantity);
 
       await updateDoc(post.ref, { comments: commentsQuantity });
 
       allPosts.push({ ...postWithId, comments: commentsQuantity });
     }
 
-    dispatch(updateAllPosts(allPosts));
+    await dispatch(updateAllPosts(allPosts));
 
     return allPosts;
   } catch (error) {
@@ -53,7 +52,7 @@ export const getOwnPosts = () => async (dispatch, getState) => {
       // data() retrieves all fields in the document as an Object.
       ownPosts.push({ ...post.data(), postId: post.id });
     });
-    dispatch(updateOwnPosts(ownPosts));
+    await dispatch(updateOwnPosts(ownPosts));
     return ownPosts;
   } catch (error) {
     console.log("error:", error);
@@ -74,9 +73,6 @@ export const uploadPostToServer = (post, screenName) => async (_, getState) => {
       userId,
       photo: imgURL,
     });
-    // ❗ it appeared crucial to dispatch fetching posts HERE to update profile and posts screens
-    // getAllPosts();
-    // getOwnPosts();
   } catch (error) {
     console.log("error:", error);
     console.log("error.message:", error.message);
@@ -92,8 +88,8 @@ export const uploadComments =
         ...comment,
         userId,
       });
-      dispatch(getAllPosts());
-      dispatch(getOwnPosts());
+      await dispatch(getAllPosts());
+      await dispatch(getOwnPosts());
     } catch (error) {
       console.log("error:", error);
       console.log("error.message:", error.message);
@@ -108,7 +104,7 @@ export const getCommentsByPostId = (postId) => async (dispatch, _) => {
     const commentsSnapshot = await getDocs(q);
 
     commentsSnapshot.forEach((comment) => postComments.push(comment.data()));
-    dispatch(updateComments(postComments));
+    await dispatch(updateComments(postComments));
     // TODO: should we return anything here?
     return postComments;
   } catch (error) {
