@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#fab520"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "jsEngine": "jsc"
@@ -23,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dogmit.postimagesapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
