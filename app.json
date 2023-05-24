@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#fab520"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "jsEngine": "jsc"
@@ -21,16 +23,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dogmit.postimagesapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "owner": "dogmit",
     "extra": {
       "eas": {
-        "projectId": "ad430c9c-6741-4b94-965a-3dde6af4516c"
+        "projectId": "1a1c4f9a-43a2-411d-a4a3-2fcadcbf0a5a"
       }
-    },
-    "owner": "dogmit"
+    }
   }
 }
