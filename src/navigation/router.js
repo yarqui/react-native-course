@@ -35,7 +35,7 @@ const useRoute = (isLoggedIn) => {
 
   return (
     <AuthStack.Navigator
-      initialRouteName="Login"
+      // initialRouteName="Login"
       screenOptions={{
         headerShown: false,
         headerTitleAlign: "center",
@@ -74,8 +74,8 @@ const useRoute = (isLoggedIn) => {
             )}
           </AuthStack.Screen>
 
-          <AuthStack.Screen name="Home" component={Home} />
-          <AuthStack.Screen
+          {/* <AuthStack.Screen name="Home" component={Home} /> */}
+          {/* <AuthStack.Screen
             name="Comments"
             component={CommentsScreen}
             options={{ headerShown: true }}
@@ -84,16 +84,16 @@ const useRoute = (isLoggedIn) => {
             name="Map"
             component={MapScreen}
             options={{ headerShown: true }}
-          />
+          /> */}
         </>
       )}
 
       {isLoggedIn && (
         <>
           <AuthStack.Screen name="Home" component={Home} />
-          {/* <AuthStack.Screen name="Create Post" component={CreatePostsScreen} />
-          <AuthStack.Screen name="Profile" component={ProfileScreen} /> */}
-          <AuthStack.Screen name="Login">
+          <AuthStack.Screen name="Create Post" component={CreatePostsScreen} />
+          <AuthStack.Screen name="Profile" component={ProfileScreen} />
+          {/* <AuthStack.Screen name="Login">
             {(props) => (
               <LoginScreen
                 {...props}
@@ -121,7 +121,7 @@ const useRoute = (isLoggedIn) => {
                 handleActiveKeyboard={handleActiveKeyboard}
               />
             )}
-          </AuthStack.Screen>
+          </AuthStack.Screen> */}
 
           <AuthStack.Screen
             name="Comments"

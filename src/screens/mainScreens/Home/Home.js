@@ -1,7 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useState } from "react";
-import { View } from "react-native";
-import { Text } from "react-native";
+import { useDispatch } from "react-redux";
 import globalStyles from "../../../utils/globalStyles";
 import CreatePostsScreen from "../CreatePostsScreen";
 import PostsScreen from "../PostsScreen";
@@ -13,12 +11,12 @@ import {
   PlusIcon,
   UserIcon,
 } from "../../../components/svg";
-import useRoute from "../../../navigation/router";
-import { Alert } from "react-native";
+import { authLogout } from "../../../redux/auth/authOperations";
 
 const Tabs = createBottomTabNavigator();
 
 const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <Tabs.Navigator
       initialRouteName="Posts"
@@ -29,9 +27,8 @@ const Home = ({ navigation }) => {
           return (
             <LogOutIcon
               onPress={() => {
-                console.log("future log out logic");
-
-                navigation.navigate("Login");
+                console.log("log out logic");
+                dispatch(authLogout());
               }}
             ></LogOutIcon>
           );
@@ -57,13 +54,13 @@ const Home = ({ navigation }) => {
         component={CreatePostsScreen}
         options={{
           headerRight: () => null,
-          headerLeft: () => (
-            <ArrowLeftIcon
-              onPress={() => {
-                navigation.navigate("Posts");
-              }}
-            />
-          ),
+          // headerLeft: () => (
+          //   <ArrowLeftIcon
+          //     onPress={() => {
+          //       navigation.navigate("Posts");
+          //     }}
+          //   />
+          // ),
           headerLeftContainerStyle: { paddingLeft: 16 },
           tabBarIcon: () => <PlusIcon />,
           tabBarStyle: { display: "none" },

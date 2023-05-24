@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { store } from "./src/redux/store";
 import * as Font from "expo-font";
-import fonts from "./src/utils/fonts";
-
 import * as SplashScreen from "expo-splash-screen";
-import { NavigationContainer } from "@react-navigation/native";
-import useRoute from "./src/navigation/router";
 
-// TODO: isLoggedIn state to conditional render navigation.
+import { store } from "./src/redux/store";
+import fonts from "./src/utils/fonts";
+import { Main } from "./src/components/Main/Main";
 
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
-  const routing = useRoute(false);
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -41,7 +37,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>{routing}</NavigationContainer>
+      <Main />
     </Provider>
   );
 };

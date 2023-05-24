@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import PropTypes from "prop-types";
+import { authLogin } from "../../../redux/auth/authOperations";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
 
 const initialUserState = {
-  email: "",
+  userEmail: "",
   password: "",
 };
 
@@ -22,14 +24,15 @@ const LoginScreen = ({
   const [userData, setUserData] = useState(initialUserState);
   const [readyToSubmit, setReadyToSubmit] = useState(false);
 
-  const { email, password } = userData;
+  const { userEmail, password } = userData;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (email && password) {
+    if (userEmail && password) {
       return setReadyToSubmit(true);
     }
     setReadyToSubmit(false);
-  }, [email, password]);
+  }, [userEmail, password]);
 
   return (
     <KeyboardContainer hideKeyboard={hideKeyboard}>
@@ -55,7 +58,7 @@ const LoginScreen = ({
               placeholderTextColor={"#BDBDBD"}
               name="email"
               keyboardType={"email-address"}
-              value={userData.email}
+              value={userData.userEmail}
               onFocus={() => {
                 handleActiveKeyboard("email");
               }}
@@ -65,7 +68,7 @@ const LoginScreen = ({
               onChangeText={(value) =>
                 setUserData((prevUserData) => ({
                   ...prevUserData,
-                  email: value.trim(),
+                  userEmail: value.trim(),
                 }))
               }
             />
@@ -122,9 +125,7 @@ const LoginScreen = ({
                   disabled={!readyToSubmit}
                   activeOpacity={0.8}
                   onPress={() => {
-                    console.log("future submit logic:", userData);
-
-                    navigation.navigate("Home");
+                    dispatch(authLogin(userData));
                     setUserData(initialUserState);
                   }}
                 >

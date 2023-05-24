@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -7,45 +8,30 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
 import globalStyles from "../../../utils/globalStyles";
-
-const initialPosts = [
-  // {
-  //   id: 1,
-  //   photo: require("../../../images/bali.jpg"),
-  //   name: "Temple of Rest",
-  //   location: "",
-  //   locationDescription: "Bali",
-  //   comments: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
-  // },
-  // {
-  //   id: 2,
-  //   photo: require("../../../images/lviv.jpg"),
-  //   name: "Lviv main square",
-  //   location: "",
-  //   locationDescription: "Lviv",
-  //   comments: [{ id: 3 }, { id: 4 }],
-  // },
-  // {
-  //   id: 3,
-  //   photo: require("../../../images/carpathians.jpg"),
-  //   name: "Khomiak mountain",
-  //   location: "",
-  //   locationDescription: "Khomiak mountain",
-  //   comments: [{ id: 5 }, { id: 6 }, { id: 7 }],
-  // },
-];
+import {
+  selectUserName,
+  selectUserEmail,
+  selectUserId,
+  selectAvatar,
+} from "../../../redux/auth/authSelectors";
+import { getAllPosts } from "../../../redux/posts/postsOperations";
+import { selectAllPosts } from "../../../redux/posts/postsSelectors";
+import PostItem from "../../../components/PostItem/PostItem";
 
 const PostsScreen = ({ route, navigation }) => {
-  const [posts, setPosts] = useState(initialPosts);
-
-  // const { /*id,*/ name, location, locationDescription, photo } = route.params;
-  // console.log("route.params:", route.params);
+  const allPosts = useSelector(selectAllPosts);
+  const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
+  const avatar = useSelector(selectAvatar);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    route.params && setPosts((prevPosts) => [...prevPosts, route.params]);
-  }, [route.params]);
+    // console.log("getAllPosts");
+    dispatch(getAllPosts());
+  }, [dispatch]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -69,7 +55,7 @@ const PostsScreen = ({ route, navigation }) => {
         >
           <View>
             <Image
-              source={require("../../../images/avatar.jpg")}
+              source={{ uri: avatar }}
               style={{ width: 60, height: 60, borderRadius: 16 }}
             />
           </View>
@@ -81,7 +67,7 @@ const PostsScreen = ({ route, navigation }) => {
                 lineHeight: 15,
               }}
             >
-              Yaroslav Pelykh
+              {userName}
             </Text>
             <Text
               style={{
@@ -91,7 +77,7 @@ const PostsScreen = ({ route, navigation }) => {
                 color: "#4d4d4d",
               }}
             >
-              y.pelykh@gmail.com
+              {userEmail}
             </Text>
           </View>
         </View>
@@ -108,88 +94,10 @@ const PostsScreen = ({ route, navigation }) => {
               width: "100%",
             }}
             scrollEnabled={true}
-            data={posts}
-            renderItem={({ item }) => {
-              return (
-                <View style={{ width: "100%", marginTop: 32 }}>
-                  <Image
-                    style={{
-                      width: "100%",
-                      height: 240,
-                      marginBottom: 8,
-                      borderRadius: 8,
-
-                      resizeMode: "cover",
-                    }}
-                    source={{ uri: item.photo }}
-                  />
-
-                  <Text
-                    style={{
-                      fontWeight: 500,
-                      fontSize: 16,
-                      lineHeight: 19,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginTop: 11,
-                    }}
-                  >
-                    {/* /**Comments section */}
-                    <Pressable
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                      onPress={() => {
-                        const img = item.photo;
-                        navigation.navigate("Comments", { img });
-                      }}
-                    >
-                      <MessageOffIcon></MessageOffIcon>
-                      <Text
-                        style={{
-                          marginLeft: 6,
-                          fontSize: 16,
-                          lineHeight: 19,
-                          color: "#BDBDBD",
-                        }}
-                      >
-                        {item.comments ? item.comments.length : 0}
-                      </Text>
-                    </Pressable>
-
-                    {/* Map section */}
-                    <Pressable
-                      style={{ flexDirection: "row" }}
-                      onPress={() => {
-                        navigation.navigate("Map", {
-                          name: item.name,
-                          locationDescription: item.locationDescription,
-                          longitude: item.location.longitude,
-                          latitude: item.location.latitude,
-                        });
-                      }}
-                    >
-                      <MapPinIcon></MapPinIcon>
-                      <Text
-                        style={{
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        {item.locationDescription}
-                      </Text>
-                    </Pressable>
-                  </View>
-                </View>
-              );
-            }}
-            keyExtractor={(item, index) => index.toString()}
+            data={allPosts}
+            renderItem={({ item }) => <PostItem item={item} />}
+            keyExtractor={(item) => item.postId}
+            key={allPosts}
           />
         </SafeAreaView>
       </View>

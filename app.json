@@ -1,21 +1,23 @@
 {
   "expo": {
     "name": "react-native-course",
-    "slug": "react-native-course",
+    "slug": "post-images-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-img.jpg",
+      "image": "./assets/splash-img.png",
       "resizeMode": "contain",
       "backgroundColor": "#fab520"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "jsEngine": "jsc"
     },
     "android": {
+      "jsEngine": "jsc",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -23,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ad430c9c-6741-4b94-965a-3dde6af4516c"
+      }
+    },
+    "owner": "dogmit"
   }
 }
