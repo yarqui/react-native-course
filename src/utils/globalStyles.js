@@ -1,8 +1,6 @@
 import { StyleSheet } from "react-native";
 import fonts from "./fonts";
 
-// borderWidth: 1, borderColor: "red",
-
 const globalStyles = StyleSheet.create({
   keyboardAvoiding: {
     flex: 1,
@@ -17,9 +15,6 @@ const globalStyles = StyleSheet.create({
   },
 
   authUnderlay: {
-    // borderWidth: 1,
-    // borderColor: "lime",
-
     position: "absolute",
     bottom: 0,
     left: 0,
@@ -33,9 +28,6 @@ const globalStyles = StyleSheet.create({
   },
 
   appContainer: {
-    // borderWidth: 1,
-    // borderColor: "#ff7301",
-
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
@@ -56,11 +48,7 @@ const globalStyles = StyleSheet.create({
   },
 
   formContainer: {
-    // borderWidth: 1,
-    // borderColor: "#0ee4e0",
-
     alignItems: "center",
-    // gap: 16,
   },
 
   inputContainer: {

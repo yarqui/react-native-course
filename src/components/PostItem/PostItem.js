@@ -44,7 +44,6 @@ const PostItem = ({ item }) => {
           onPress={() => {
             const img = item.photo;
             const postId = item.postId;
-            // console.log("item.postId in PostItem:", item.postId);
 
             navigation.navigate("Comments", { img, postId });
           }}

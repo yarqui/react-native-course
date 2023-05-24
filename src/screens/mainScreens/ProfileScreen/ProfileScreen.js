@@ -65,7 +65,6 @@ const ProfileScreen = ({ navigation }) => {
             style={{
               width: "100%",
               flex: 1,
-              // marginTop: -32,
             }}
             data={ownPosts}
             renderItem={({ item }) => <PostItem item={item} />}

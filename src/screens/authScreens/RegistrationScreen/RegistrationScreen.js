@@ -5,8 +5,7 @@ import Avatar from "../../../components/Avatar";
 import KeyboardContainer from "../../../components/KeyboardContainer";
 import globalStyles from "../../../utils/globalStyles";
 import { authRegistration } from "../../../redux/auth/authOperations";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAvatar } from "../../../redux/auth/authSelectors";
+import { useDispatch } from "react-redux";
 import {
   launchImageLibraryAsync,
   requestMediaLibraryPermissionsAsync,
@@ -32,8 +31,6 @@ const RegistrationScreen = ({
   const [userData, setUserData] = useState(initialUserState);
   const [readyToSubmit, setReadyToSubmit] = useState(false);
   const dispatch = useDispatch();
-  // const avatar = useSelector(selectAvatar);
-  // console.log("avatar in registration:", avatar);
 
   const { userName, userEmail, password, avatar } = userData;
 
@@ -54,13 +51,11 @@ const RegistrationScreen = ({
       }
       // Displays the system UI for choosing an image or a video from the phone's library
       let imgPickerResult = await launchImageLibraryAsync();
-      console.log("imgPickerResult:", imgPickerResult);
 
       if (imgPickerResult.canceled) return;
 
       const img = imgPickerResult.assets[0].uri;
       const uploadedImg = await uploadPhotoToServer(img, "avatar");
-      console.log("uploadedImg:", uploadedImg);
 
       setUserData((prevUserData) => ({
         ...prevUserData,
@@ -196,12 +191,7 @@ const RegistrationScreen = ({
                   </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() => {
-                    console.log("future navigation to log in screen");
-                  }}
-                >
+                <TouchableOpacity activeOpacity={0.7}>
                   <Text
                     style={globalStyles.authAccountPrompt}
                     onPress={() => {

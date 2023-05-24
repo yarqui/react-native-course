@@ -118,7 +118,6 @@ export const authStateChanged = () => async (dispatch) => {
 };
 
 export const changeUserAvatar = (avatar) => async (dispatch, _) => {
-  console.log("avatar in changeUserAvatar:", avatar);
   try {
     await dispatch(updateUserAvatar(avatar));
     await updateProfile(auth.currentUser, { photoURL: avatar });

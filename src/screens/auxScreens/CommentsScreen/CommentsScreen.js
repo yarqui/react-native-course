@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Keyboard,
-  Image,
-  SafeAreaView,
-} from "react-native";
-import KeyboardContainer from "../../../components/KeyboardContainer";
+import { View, FlatList, Keyboard, Image, SafeAreaView } from "react-native";
 import globalStyles from "../../../utils/globalStyles";
 import { TextInput } from "react-native-gesture-handler";
 import { SendIcon } from "../../../components/svg";
@@ -23,7 +14,7 @@ import {
   uploadComments,
 } from "../../../redux/posts/postsOperations";
 
-const CommentsScreen = ({ route, navigation }) => {
+const CommentsScreen = ({ route }) => {
   const [keyboardIsShown, setKeyboardIsShown] = useState(false);
   const [commentText, setCommentText] = useState("");
   const comments = useSelector(selectComments);
@@ -61,10 +52,6 @@ const CommentsScreen = ({ route, navigation }) => {
     const formattedDate = date.toLocaleDateString("en-UA", options);
 
     return formattedDate;
-    // const hours = date.getHours().toString().padStart(2, "0");
-    // const minutes = date.getMinutes().toString().padStart(2, "0");
-
-    // return `${formattedDate} | ${hours}:${minutes}`;
   };
 
   const onSubmit = () => {
@@ -136,46 +123,3 @@ const CommentsScreen = ({ route, navigation }) => {
   );
 };
 export default CommentsScreen;
-
-// const styles = StyleSheet.create({
-//   postImage: {
-//     width: "100%",
-//     height: 240,
-//     marginBottom: 8,
-//     borderRadius: 8,
-
-//     resizeMode: "cover",
-//   },
-
-//   textTime: {
-//     marginLeft: "auto",
-//     marginTop: 8,
-//     fontSize: 10,
-//     lineHeight: 12,
-//     color: "#BDBDBD",
-//   },
-
-//   inputWrap: {
-//     position: "relative",
-//     width: "100%",
-//   },
-
-//   input: {
-//     height: 50,
-//     padding: 16,
-
-//     fontSize: 16,
-//     lineHeight: 19,
-
-//     backgroundColor: "#F6F6F6",
-//     borderWidth: 1,
-//     borderColor: "#E8E8E8",
-//     borderRadius: 100,
-//   },
-
-//   iconSend: {
-//     position: "absolute",
-//     top: 8,
-//     right: 8,
-//   },
-// });
