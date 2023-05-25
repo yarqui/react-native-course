@@ -11,10 +11,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#fab520"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "jsEngine": "jsc"
+      "jsEngine": "jsc",
+      "bundleIdentifier": "com.dogmit.photosphere"
     },
     "android": {
       "jsEngine": "jsc",
@@ -32,6 +35,12 @@
       "eas": {
         "projectId": "8397b3fc-b3b4-485b-80c8-364302ab3457"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8397b3fc-b3b4-485b-80c8-364302ab3457"
     }
   }
 }
