@@ -1,11 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useDispatch } from "react-redux";
-import globalStyles from "../../../utils/globalStyles";
 import CreatePostsScreen from "../CreatePostsScreen";
 import PostsScreen from "../PostsScreen";
 import ProfileScreen from "../ProfileScreen";
 import {
-  ArrowLeftIcon,
   GridIcon,
   LogOutIcon,
   PlusIcon,
@@ -15,7 +13,7 @@ import { authLogout } from "../../../redux/auth/authOperations";
 
 const Tabs = createBottomTabNavigator();
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const dispatch = useDispatch();
   return (
     <Tabs.Navigator
@@ -27,7 +25,6 @@ const Home = ({ navigation }) => {
           return (
             <LogOutIcon
               onPress={() => {
-                console.log("log out logic");
                 dispatch(authLogout());
               }}
             ></LogOutIcon>
@@ -54,13 +51,6 @@ const Home = ({ navigation }) => {
         component={CreatePostsScreen}
         options={{
           headerRight: () => null,
-          // headerLeft: () => (
-          //   <ArrowLeftIcon
-          //     onPress={() => {
-          //       navigation.navigate("Posts");
-          //     }}
-          //   />
-          // ),
           headerLeftContainerStyle: { paddingLeft: 16 },
           tabBarIcon: () => <PlusIcon />,
           tabBarStyle: { display: "none" },

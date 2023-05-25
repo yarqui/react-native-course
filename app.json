@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-course",
-    "slug": "post-images-app",
+    "name": "PhotoSphere",
+    "slug": "photosphere",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,13 +16,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "jsEngine": "jsc"
+      "jsEngine": "jsc",
+      "bundleIdentifier": "com.dogmit.photosphere"
     },
     "android": {
       "jsEngine": "jsc",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
       "package": "com.dogmit.postimagesapp"
     },
@@ -32,8 +33,14 @@
     "owner": "dogmit",
     "extra": {
       "eas": {
-        "projectId": "1a1c4f9a-43a2-411d-a4a3-2fcadcbf0a5a"
+        "projectId": "8397b3fc-b3b4-485b-80c8-364302ab3457"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8397b3fc-b3b4-485b-80c8-364302ab3457"
     }
   }
 }

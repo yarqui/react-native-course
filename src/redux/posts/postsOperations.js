@@ -105,7 +105,7 @@ export const getCommentsByPostId = (postId) => async (dispatch, _) => {
 
     commentsSnapshot.forEach((comment) => postComments.push(comment.data()));
     await dispatch(updateComments(postComments));
-    // TODO: should we return anything here?
+    // TODO: do we have to return anything here?
     return postComments;
   } catch (error) {
     console.log("error:", error);

@@ -1,27 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  Pressable,
-  SafeAreaView,
-} from "react-native";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { MapPinIcon, MessageOffIcon } from "../../../components/svg";
+import { View, Text, Image, FlatList, SafeAreaView } from "react-native";
 import globalStyles from "../../../utils/globalStyles";
 import {
   selectUserName,
   selectUserEmail,
-  selectUserId,
   selectAvatar,
 } from "../../../redux/auth/authSelectors";
 import { getAllPosts } from "../../../redux/posts/postsOperations";
 import { selectAllPosts } from "../../../redux/posts/postsSelectors";
 import PostItem from "../../../components/PostItem/PostItem";
 
-const PostsScreen = ({ route, navigation }) => {
+const PostsScreen = () => {
   const allPosts = useSelector(selectAllPosts);
   const userName = useSelector(selectUserName);
   const userEmail = useSelector(selectUserEmail);
@@ -29,7 +19,6 @@ const PostsScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log("getAllPosts");
     dispatch(getAllPosts());
   }, [dispatch]);
 
@@ -38,7 +27,6 @@ const PostsScreen = ({ route, navigation }) => {
       <View
         style={{
           ...globalStyles.appContainer,
-          // borderWidth: 1,
           justifyContent: "flex-start",
           alignItems: "flex-start",
           marginTop: 32,
@@ -47,8 +35,6 @@ const PostsScreen = ({ route, navigation }) => {
       >
         <View
           style={{
-            // borderWidth: 1,
-
             flexDirection: "row",
             alignItems: "center",
           }}

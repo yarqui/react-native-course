@@ -9,7 +9,7 @@ import globalStyles from "../../utils/globalStyles";
 
 const KeyboardContainer = ({ hideKeyboard, children }) => {
   return (
-    // FIXME: This👇 TouchableWithoutFeedback prevents scrollable content scrolling for some reason. You may encounter this issue in CommentScreen's FlatList
+    // FIXME: This👇 TouchableWithoutFeedback prevents scrollable content scrolling for some reason. You may encounter this issue in CommentScreen's FlatList until you remove it from there
     <TouchableWithoutFeedback
       style={{ flex: 1, backgroundColor: "#ffffff" }}
       onPress={hideKeyboard}

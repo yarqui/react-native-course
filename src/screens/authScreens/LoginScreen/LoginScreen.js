@@ -12,7 +12,6 @@ const initialUserState = {
 };
 
 const LoginScreen = ({
-  isLoggedIn,
   navigation,
   keyboardIsShown,
   passwordIsShown,
@@ -133,12 +132,7 @@ const LoginScreen = ({
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => {
-                  console.log("future navigation to sign up screen");
-                }}
-              >
+              <TouchableOpacity activeOpacity={0.7}>
                 <Text
                   style={globalStyles.authAccountPrompt}
                   onPress={() => {

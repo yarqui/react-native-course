@@ -4,14 +4,12 @@ import {
   requestMediaLibraryPermissionsAsync,
   launchImageLibraryAsync,
 } from "expo-image-picker";
+import PropTypes from "prop-types";
 import { AddAvatarIcon, RemoveAvatarIcon } from "../svg";
 import avatarStyles from "./AvatarStyles";
-import { selectAvatar, selectUserId } from "../../redux/auth/authSelectors";
+import { selectUserId } from "../../redux/auth/authSelectors";
 import { uploadPhotoToServer } from "../../utils/uploadPhotoToServer";
 import { changeUserAvatar } from "../../redux/auth/authOperations";
-import { authSlice } from "../../redux/auth/authSlice";
-
-const { updateUserAvatar } = authSlice.actions;
 
 const Avatar = ({ avatar, pickImageOnRegistration }) => {
   const userId = useSelector(selectUserId);
@@ -27,13 +25,11 @@ const Avatar = ({ avatar, pickImageOnRegistration }) => {
       }
       // Displays the system UI for choosing an image or a video from the phone's library
       let imgPickerResult = await launchImageLibraryAsync();
-      // console.log("imgPickerResult:", imgPickerResult);
 
       if (imgPickerResult.canceled) return;
 
       const img = imgPickerResult.assets[0].uri;
       const uploadedImg = await uploadPhotoToServer(img, "avatar");
-      console.log("uploadedImg:", uploadedImg);
 
       await dispatch(changeUserAvatar(uploadedImg));
     } catch (error) {
@@ -50,7 +46,6 @@ const Avatar = ({ avatar, pickImageOnRegistration }) => {
           }}
           activeOpacity={0.8}
           onPress={() => {
-            console.log("future remove avatar logic");
             dispatch(changeUserAvatar(null));
           }}
         >
@@ -65,16 +60,17 @@ const Avatar = ({ avatar, pickImageOnRegistration }) => {
           style={avatarStyles.avatarUnderlay}
           activeOpacity={0.8}
           onPress={userId ? pickImage : pickImageOnRegistration}
-          // onPress={() => {
-          //   console.log("future add avatar logic");
-          //   pickImage();
-          // }}
         >
           <AddAvatarIcon style={avatarStyles.addAvatarIcon} />
         </TouchableOpacity>
       )}
     </>
   );
+};
+
+Avatar.propTypes = {
+  pickImageOnRegistration: PropTypes.func,
+  avatar: PropTypes.string,
 };
 
 export default Avatar;

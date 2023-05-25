@@ -11,7 +11,6 @@ export const CommentsStyles = StyleSheet.create({
   },
 
   commentsContainer: {
-    // borderWidth: 1,
     width: "100%",
     marginTop: 32,
   },
@@ -26,7 +25,6 @@ export const CommentsStyles = StyleSheet.create({
   },
 
   textWrap: {
-    // borderWidth: 1,
     flex: 1,
     backgroundColor: "#f7f7f7",
     padding: 16,
@@ -37,13 +35,11 @@ export const CommentsStyles = StyleSheet.create({
   },
 
   text: {
-    // borderWidth: 1,
     fontSize: 13,
     lineHeight: 18,
   },
 
   textTime: {
-    // borderWidth: 1,
     marginLeft: "auto",
     marginTop: 8,
     fontSize: 10,
